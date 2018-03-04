@@ -8,6 +8,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'My Library';
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
