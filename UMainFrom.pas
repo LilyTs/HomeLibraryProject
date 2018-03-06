@@ -11,8 +11,7 @@ type
   TMainForm = class(TForm)
     IBDatabase: TIBDatabase;
     IBTransaction: TIBTransaction;
-    IBDataSource: TDataSource;
-    IBQuery: TIBQuery;
+    ibqGenres: TIBQuery;
     PageControl: TPageControl;
     tsMain: TTabSheet;
     tsBooks: TTabSheet;
@@ -21,6 +20,23 @@ type
     tsPubHouses: TTabSheet;
     dbgridGenres: TDBGrid;
     dbnavGenres: TDBNavigator;
+    dbgridBorrowings: TDBGrid;
+    ibqBorrowings: TIBQuery;
+    dsrcGenres: TDataSource;
+    dsrcBorrowings: TDataSource;
+    dbnavBorrowings: TDBNavigator;
+    dbgridBooks: TDBGrid;
+    dbnavBooks: TDBNavigator;
+    dbgridFriends: TDBGrid;
+    dbnavFriends: TDBNavigator;
+    dbgridPubHouses: TDBGrid;
+    dbnavPubHouses: TDBNavigator;
+    ibqBooks: TIBQuery;
+    dsrcBooks: TDataSource;
+    ibqFriends: TIBQuery;
+    dsrcFriends: TDataSource;
+    ibqPubHouses: TIBQuery;
+    dsrcPubHouses: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -47,9 +63,30 @@ begin
       IniFile.Free;
     end;
     IBDatabase.Connected := true;
-    with IBQuery do
+    with ibqGenres do
       begin
         SQL.Text := 'SELECT * FROM Genre';
+        Open;
+      end;
+    with ibqBorrowings do
+      begin
+        SQL.Text := 'SELECT B.Book_id AS "Book ID", Bk.Name AS "Book", B.Friend_id AS "Friend ID", F.FIO AS "Friend", B.BorrowDate AS "Borrow date", B.ReturnDate AS "Return date",  B.Comment '  //B.IsLost AS "Is lost", B.IsDamaged AS "Is damaged",
+                  + 'FROM Borrowing B JOIN Friend F ON B.Friend_id = F.Friend_id JOIN Book Bk ON B.Book_id = Bk.Book_id;';
+        Open;
+      end;
+    with ibqBooks do
+      begin
+        SQL.Text := 'SELECT * FROM Book';
+        Open;
+      end;
+    with ibqFriends do
+      begin
+        SQL.Text := 'SELECT * FROM Friend';
+        Open;
+      end;
+    with ibqPubHouses do
+      begin
+        SQL.Text := 'SELECT * FROM PublishingHouse';
         Open;
       end;
   except
@@ -63,7 +100,11 @@ end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  IBQuery.Close;
+  ibqGenres.Close;
+  ibqBorrowings.Close;
+  ibqBooks.Close;
+  ibqFriends.Close;
+  ibqPubHouses.Close;
   IBDatabase.Connected := False;
 end;
 
