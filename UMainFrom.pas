@@ -5,16 +5,22 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
-  IBCustomDataSet, IBTable, IniFiles, IBQuery;
+  IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls;
 
 type
   TMainForm = class(TForm)
-    IBDatabase1: TIBDatabase;
-    IBTransaction1: TIBTransaction;
-    DBGrid1: TDBGrid;
-    DBNavigator1: TDBNavigator;
-    DataSource2: TDataSource;
-    IBQuery1: TIBQuery;
+    IBDatabase: TIBDatabase;
+    IBTransaction: TIBTransaction;
+    IBDataSource: TDataSource;
+    IBQuery: TIBQuery;
+    PageControl: TPageControl;
+    tsMain: TTabSheet;
+    tsBooks: TTabSheet;
+    tsFriends: TTabSheet;
+    tsGenres: TTabSheet;
+    tsPubHouses: TTabSheet;
+    dbgridGenres: TDBGrid;
+    dbnavGenres: TDBNavigator;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -36,12 +42,12 @@ begin
   try
     IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
     try
-      IBDatabase1.DatabaseName := IniFile.ReadString('Base', 'Path', '');
+      IBDatabase.DatabaseName := IniFile.ReadString('Base', 'Path', '');
     finally
       IniFile.Free;
     end;
-    IBDatabase1.Connected := true;
-    with IBQuery1 do
+    IBDatabase.Connected := true;
+    with IBQuery do
       begin
         SQL.Text := 'SELECT * FROM Genre';
         Open;
@@ -57,8 +63,8 @@ end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  IBQuery1.Close;
-  IBDatabase1.Connected := False;
+  IBQuery.Close;
+  IBDatabase.Connected := False;
 end;
 
 end.
