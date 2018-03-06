@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 212
-  Top = 144
+  Left = 316
+  Top = 156
   Width = 736
   Height = 480
   Caption = 'My Library'
@@ -11,6 +11,8 @@ object MainForm: TMainForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object DBGrid1: TDBGrid
@@ -19,7 +21,7 @@ object MainForm: TMainForm
     Width = 720
     Height = 120
     Align = alTop
-    DataSource = DataSource1
+    DataSource = DataSource2
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -57,47 +59,7 @@ object MainForm: TMainForm
     Align = alTop
     TabOrder = 1
   end
-  object IBTable1: TIBTable
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    Active = True
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'GENRE_ID'
-        Attributes = [faRequired]
-        DataType = ftInteger
-      end
-      item
-        Name = 'NAME'
-        Attributes = [faRequired]
-        DataType = ftString
-        Size = 30
-      end
-      item
-        Name = 'PARENTGENRE_ID'
-        DataType = ftInteger
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_GENRE'
-        Fields = 'GENRE_ID'
-        Options = [ixUnique]
-      end
-      item
-        Name = 'GENRE_PARENT_ID_FK'
-        Fields = 'PARENTGENRE_ID'
-      end>
-    IndexFieldNames = 'GENRE_ID'
-    MasterSource = DataSource1
-    StoreDefs = True
-    TableName = 'GENRE'
-    Left = 472
-    Top = 296
-  end
   object IBDatabase1: TIBDatabase
-    Connected = True
     DatabaseName = 'LIBRARYDB.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
@@ -111,26 +73,27 @@ object MainForm: TMainForm
     Top = 184
   end
   object IBTransaction1: TIBTransaction
-    Active = True
+    Active = False
     DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
     AutoStopAction = saNone
     Left = 472
     Top = 240
   end
-  object DataSource1: TDataSource
-    DataSet = IBDataSet1
-    Left = 528
-    Top = 296
+  object DataSource2: TDataSource
+    DataSet = IBQuery1
+    Left = 344
+    Top = 256
   end
-  object IBDataSet1: TIBDataSet
+  object IBQuery1: TIBQuery
     Database = IBDatabase1
     Transaction = IBTransaction1
     BufferChunks = 1000
     CachedUpdates = False
-    SelectSQL.Strings = (
-      'select * from GENRE')
-    Active = True
-    Left = 472
-    Top = 344
+    Left = 384
+    Top = 256
   end
 end
