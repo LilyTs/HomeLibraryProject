@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
-  IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls;
+  IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls, IBUpdateSQL,
+  ActnList, ImgList, ToolWin, UAddEditPubHouseForm;
 
 type
   TMainForm = class(TForm)
@@ -37,16 +38,31 @@ type
     dsrcFriends: TDataSource;
     ibqPubHouses: TIBQuery;
     dsrcPubHouses: TDataSource;
+    ibUpdateSQlGenres: TIBUpdateSQL;
+    ImageList: TImageList;
+    actListPubHouses: TActionList;
+    actAddPubHouse: TAction;
+    toolBarPubHouses: TToolBar;
+    actDeletePubHouse: TAction;
+    actEditPubHouse: TAction;
+    btnAddPubHouse: TToolButton;
+    btnDeletePubHouse: TToolButton;
+    btnEditPubHouse: TToolButton;
+    btnRefreshPubHouses: TToolButton;
+    actRerfeshPubHouses: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure actAddPubHouseExecute(Sender: TObject);
+    procedure btnRefreshPubHousesClick(Sender: TObject);
   private
-    { Private declarations }
+    procedure setName(newName: string);
   public
     { Public declarations }
   end;
 
 var
   MainForm: TMainForm;
+  Name: string;
 
 implementation
 
@@ -106,6 +122,22 @@ begin
   ibqFriends.Close;
   ibqPubHouses.Close;
   IBDatabase.Connected := False;
+end;
+
+procedure TMainForm.actAddPubHouseExecute(Sender: TObject);
+begin
+  AddEditPubHouseForm.Show;
+end;
+
+procedure TMainForm.setName(newName: string);
+begin
+  Name := newName;
+end;
+
+procedure TMainForm.btnRefreshPubHousesClick(Sender: TObject);
+begin
+  ibqPubHouses.Close;
+  ibqPubHouses.Open;
 end;
 
 end.
