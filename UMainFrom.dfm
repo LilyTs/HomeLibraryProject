@@ -1,9 +1,10 @@
 object MainForm: TMainForm
-  Left = 232
-  Top = 145
-  Width = 820
-  Height = 528
+  Left = 303
+  Top = 197
+  BorderStyle = bsSingle
   Caption = 'My Library'
+  ClientHeight = 489
+  ClientWidth = 804
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 804
     Height = 450
-    ActivePage = tsPubHouses
+    ActivePage = tsGenres
     TabOrder = 0
     object tsMain: TTabSheet
       Caption = 'Main'
@@ -222,7 +223,6 @@ object MainForm: TMainForm
           item
             Expanded = False
             FieldName = 'GENRE_ID'
-            ReadOnly = True
             Title.Caption = 'Genre ID'
             Width = 100
             Visible = True
@@ -330,6 +330,7 @@ object MainForm: TMainForm
     end
   end
   object IBDatabase: TIBDatabase
+    Connected = True
     DatabaseName = 
       'C:\Users\Lilia\Desktop\Studies\3_year\6 semester\DataBases ('#1050#1072#1096#1080 +
       #1088#1089#1082#1072#1103' '#1048'.'#1048'.)\Delphi project for report\HomeLibraryProject\App\LIB' +
@@ -362,11 +363,7 @@ object MainForm: TMainForm
     BufferChunks = 1000
     CachedUpdates = False
     SQL.Strings = (
-      
-        'select B.BOOK_ID, Bk.Name, B.FRIEND_ID, F.FIO, B.BORROWDATE, B.R' +
-        'ETURNDATE, B.ISLOST, B.ISDAMAGED, B.COMMENT from BORROWING B JOI' +
-        'N FRIEND F ON B.Friend_id = F.Friend_id JOIN Book Bk ON B.Book_i' +
-        'd = Bk.Book_id')
+      'Select * from GENRE;')
     UpdateObject = ibUpdateSQlGenres
     Left = 88
     Top = 456
@@ -442,7 +439,7 @@ object MainForm: TMainForm
       'SET  Name = :Name, ParentGenre_id = :ParentGenre_id'
       'WHERE Genre_id = :Genre_id; ')
     InsertSQL.Strings = (
-      'INSERT INTO Genre VALUES(:Genre_idl, :Name, :ParentGenre_id);')
+      'INSERT INTO Genre VALUES(:Genre_id, :Name, :ParentGenre_id);')
     DeleteSQL.Strings = (
       'DELETE FROM Genre'
       'WHERE Genre_id = :Genre_id;')
@@ -453,7 +450,7 @@ object MainForm: TMainForm
     Left = 460
     Top = 456
     Bitmap = {
-      494C010104000500040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010104000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -721,7 +718,8 @@ object MainForm: TMainForm
       F81FE3C78007C003F81FC18380038001F81FC003800180018001C00380010000
       0000E007800103C00000F00F800103E30000F00F800103000000E00780010380
       8001C00380000000F81FC00380008000F81FC18380008000F81FE3C78000C000
-      F81FFFFF8000E004FC3FFFFF8000F81F}
+      F81FFFFF8000E004FC3FFFFF8000F81F00000000000000000000000000000000
+      000000000000}
   end
   object actListPubHouses: TActionList
     Images = ImageList
@@ -744,5 +742,20 @@ object MainForm: TMainForm
       Caption = 'actRerfeshPubHouses'
       ImageIndex = 3
     end
+  end
+  object ibqUpdatePubHouses: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransactionUpdatePubHouses
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 116
+    Top = 416
+  end
+  object IBTransactionUpdatePubHouses: TIBTransaction
+    Active = False
+    DefaultDatabase = IBDatabase
+    AutoStopAction = saNone
+    Left = 156
+    Top = 416
   end
 end

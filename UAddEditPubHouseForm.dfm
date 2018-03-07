@@ -1,9 +1,10 @@
 object AddEditPubHouseForm: TAddEditPubHouseForm
-  Left = 579
-  Top = 267
-  Width = 259
-  Height = 169
+  Left = 773
+  Top = 257
+  BorderStyle = bsSingle
   Caption = 'AddEditPubHouseForm'
+  ClientHeight = 171
+  ClientWidth = 242
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,28 +18,28 @@ object AddEditPubHouseForm: TAddEditPubHouseForm
   TextHeight = 13
   object lblPubHouseName: TLabel
     Left = 16
-    Top = 48
+    Top = 64
     Width = 31
-    Height = 17
+    Height = 13
     Caption = 'Name:'
   end
   object lblPubHouseID: TLabel
-    Left = 16
-    Top = 16
+    Left = 24
+    Top = 24
     Width = 14
     Height = 13
     Caption = 'ID:'
   end
   object edPubHouseName: TEdit
     Left = 56
-    Top = 48
+    Top = 64
     Width = 169
     Height = 21
     TabOrder = 0
   end
   object btnSavePubHouse: TButton
-    Left = 32
-    Top = 88
+    Left = 24
+    Top = 120
     Width = 80
     Height = 25
     Caption = 'Save'
@@ -47,38 +48,21 @@ object AddEditPubHouseForm: TAddEditPubHouseForm
     OnClick = btnSavePubHouseClick
   end
   object btnCancelPubHouse: TButton
-    Left = 128
-    Top = 88
+    Left = 136
+    Top = 120
     Width = 80
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 2
+    OnClick = btnCancelPubHouseClick
   end
   object edPubHouseID: TEdit
     Left = 56
-    Top = 16
+    Top = 24
     Width = 169
     Height = 21
     TabOrder = 3
     OnKeyPress = edPubHouseIDKeyPress
-  end
-  object ibqUpdatePubHouses: TIBQuery
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 92
-    Top = 416
-  end
-  object IBQuery1: TIBQuery
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 92
-    Top = 416
-  end
-  object IBTransactionUpdateHouses: TIBTransaction
-    Active = False
-    AutoStopAction = saNone
-    Left = 132
-    Top = 416
   end
 end

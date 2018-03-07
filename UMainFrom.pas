@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
   IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls, IBUpdateSQL,
-  ActnList, ImgList, ToolWin, UAddEditPubHouseForm;
+  ActnList, ImgList, ToolWin;
 
 type
   TMainForm = class(TForm)
@@ -50,12 +50,14 @@ type
     btnEditPubHouse: TToolButton;
     btnRefreshPubHouses: TToolButton;
     actRerfeshPubHouses: TAction;
+    ibqUpdatePubHouses: TIBQuery;
+    IBTransactionUpdatePubHouses: TIBTransaction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
     procedure btnRefreshPubHousesClick(Sender: TObject);
   private
-    procedure setName(newName: string);
+  
   public
     { Public declarations }
   end;
@@ -66,6 +68,8 @@ var
 
 implementation
 
+uses UAddEditPubHouseForm;
+
 {$R *.dfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -74,6 +78,7 @@ begin
   try
     IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
     try
+      IBDatabase.Close;
       IBDatabase.DatabaseName := IniFile.ReadString('Base', 'Path', '');
     finally
       IniFile.Free;
@@ -127,11 +132,6 @@ end;
 procedure TMainForm.actAddPubHouseExecute(Sender: TObject);
 begin
   AddEditPubHouseForm.Show;
-end;
-
-procedure TMainForm.setName(newName: string);
-begin
-  Name := newName;
 end;
 
 procedure TMainForm.btnRefreshPubHousesClick(Sender: TObject);

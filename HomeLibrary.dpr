@@ -12,5 +12,6 @@ begin
   Application.Title := 'My Library';
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TAddEditPubHouseForm, AddEditPubHouseForm);
+  AddEditPubHouseForm.Hide;
   Application.Run;
 end.

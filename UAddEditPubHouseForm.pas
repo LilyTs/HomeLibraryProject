@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, DB, IBCustomDataSet, IBQuery, IBDatabase;
+  Dialogs, StdCtrls, DB, IBCustomDataSet, IBDatabase, IBQuery, UMainFrom;
 
 type
   TAddEditPubHouseForm = class(TForm)
@@ -12,12 +12,11 @@ type
     lblPubHouseName: TLabel;
     btnSavePubHouse: TButton;
     btnCancelPubHouse: TButton;
-    ibqUpdatePubHouses: TIBQuery;
-    IBTransactionUpdateHouses: TIBTransaction;
     lblPubHouseID: TLabel;
     edPubHouseID: TEdit;
     procedure btnSavePubHouseClick(Sender: TObject);
     procedure edPubHouseIDKeyPress(Sender: TObject; var Key: Char);
+    procedure btnCancelPubHouseClick(Sender: TObject);
   private
   
   public
@@ -40,10 +39,10 @@ begin
   else
     begin
       try
-        with ibqUpdatePubHouses do
+        with MainForm.ibqUpdatePubHouses do
         begin
           SQL.Text := 'INSERT INTO PublishingHouse VALUES('
-            + edPubHouseID.Text + ', ' + edPubHouseName.Text + ');';
+            + edPubHouseID.Text + ' , ''' + edPubHouseName.Text + ''');';
           Transaction.StartTransaction;
           ExecSQL;
           Transaction.Commit;
@@ -52,12 +51,13 @@ begin
        except
          on E: Exception do
         begin
-          if ibqUpdatePubHouses.Transaction.Active then
-            ibqUpdatePubHouses.Transaction.Rollback;
+          if MainForm.ibqUpdatePubHouses.Transaction.Active then
+            MainForm.ibqUpdatePubHouses.Transaction.Rollback;
           Application.MessageBox(PChar(E.Message), 'Error. Couldn''t connect to database ', MB_ICONERROR);
         end;
        end;
     end;
+    Self.Hide;
 end;
 
 procedure TAddEditPubHouseForm.edPubHouseIDKeyPress(Sender: TObject;
@@ -70,6 +70,13 @@ begin
     // остальные символы Ч запрещены
     else Key := Chr(0); // символ не отображать
   end;
+end;
+
+procedure TAddEditPubHouseForm.btnCancelPubHouseClick(Sender: TObject);
+begin
+  edPubHouseID.Text := '';
+  edPubHouseName.Text := '';
+  Self.Hide;
 end;
 
 end.
