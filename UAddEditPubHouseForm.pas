@@ -59,7 +59,7 @@ begin
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;
-            MainForm.btnRefreshPubHousesClick(MainForm);
+            MainForm.actRerfeshPubHousesExecute(MainForm);
           end;
        except
          on E: Exception do
@@ -101,6 +101,8 @@ procedure TAddEditPubHouseForm.FormShow(Sender: TObject);
 begin
   lblPubHouseID.Visible := IsNew;
   edPubHouseID.Visible := IsNew;
+  edPubHouseID.Clear;
+  edPubHouseName.Clear;
 end;
 
 end.

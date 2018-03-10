@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 229
-  Top = 131
+  Left = 302
+  Top = 115
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 489
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 804
     Height = 450
-    ActivePage = tsPubHouses
+    ActivePage = tsFriends
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -152,7 +152,7 @@ object MainForm: TMainForm
       ImageIndex = 2
       object dbgridFriends: TDBGrid
         Left = 0
-        Top = 0
+        Top = 29
         Width = 790
         Height = 300
         Align = alTop
@@ -210,12 +210,44 @@ object MainForm: TMainForm
       end
       object dbnavFriends: TDBNavigator
         Left = 0
-        Top = 300
+        Top = 329
         Width = 790
         Height = 25
         DataSource = dsrcFriends
+        VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
         Align = alTop
         TabOrder = 1
+      end
+      object toolBarFriends: TToolBar
+        Left = 0
+        Top = 0
+        Width = 790
+        Height = 29
+        ButtonHeight = 36
+        ButtonWidth = 39
+        Caption = 'toolBarPubHouses'
+        Images = ImageList
+        TabOrder = 2
+        object btnAddFriend: TToolButton
+          Left = 0
+          Top = 2
+          Action = actAddFriend
+        end
+        object btnDeleteFriend: TToolButton
+          Left = 39
+          Top = 2
+          Action = actDeleteFriend
+        end
+        object btnEditFriend: TToolButton
+          Left = 78
+          Top = 2
+          Action = actEditFriend
+        end
+        object btnRefreshFriends: TToolButton
+          Left = 117
+          Top = 2
+          Action = actRefreshFriends
+        end
       end
     end
     object tsGenres: TTabSheet
@@ -349,7 +381,6 @@ object MainForm: TMainForm
           Top = 2
           Caption = 'refresh'
           ImageIndex = 3
-          OnClick = btnRefreshPubHousesClick
         end
       end
     end
@@ -767,6 +798,7 @@ object MainForm: TMainForm
       Caption = 'actRerfeshPubHouses'
       ImageIndex = 3
       ShortCut = 116
+      OnExecute = actRerfeshPubHousesExecute
     end
   end
   object ibqUpdatePubHouses: TIBQuery
@@ -774,14 +806,52 @@ object MainForm: TMainForm
     Transaction = IBTransactionUpdatePubHouses
     BufferChunks = 1000
     CachedUpdates = False
-    Left = 116
-    Top = 416
+    Left = 564
+    Top = 456
   end
   object IBTransactionUpdatePubHouses: TIBTransaction
     Active = False
     DefaultDatabase = IBDatabase
     AutoStopAction = saNone
-    Left = 156
+    Left = 596
+    Top = 456
+  end
+  object actListFriends: TActionList
+    Images = ImageList
+    Left = 12
+    Top = 416
+    object actAddFriend: TAction
+      Caption = 'actAddFriend'
+      ImageIndex = 0
+      OnExecute = actAddFriendExecute
+    end
+    object actDeleteFriend: TAction
+      Caption = 'actDeleteFriend'
+      ImageIndex = 1
+    end
+    object actEditFriend: TAction
+      Caption = 'actEditFriend'
+      ImageIndex = 2
+    end
+    object actRefreshFriends: TAction
+      Caption = 'actRefreshFriends'
+      ImageIndex = 3
+      OnExecute = actRefreshFriendsExecute
+    end
+  end
+  object ibqUpdateFriends: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransactionUpdateFriends
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 92
+    Top = 416
+  end
+  object IBTransactionUpdateFriends: TIBTransaction
+    Active = False
+    DefaultDatabase = IBDatabase
+    AutoStopAction = saNone
+    Left = 124
     Top = 416
   end
 end

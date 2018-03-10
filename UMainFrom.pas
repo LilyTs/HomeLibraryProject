@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
   IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls, IBUpdateSQL,
-  ActnList, ImgList, ToolWin;
+  ActnList, ImgList, ToolWin, SQLStrings;
 
 type
   TMainForm = class(TForm)
@@ -52,12 +52,26 @@ type
     btnDeletePubHouse: TToolButton;
     btnEditPubHouse: TToolButton;
     btnRefreshPubHouses: TToolButton;
+    toolBarFriends: TToolBar;
+    btnAddFriend: TToolButton;
+    btnDeleteFriend: TToolButton;
+    btnEditFriend: TToolButton;
+    btnRefreshFriends: TToolButton;
+    actListFriends: TActionList;
+    actAddFriend: TAction;
+    actDeleteFriend: TAction;
+    actEditFriend: TAction;
+    actRefreshFriends: TAction;
+    ibqUpdateFriends: TIBQuery;
+    IBTransactionUpdateFriends: TIBTransaction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
-    procedure btnRefreshPubHousesClick(Sender: TObject);
     procedure actDeletePubHouseExecute(Sender: TObject);
     procedure actEditPubHouseExecute(Sender: TObject);
+    procedure actAddFriendExecute(Sender: TObject);
+    procedure actRefreshFriendsExecute(Sender: TObject);
+    procedure actRerfeshPubHousesExecute(Sender: TObject);
   private
   
   public
@@ -70,7 +84,7 @@ var
 
 implementation
 
-uses UAddEditPubHouseForm;
+uses UAddEditPubHouseForm, UAddEditFriendForm;
 
 {$R *.dfm}
 
@@ -90,12 +104,7 @@ begin
       begin
         SQL.Text := 'SELECT * FROM Genre';
         Open;
-      end;
-    {with ibqTests do
-      begin
-        SQL.Text := 'SELECT * FROM Test';
-        Open;
-      end; }  
+      end; 
     with ibqBorrowings do
       begin
         SQL.Text := 'SELECT B.Book_id AS "Book ID", Bk.Name AS "Book", B.Friend_id AS "Friend ID", F.FIO AS "Friend", B.BorrowDate AS "Borrow date", B.ReturnDate AS "Return date",  B.Comment '  //B.IsLost AS "Is lost", B.IsDamaged AS "Is damaged",
@@ -118,9 +127,9 @@ begin
         Open;
       end;
   except
-    on E: Exception do
+    on E: EDatabaseError do
       begin
-        Application.MessageBox(PChar(E.Message), 'Error. Couldn''t connect to database ', MB_ICONERROR);
+        Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
         Halt;
       end;
   end;
@@ -139,14 +148,8 @@ end;
 
 procedure TMainForm.actAddPubHouseExecute(Sender: TObject);
 begin  
-  AddEditPubHouseForm.SetIsNew(False);
+  AddEditPubHouseForm.SetIsNew(True);
   AddEditPubHouseForm.Show;
-end;
-
-procedure TMainForm.btnRefreshPubHousesClick(Sender: TObject);
-begin
-  ibqPubHouses.Close;
-  ibqPubHouses.Open;
 end;
 
 procedure TMainForm.actDeletePubHouseExecute(Sender: TObject);
@@ -162,7 +165,7 @@ begin
         ExecSQL;
         Transaction.Commit;
         Transaction.Active := False;
-        btnRefreshPubHousesClick(self);
+        actRerfeshPubHousesExecute(self);
       end;
   except on E: Exception do
       begin
@@ -177,6 +180,36 @@ procedure TMainForm.actEditPubHouseExecute(Sender: TObject);
 begin
   AddEditPubHouseForm.SetIsNew(False);
   AddEditPubHouseForm.Show;
+end;
+
+procedure TMainForm.actAddFriendExecute(Sender: TObject);
+begin
+  AddEditFriendForm.SetIsNew(True);
+  AddEditFriendForm.Show;
+end;
+
+procedure TMainForm.actRefreshFriendsExecute(Sender: TObject);
+begin
+  try
+    ibqFriends.Close;
+    ibqFriends.Open;
+  except on E: EDatabaseError do
+    begin
+      Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+    end;
+  end;
+end;
+
+procedure TMainForm.actRerfeshPubHousesExecute(Sender: TObject);
+begin
+  try
+    ibqPubHouses.Close;
+    ibqPubHouses.Open;
+  except on E: EDatabaseError do
+    begin
+      Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+    end;
+  end;
 end;
 
 end.
