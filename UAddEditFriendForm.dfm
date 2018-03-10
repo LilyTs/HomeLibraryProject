@@ -64,6 +64,7 @@ object AddEditFriendForm: TAddEditFriendForm
     Height = 21
     MaxLength = 16
     TabOrder = 1
+    OnKeyPress = edFriendPhoneKeyPress
   end
   object edFriendSocialNumber: TEdit
     Left = 96

@@ -22,6 +22,7 @@ type
     btnCancelFriend: TButton;
     procedure btnSaveFriendClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure edFriendPhoneKeyPress(Sender: TObject; var Key: Char);
   private
     IsNew: Boolean;
   public
@@ -45,7 +46,14 @@ begin
         begin
           try
             Close;
-            SQL.Text := sqlInsertFriend;
+            SQL.Clear;
+            if IsNew then
+              SQL.Text := sqlInsertFriend
+            else
+              begin
+                SQL.Text := sqlEditFriend;
+                ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[0].Value;
+              end;
             ParamByName('FIO').AsString := edFriendFIO.Text;
             ParamByName('PhoneNumber').AsString := edFriendPhone.Text;
             ParamByName('SocialNumber').AsString := edFriendSocialNumber.Text;
@@ -81,7 +89,31 @@ begin
       edFriendSocialNumber.Clear;
       edFriendEmail.Clear;
       edFriendComment.Clear;
+    end
+  else
+    begin
+      edFriendFIO.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[1].Value;
+      edFriendPhone.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[2].Value;
+      edFriendSocialNumber.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[3].Value;
+      edFriendEmail.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[4].Value;
+      edFriendComment.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[5].Value;
     end;
+end;
+
+procedure TAddEditFriendForm.edFriendPhoneKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  case Key of
+    '0'..'9': ; // цифра
+    #8 : ;    // клавиша <Back Space>
+    #32 : ;   // пробел
+    #40 : ;   // '('
+    #41 : ;   // ')'
+    #43 : ;   // '+'
+    #13 : edFriendSocialNumber.SetFocus ; // клавиша <Enter>, переводим фокус на следующий Edit
+      // остальные символы Ч запрещены
+    else Key := Chr(0); // символ не отображать
+  end;
 end;
 
 end.

@@ -72,11 +72,16 @@ type
     procedure actAddFriendExecute(Sender: TObject);
     procedure actRefreshFriendsExecute(Sender: TObject);
     procedure actRerfeshPubHousesExecute(Sender: TObject);
+    procedure actDeleteFriendExecute(Sender: TObject);
+    procedure actEditFriendExecute(Sender: TObject);
   private
   
   public
     { Public declarations }
   end;
+
+  {напоминалка:
+  сделать недоступным кнопку удаления, когда грид пустой}
 
 var
   MainForm: TMainForm;
@@ -210,6 +215,34 @@ begin
       Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
     end;
   end;
+end;
+
+procedure TMainForm.actDeleteFriendExecute(Sender: TObject);
+begin
+  with ibqUpdateFriends do
+    begin
+      try
+        Close;
+        SQL.Text := sqlDeleteFriend;
+        ParamByName('Friend_id').AsInteger := dbgridFriends.DataSource.DataSet.Fields.Fields[0].Value;
+        ExecSQL;
+        Transaction.Commit;
+        Transaction.Active := False;
+        MainForm.actRefreshFriendsExecute(self);
+      except on E: EDatabaseError do
+        begin
+          if Transaction.Active then
+            Transaction.Rollback;
+          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+        end;
+      end;
+    end;
+end;
+
+procedure TMainForm.actEditFriendExecute(Sender: TObject);
+begin
+  AddEditFriendForm.SetIsNew(False);
+  AddEditFriendForm.Show;
 end;
 
 end.

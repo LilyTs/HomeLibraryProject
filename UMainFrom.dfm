@@ -823,19 +823,24 @@ object MainForm: TMainForm
     object actAddFriend: TAction
       Caption = 'actAddFriend'
       ImageIndex = 0
+      ShortCut = 16462
       OnExecute = actAddFriendExecute
     end
     object actDeleteFriend: TAction
       Caption = 'actDeleteFriend'
       ImageIndex = 1
+      ShortCut = 46
+      OnExecute = actDeleteFriendExecute
     end
     object actEditFriend: TAction
       Caption = 'actEditFriend'
       ImageIndex = 2
+      OnExecute = actEditFriendExecute
     end
     object actRefreshFriends: TAction
       Caption = 'actRefreshFriends'
       ImageIndex = 3
+      ShortCut = 116
       OnExecute = actRefreshFriendsExecute
     end
   end

@@ -16,5 +16,6 @@ begin
   Application.CreateForm(TAddEditPubHouseForm, AddEditPubHouseForm);
   Application.CreateForm(TAddEditFriendForm, AddEditFriendForm);
   AddEditPubHouseForm.Hide;
+  AddEditFriendForm.Hide;
   Application.Run;
 end.
