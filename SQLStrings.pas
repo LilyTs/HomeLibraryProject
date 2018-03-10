@@ -19,6 +19,28 @@ const
                 + 'SocialNumber = :SocialNumber, Email = :Email, Comment = :Comment '
                 + 'WHERE Friend_id = :Friend_id';
 
+  sqlGetBooks = 'SELECT * FROM Book';
+  sqlInsertBook = 'INSERT INTO Book '
+                    + 'VALUES(:Book_id, :Name, :Author, :PicAuthor, :Translator, :PubYear, :Comment, :PubHouse_id)';
+  sqlDeleteBook = 'DELETE FROM Book '
+                    + 'WHERE Book_id = :Book_id';
+  sqlEditBook = 'UPDATE Book SET Name = :Name, Author = :Author, Translator = :Translator, PubYear = :PubYear, Comment = :Comment, PubHouse_id = :PubHouse_id'
+                  + 'WHERE Book_id = :Book_id';
+
+  sqlGetGenres = 'SELECT * FROM Genre';
+  sqlInsertGenre = 'INSERT INTO Genre VALUES(:Genre_id, :FIO, :ParentGenre_id)';
+  sqlDeleteGenre = 'DELETE FROM Genre WHERE Genre_id = :Genre_id';
+  sqlEditGenre = 'UPDATE Genre SET Name = :Name, ParentGenre_id = :ParentGenre_id'
+                + 'WHERE Genre_id = :Genre_id';
+
+  sqlGetBorrowings = 'SELECT * FROM Borrowing';
+  sqlInsertBorrowings = 'INSERT INTO Borrowings VALUES(:Book_id, :Friend_id, :Borrowdate, '
+                  + ':IsLost, :IsDamaged, :ReturnDate, :Comment)';
+  sqlDeleteBorrowing = 'DELETE FROM Borrowing WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';
+  sqlEditBorrowing = 'UPDATE Borrowing SET IsLost = :IsLost, IsDamaged = :IsDamaged, '
+                + 'ReturnDate = :ReturnDate, Comment = :Comment '
+                + 'WHERE WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';
+
 implementation
 
 end.
