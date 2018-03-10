@@ -17,10 +17,11 @@ type
     procedure btnSavePubHouseClick(Sender: TObject);
     procedure edPubHouseIDKeyPress(Sender: TObject; var Key: Char);
     procedure btnCancelPubHouseClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
-  
+    IsNew: Boolean;
   public
-  
+    procedure SetIsNew(New: Boolean);
   end;
 
 var
@@ -34,28 +35,39 @@ implementation
 
 procedure TAddEditPubHouseForm.btnSavePubHouseClick(Sender: TObject);
 begin
-  if (edPubHouseName.Text = '') or (edPubHouseID.Text = '') then
+  if (edPubHouseName.Text = '') or (edPubHouseID.Visible and (edPubHouseID.Text = '')) then
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
       try
         with MainForm.ibqUpdatePubHouses do
-        begin
-          SQL.Text := 'INSERT INTO PublishingHouse VALUES('
-            + edPubHouseID.Text + ' , ''' + edPubHouseName.Text + ''');';
-          Transaction.StartTransaction;
-          ExecSQL;
-          Transaction.Commit;
-          Transaction.Active := False;
-          MainForm.btnRefreshPubHousesClick(MainForm);
-        end;
+          begin
+            if not IsNew then
+              begin
+                lblPubHouseID.Visible := False;
+                edPubHouseID.Visible := False;
+                SQL.Text := 'UPDATE PublishingHouse SET Name = '''
+                  + edPubHouseName.Text + ''' WHERE PubHouse_id = '
+                  + IntToStr(MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[0].Value);
+              end
+            else
+              begin
+                SQL.Text := 'INSERT INTO PublishingHouse VALUES('
+                  + edPubHouseID.Text + ' , ''' + edPubHouseName.Text + ''');';
+              end;
+            Transaction.StartTransaction;
+            ExecSQL;
+            Transaction.Commit;
+            Transaction.Active := False;
+            MainForm.btnRefreshPubHousesClick(MainForm);
+          end;
        except
          on E: Exception do
-        begin
-          if MainForm.ibqUpdatePubHouses.Transaction.Active then
-            MainForm.ibqUpdatePubHouses.Transaction.Rollback;
-          Application.MessageBox(PChar(E.Message), 'Error. Couldn''t connect to database ', MB_ICONERROR);
-        end;
+          begin
+            if MainForm.ibqUpdatePubHouses.Transaction.Active then
+              MainForm.ibqUpdatePubHouses.Transaction.Rollback;
+            Application.MessageBox(PChar(E.Message), 'Error. Couldn''t connect to database ', MB_ICONERROR);
+          end;
        end;
     end;
     Self.Hide;
@@ -78,6 +90,17 @@ begin
   edPubHouseID.Text := '';
   edPubHouseName.Text := '';
   Self.Hide;
+end;
+
+procedure TAddEditPubHouseForm.SetIsNew(New: Boolean);
+begin
+  IsNew := New;
+end;
+
+procedure TAddEditPubHouseForm.FormShow(Sender: TObject);
+begin
+  lblPubHouseID.Visible := IsNew;
+  edPubHouseID.Visible := IsNew;
 end;
 
 end.

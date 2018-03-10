@@ -21,17 +21,24 @@ object MainForm: TMainForm
     Top = 0
     Width = 804
     Height = 450
-    ActivePage = tsMain
+    ActivePage = tsPubHouses
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
     MultiLine = True
+    ParentFont = False
     ParentShowHint = False
     ShowHint = False
     TabOrder = 0
     object tsMain: TTabSheet
+      BorderWidth = 3
       Caption = 'Main'
       object dbgridBorrowings: TDBGrid
         Left = 0
         Top = 0
-        Width = 796
+        Width = 790
         Height = 300
         Align = alTop
         DataSource = dsrcBorrowings
@@ -46,7 +53,7 @@ object MainForm: TMainForm
       object dbnavBorrowings: TDBNavigator
         Left = 0
         Top = 300
-        Width = 796
+        Width = 790
         Height = 25
         DataSource = dsrcBorrowings
         Align = alTop
@@ -54,12 +61,13 @@ object MainForm: TMainForm
       end
     end
     object tsBooks: TTabSheet
+      BorderWidth = 3
       Caption = 'Books'
       ImageIndex = 1
       object dbgridBooks: TDBGrid
         Left = 0
         Top = 0
-        Width = 796
+        Width = 790
         Height = 300
         Align = alTop
         DataSource = dsrcBooks
@@ -131,7 +139,7 @@ object MainForm: TMainForm
       object dbnavBooks: TDBNavigator
         Left = 0
         Top = 300
-        Width = 796
+        Width = 790
         Height = 25
         DataSource = dsrcBooks
         Align = alTop
@@ -139,12 +147,13 @@ object MainForm: TMainForm
       end
     end
     object tsFriends: TTabSheet
+      BorderWidth = 3
       Caption = 'Friends'
       ImageIndex = 2
       object dbgridFriends: TDBGrid
         Left = 0
         Top = 0
-        Width = 796
+        Width = 790
         Height = 300
         Align = alTop
         DataSource = dsrcFriends
@@ -202,7 +211,7 @@ object MainForm: TMainForm
       object dbnavFriends: TDBNavigator
         Left = 0
         Top = 300
-        Width = 796
+        Width = 790
         Height = 25
         DataSource = dsrcFriends
         Align = alTop
@@ -210,12 +219,13 @@ object MainForm: TMainForm
       end
     end
     object tsGenres: TTabSheet
+      BorderWidth = 3
       Caption = 'Genres'
       ImageIndex = 3
       object dbgridGenres: TDBGrid
         Left = 0
         Top = 0
-        Width = 796
+        Width = 790
         Height = 300
         Align = alTop
         DataSource = dsrcGenres
@@ -252,7 +262,7 @@ object MainForm: TMainForm
       object dbnavGenres: TDBNavigator
         Left = 0
         Top = 300
-        Width = 796
+        Width = 790
         Height = 25
         DataSource = dsrcGenres
         Align = alTop
@@ -260,12 +270,13 @@ object MainForm: TMainForm
       end
     end
     object tsPubHouses: TTabSheet
+      BorderWidth = 3
       Caption = 'Publishing Houses'
       ImageIndex = 4
       object dbgridPubHouses: TDBGrid
         Left = 0
         Top = 29
-        Width = 796
+        Width = 790
         Height = 300
         Align = alTop
         DataSource = dsrcPubHouses
@@ -308,7 +319,7 @@ object MainForm: TMainForm
       object toolBarPubHouses: TToolBar
         Left = 0
         Top = 0
-        Width = 796
+        Width = 790
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -750,6 +761,7 @@ object MainForm: TMainForm
     object actEditPubHouse: TAction
       Caption = 'actEditPubHouse'
       ImageIndex = 2
+      OnExecute = actEditPubHouseExecute
     end
     object actRerfeshPubHouses: TAction
       Caption = 'actRerfeshPubHouses'

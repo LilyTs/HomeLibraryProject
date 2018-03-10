@@ -14,6 +14,7 @@ object AddEditPubHouseForm: TAddEditPubHouseForm
   OldCreateOrder = False
   Position = poDefault
   Visible = True
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lblPubHouseName: TLabel

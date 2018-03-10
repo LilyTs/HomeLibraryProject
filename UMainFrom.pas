@@ -57,6 +57,7 @@ type
     procedure actAddPubHouseExecute(Sender: TObject);
     procedure btnRefreshPubHousesClick(Sender: TObject);
     procedure actDeletePubHouseExecute(Sender: TObject);
+    procedure actEditPubHouseExecute(Sender: TObject);
   private
   
   public
@@ -137,7 +138,8 @@ begin
 end;
 
 procedure TMainForm.actAddPubHouseExecute(Sender: TObject);
-begin
+begin  
+  AddEditPubHouseForm.SetIsNew(False);
   AddEditPubHouseForm.Show;
 end;
 
@@ -169,6 +171,12 @@ begin
         Application.MessageBox(PChar(E.Message), 'Error. Couldn''t connect to database ', MB_ICONERROR);
       end;
   end;
+end;
+
+procedure TMainForm.actEditPubHouseExecute(Sender: TObject);
+begin
+  AddEditPubHouseForm.SetIsNew(False);
+  AddEditPubHouseForm.Show;
 end;
 
 end.
