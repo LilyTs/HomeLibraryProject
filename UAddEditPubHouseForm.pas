@@ -47,6 +47,7 @@ begin
           ExecSQL;
           Transaction.Commit;
           Transaction.Active := False;
+          MainForm.btnRefreshPubHousesClick(MainForm);
         end;
        except
          on E: Exception do

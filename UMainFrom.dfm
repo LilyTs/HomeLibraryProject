@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 303
-  Top = 197
+  Left = 229
+  Top = 131
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 489
@@ -21,7 +21,10 @@ object MainForm: TMainForm
     Top = 0
     Width = 804
     Height = 450
-    ActivePage = tsGenres
+    ActivePage = tsMain
+    MultiLine = True
+    ParentShowHint = False
+    ShowHint = False
     TabOrder = 0
     object tsMain: TTabSheet
       Caption = 'Main'
@@ -32,6 +35,7 @@ object MainForm: TMainForm
         Height = 300
         Align = alTop
         DataSource = dsrcBorrowings
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -59,6 +63,7 @@ object MainForm: TMainForm
         Height = 300
         Align = alTop
         DataSource = dsrcBooks
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -143,6 +148,7 @@ object MainForm: TMainForm
         Height = 300
         Align = alTop
         DataSource = dsrcFriends
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -213,6 +219,7 @@ object MainForm: TMainForm
         Height = 300
         Align = alTop
         DataSource = dsrcGenres
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -257,11 +264,12 @@ object MainForm: TMainForm
       ImageIndex = 4
       object dbgridPubHouses: TDBGrid
         Left = 0
-        Top = 0
+        Top = 29
         Width = 796
         Height = 300
         Align = alTop
         DataSource = dsrcPubHouses
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
         ReadOnly = True
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
@@ -288,19 +296,22 @@ object MainForm: TMainForm
       end
       object dbnavPubHouses: TDBNavigator
         Left = 0
-        Top = 300
+        Top = 325
         Width = 796
         Height = 25
         DataSource = dsrcPubHouses
-        Align = alTop
+        VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
       end
       object toolBarPubHouses: TToolBar
         Left = 0
-        Top = 325
+        Top = 0
         Width = 796
         Height = 29
-        ButtonHeight = 30
+        ButtonHeight = 36
+        ButtonWidth = 39
         Caption = 'toolBarPubHouses'
         Images = ImageList
         TabOrder = 2
@@ -308,21 +319,24 @@ object MainForm: TMainForm
           Left = 0
           Top = 2
           Action = actAddPubHouse
+          Caption = 'Add'
         end
         object btnDeletePubHouse: TToolButton
-          Left = 23
+          Left = 39
           Top = 2
           Action = actDeletePubHouse
+          Caption = 'delete'
         end
         object btnEditPubHouse: TToolButton
-          Left = 46
+          Left = 78
           Top = 2
           Action = actEditPubHouse
+          Caption = 'edit'
         end
         object btnRefreshPubHouses: TToolButton
-          Left = 69
+          Left = 117
           Top = 2
-          Caption = 'btnRefreshPubHouses'
+          Caption = 'refresh'
           ImageIndex = 3
           OnClick = btnRefreshPubHousesClick
         end
@@ -330,11 +344,7 @@ object MainForm: TMainForm
     end
   end
   object IBDatabase: TIBDatabase
-    Connected = True
-    DatabaseName = 
-      'C:\Users\Lilia\Desktop\Studies\3_year\6 semester\DataBases ('#1050#1072#1096#1080 +
-      #1088#1089#1082#1072#1103' '#1048'.'#1048'.)\Delphi project for report\HomeLibraryProject\App\LIB' +
-      'RARYDB.FDB'
+    DatabaseName = 'C:\Users\Lilia\Desktop\Studies\3_year\6 semester\LIBRARYDB.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey')
@@ -728,11 +738,14 @@ object MainForm: TMainForm
     object actAddPubHouse: TAction
       Caption = 'actAddPubHouse'
       ImageIndex = 0
+      ShortCut = 16462
       OnExecute = actAddPubHouseExecute
     end
     object actDeletePubHouse: TAction
       Caption = 'actDeletePubHouse'
       ImageIndex = 1
+      ShortCut = 46
+      OnExecute = actDeletePubHouseExecute
     end
     object actEditPubHouse: TAction
       Caption = 'actEditPubHouse'
@@ -741,6 +754,7 @@ object MainForm: TMainForm
     object actRerfeshPubHouses: TAction
       Caption = 'actRerfeshPubHouses'
       ImageIndex = 3
+      ShortCut = 116
     end
   end
   object ibqUpdatePubHouses: TIBQuery
