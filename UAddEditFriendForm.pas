@@ -23,6 +23,7 @@ type
     procedure btnSaveFriendClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edFriendPhoneKeyPress(Sender: TObject; var Key: Char);
+    procedure btnCancelFriendClick(Sender: TObject);
   private
     IsNew: Boolean;
   public
@@ -62,7 +63,7 @@ begin
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;
-            MainForm.actRefreshFriendsExecute(self);
+            MainForm.actRefreshFriendsExecute(MainForm);
           except on E: EDatabaseError do
             begin
               if Transaction.Active then
@@ -114,6 +115,11 @@ begin
       // остальные символы Ч запрещены
     else Key := Chr(0); // символ не отображать
   end;
+end;
+
+procedure TAddEditFriendForm.btnCancelFriendClick(Sender: TObject);
+begin
+  Self.Hide;
 end;
 
 end.

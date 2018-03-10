@@ -5,7 +5,7 @@ interface
 const
   sqlGetPubHouses = 'SELECT * FROM PublishingHouse';
   sqlInsertPubHouse = 'INSERT INTO PublishingHouse '
-                    + 'VALUES(:PubHouse_id, :PubHouse_name)';
+                    + 'VALUES(:PubHouse_id, :Name)';
   sqlDeletePubHouse = 'DELETE FROM PublishingHouse '
                     + 'WHERE PubHouse_id = :PubHouse_id';
   sqlEditPubHouse = 'UPDATE PublishingHouse SET Name = :Name '

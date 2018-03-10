@@ -108,5 +108,6 @@ object AddEditFriendForm: TAddEditFriendForm
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 6
+    OnClick = btnCancelFriendClick
   end
 end

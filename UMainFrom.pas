@@ -28,7 +28,7 @@ type
     actAddPubHouse: TAction;
     actDeletePubHouse: TAction;
     actEditPubHouse: TAction;
-    actRerfeshPubHouses: TAction;
+    actRefreshPubHouses: TAction;
     ibqUpdatePubHouses: TIBQuery;
     IBTransactionUpdatePubHouses: TIBTransaction;
     PageControl: TPageControl;
@@ -71,7 +71,7 @@ type
     procedure actEditPubHouseExecute(Sender: TObject);
     procedure actAddFriendExecute(Sender: TObject);
     procedure actRefreshFriendsExecute(Sender: TObject);
-    procedure actRerfeshPubHousesExecute(Sender: TObject);
+    procedure actRefreshPubHousesExecute(Sender: TObject);
     procedure actDeleteFriendExecute(Sender: TObject);
     procedure actEditFriendExecute(Sender: TObject);
   private
@@ -147,6 +147,8 @@ begin
   ibqBooks.Close;
   ibqFriends.Close;
   ibqPubHouses.Close;
+  ibqUpdateFriends.Close;
+  ibqUpdatePubHouses.Close;
   IBDatabase.Connected := False;
   IBDatabase.Close;
 end;
@@ -159,26 +161,24 @@ end;
 
 procedure TMainForm.actDeletePubHouseExecute(Sender: TObject);
 begin
-  try
-    with ibqUpdatePubHouses do
-      begin
+  with ibqUpdatePubHouses do
+    begin
+      try
         Close;
-        SQL.Clear;
-        SQL.Text := 'DELETE FROM PublishingHouse WHERE PubHouse_id = '
-          + IntToStr(dbgridPubHouses.DataSource.DataSet.Fields.Fields[0].Value);
-        Transaction.StartTransaction;
+        SQL.Text := sqlDeletePubHouse;
+        ParamByName('PubHouse_id').AsInteger := dbgridPubHouses.DataSource.DataSet.Fields.Fields[0].Value;
         ExecSQL;
         Transaction.Commit;
         Transaction.Active := False;
-        actRerfeshPubHousesExecute(self);
+        MainForm.actRefreshPubHousesExecute(self);
+      except on E: EDatabaseError do
+        begin
+          if Transaction.Active then
+            Transaction.Rollback;
+          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+        end;
       end;
-  except on E: Exception do
-      begin
-        if ibqUpdatePubHouses.Transaction.Active then
-          ibqUpdatePubHouses.Transaction.Rollback;
-        Application.MessageBox(PChar(E.Message), 'Error. Couldn''t connect to database ', MB_ICONERROR);
-      end;
-  end;
+    end;
 end;
 
 procedure TMainForm.actEditPubHouseExecute(Sender: TObject);
@@ -205,7 +205,7 @@ begin
   end;
 end;
 
-procedure TMainForm.actRerfeshPubHousesExecute(Sender: TObject);
+procedure TMainForm.actRefreshPubHousesExecute(Sender: TObject);
 begin
   try
     ibqPubHouses.Close;

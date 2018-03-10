@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, DB, IBCustomDataSet, IBDatabase, IBQuery, UMainFrom;
+  Dialogs, StdCtrls, DB, IBCustomDataSet, IBDatabase, IBQuery, UMainFrom, SQLStrings;
 
 type
   TAddEditPubHouseForm = class(TForm)
@@ -39,36 +39,34 @@ begin
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
-      try
-        with MainForm.ibqUpdatePubHouses do
-          begin
-            if not IsNew then
+      with MainForm.ibqUpdatePubHouses do
+        begin
+          try
+            Close;
+            SQL.Clear;
+            if IsNew then
               begin
-                lblPubHouseID.Visible := False;
-                edPubHouseID.Visible := False;
-                SQL.Text := 'UPDATE PublishingHouse SET Name = '''
-                  + edPubHouseName.Text + ''' WHERE PubHouse_id = '
-                  + IntToStr(MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[0].Value);
+                SQL.Text := sqlInsertPubHouse;
+                ParamByName('PubHouse_id').AsInteger := StrToInt(edPubHouseID.Text);
               end
             else
               begin
-                SQL.Text := 'INSERT INTO PublishingHouse VALUES('
-                  + edPubHouseID.Text + ' , ''' + edPubHouseName.Text + ''');';
+                SQL.Text := sqlEditPubHouse;
+                ParamByName('PubHouse_id').AsInteger := MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[0].Value;
               end;
-            Transaction.StartTransaction;
+            ParamByName('Name').AsString := edPubHouseName.Text;
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;
-            MainForm.actRerfeshPubHousesExecute(MainForm);
+            MainForm.actRefreshPubHousesExecute(MainForm);
+          except on E: EDatabaseError do
+            begin
+              if Transaction.Active then
+                Transaction.Rollback;
+              Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+            end;
           end;
-       except
-         on E: Exception do
-          begin
-            if MainForm.ibqUpdatePubHouses.Transaction.Active then
-              MainForm.ibqUpdatePubHouses.Transaction.Rollback;
-            Application.MessageBox(PChar(E.Message), 'Error. Couldn''t connect to database ', MB_ICONERROR);
-          end;
-       end;
+        end;
     end;
     Self.Hide;
 end;

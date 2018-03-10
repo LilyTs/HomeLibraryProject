@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 804
     Height = 450
-    ActivePage = tsFriends
+    ActivePage = tsPubHouses
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -794,11 +794,11 @@ object MainForm: TMainForm
       ImageIndex = 2
       OnExecute = actEditPubHouseExecute
     end
-    object actRerfeshPubHouses: TAction
-      Caption = 'actRerfeshPubHouses'
+    object actRefreshPubHouses: TAction
+      Caption = 'actRefreshPubHouses'
       ImageIndex = 3
       ShortCut = 116
-      OnExecute = actRerfeshPubHousesExecute
+      OnExecute = actRefreshPubHousesExecute
     end
   end
   object ibqUpdatePubHouses: TIBQuery
