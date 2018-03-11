@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 302
-  Top = 115
+  Left = 244
+  Top = 142
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 489
@@ -66,7 +66,7 @@ object MainForm: TMainForm
       ImageIndex = 1
       object dbgridBooks: TDBGrid
         Left = 0
-        Top = 0
+        Top = 29
         Width = 790
         Height = 300
         Align = alTop
@@ -138,12 +138,44 @@ object MainForm: TMainForm
       end
       object dbnavBooks: TDBNavigator
         Left = 0
-        Top = 300
+        Top = 329
         Width = 790
         Height = 25
         DataSource = dsrcBooks
+        VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
         Align = alTop
         TabOrder = 1
+      end
+      object toolBarBooks: TToolBar
+        Left = 0
+        Top = 0
+        Width = 790
+        Height = 29
+        ButtonHeight = 36
+        ButtonWidth = 39
+        Caption = 'toolBarPubHouses'
+        Images = ImageList
+        TabOrder = 2
+        object btnAddBook: TToolButton
+          Left = 0
+          Top = 2
+          Action = actAddBook
+        end
+        object btnDeleteBook: TToolButton
+          Left = 39
+          Top = 2
+          Action = actDeleteBook
+        end
+        object btnEditBook: TToolButton
+          Left = 78
+          Top = 2
+          Action = actEditBook
+        end
+        object btnRefreshBook: TToolButton
+          Left = 117
+          Top = 2
+          Action = actRefreshBooks
+        end
       end
     end
     object tsFriends: TTabSheet
@@ -858,5 +890,42 @@ object MainForm: TMainForm
     AutoStopAction = saNone
     Left = 124
     Top = 416
+  end
+  object ibqUpdateBooks: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransactionUpdateBooks
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 164
+    Top = 416
+  end
+  object IBTransactionUpdateBooks: TIBTransaction
+    Active = False
+    DefaultDatabase = IBDatabase
+    AutoStopAction = saNone
+    Left = 196
+    Top = 416
+  end
+  object actListBooks: TActionList
+    Images = ImageList
+    Left = 228
+    Top = 416
+    object actAddBook: TAction
+      Caption = 'actAddBook'
+      ImageIndex = 0
+      OnExecute = actAddBookExecute
+    end
+    object actDeleteBook: TAction
+      Caption = 'actDeleteBook'
+      ImageIndex = 1
+    end
+    object actEditBook: TAction
+      Caption = 'actEditBook'
+      ImageIndex = 2
+    end
+    object actRefreshBooks: TAction
+      Caption = 'actRefreshBooks'
+      ImageIndex = 3
+    end
   end
 end

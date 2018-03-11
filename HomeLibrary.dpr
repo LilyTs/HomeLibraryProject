@@ -5,7 +5,8 @@ uses
   UMainFrom in 'UMainFrom.pas' {MainForm},
   UAddEditPubHouseForm in 'UAddEditPubHouseForm.pas' {AddEditPubHouseForm},
   SQLStrings in 'SQLStrings.pas',
-  UAddEditFriendForm in 'UAddEditFriendForm.pas' {AddEditFriendForm};
+  UAddEditFriendForm in 'UAddEditFriendForm.pas' {AddEditFriendForm},
+  UAddEditBookForm in 'UAddEditBookForm.pas' {AddEditBookForm};
 
 {$R *.res}
 
@@ -15,7 +16,9 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TAddEditPubHouseForm, AddEditPubHouseForm);
   Application.CreateForm(TAddEditFriendForm, AddEditFriendForm);
+  Application.CreateForm(TAddEditBookForm, AddEditBookForm);
   AddEditPubHouseForm.Hide;
   AddEditFriendForm.Hide;
+  AddEditBookForm.Hide;
   Application.Run;
 end.

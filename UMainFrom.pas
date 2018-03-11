@@ -64,6 +64,18 @@ type
     actRefreshFriends: TAction;
     ibqUpdateFriends: TIBQuery;
     IBTransactionUpdateFriends: TIBTransaction;
+    toolBarBooks: TToolBar;
+    btnAddBook: TToolButton;
+    btnDeleteBook: TToolButton;
+    btnEditBook: TToolButton;
+    btnRefreshBook: TToolButton;
+    ibqUpdateBooks: TIBQuery;
+    IBTransactionUpdateBooks: TIBTransaction;
+    actListBooks: TActionList;
+    actAddBook: TAction;
+    actDeleteBook: TAction;
+    actEditBook: TAction;
+    actRefreshBooks: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -74,6 +86,7 @@ type
     procedure actRefreshPubHousesExecute(Sender: TObject);
     procedure actDeleteFriendExecute(Sender: TObject);
     procedure actEditFriendExecute(Sender: TObject);
+    procedure actAddBookExecute(Sender: TObject);
   private
   
   public
@@ -89,7 +102,7 @@ var
 
 implementation
 
-uses UAddEditPubHouseForm, UAddEditFriendForm;
+uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm;
 
 {$R *.dfm}
 
@@ -107,28 +120,27 @@ begin
     IBTransaction.Active := True;
     with ibqGenres do
       begin
-        SQL.Text := 'SELECT * FROM Genre';
+        SQL.Text := sqlGetGenres;
         Open;
       end; 
-    with ibqBorrowings do
+    {with ibqBorrowings do
       begin
-        SQL.Text := 'SELECT B.Book_id AS "Book ID", Bk.Name AS "Book", B.Friend_id AS "Friend ID", F.FIO AS "Friend", B.BorrowDate AS "Borrow date", B.ReturnDate AS "Return date",  B.Comment '  //B.IsLost AS "Is lost", B.IsDamaged AS "Is damaged",
-                  + 'FROM Borrowing B JOIN Friend F ON B.Friend_id = F.Friend_id JOIN Book Bk ON B.Book_id = Bk.Book_id;';
+        SQL.Text := sqlGetBorrowings;
         Open;
-      end;
+      end;}
     with ibqBooks do
       begin
-        SQL.Text := 'SELECT * FROM Book';
+        SQL.Text := sqlGetBooks;
         Open;
       end;
     with ibqFriends do
       begin
-        SQL.Text := 'SELECT * FROM Friend';
+        SQL.Text := sqlGetFriends;
         Open;
       end;
     with ibqPubHouses do
       begin
-        SQL.Text := 'SELECT * FROM PublishingHouse';
+        SQL.Text := sqlGetPubHouses;
         Open;
       end;
   except
@@ -243,6 +255,12 @@ procedure TMainForm.actEditFriendExecute(Sender: TObject);
 begin
   AddEditFriendForm.SetIsNew(False);
   AddEditFriendForm.Show;
+end;
+
+procedure TMainForm.actAddBookExecute(Sender: TObject);
+begin
+  AddEditBookForm.setIsNew(True);
+  AddEditBookForm.Show;
 end;
 
 end.
