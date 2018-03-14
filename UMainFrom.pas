@@ -76,6 +76,18 @@ type
     actDeleteBook: TAction;
     actEditBook: TAction;
     actRefreshBooks: TAction;
+    toolBarGenres: TToolBar;
+    btnAddGenre: TToolButton;
+    btnDeleteGenre: TToolButton;
+    btnEditGenre: TToolButton;
+    btnRefreshGenres: TToolButton;
+    actListGenres: TActionList;
+    ibqUpdateGenres: TIBQuery;
+    IBTransactionUpdateGenres: TIBTransaction;
+    actAddGenre: TAction;
+    actDeleteGenre: TAction;
+    actEditGenre: TAction;
+    actRefreshGenres: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -87,14 +99,15 @@ type
     procedure actDeleteFriendExecute(Sender: TObject);
     procedure actEditFriendExecute(Sender: TObject);
     procedure actAddBookExecute(Sender: TObject);
+    procedure actAddGenreExecute(Sender: TObject);
+    procedure actDeleteGenreExecute(Sender: TObject);
+    procedure actRefreshGenresExecute(Sender: TObject);
+    procedure actEditGenreExecute(Sender: TObject);
   private
   
   public
     { Public declarations }
   end;
-
-  {напоминалка:
-  сделать недоступным кнопку удаления, когда грид пустой}
 
 var
   MainForm: TMainForm;
@@ -102,7 +115,7 @@ var
 
 implementation
 
-uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm;
+uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm, UAddEditGenreForm;
 
 {$R *.dfm}
 
@@ -261,6 +274,46 @@ procedure TMainForm.actAddBookExecute(Sender: TObject);
 begin
   AddEditBookForm.setIsNew(True);
   AddEditBookForm.Show;
+end;
+
+procedure TMainForm.actAddGenreExecute(Sender: TObject);
+begin
+  AddEditGenreForm.SetIsNew(true);
+  AddEditGenreForm.Show;
+end;
+
+procedure TMainForm.actDeleteGenreExecute(Sender: TObject);
+begin
+  with ibqUpdateGenres do
+    begin
+      try
+        Close;
+        SQL.Text := sqlDeleteGenre;
+        ParamByName('Genre_id').AsInteger := dbgridGenres.DataSource.DataSet.Fields.Fields[0].Value;
+        ExecSQL;
+        Transaction.Commit;
+        Transaction.Active := False;
+        MainForm.actRefreshGenresExecute(self);
+      except on E: EDatabaseError do
+        begin
+          if Transaction.Active then
+            Transaction.Rollback;
+          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+        end;
+      end;
+    end;
+end;
+
+procedure TMainForm.actRefreshGenresExecute(Sender: TObject);
+begin
+  ibqGenres.Close;
+  ibqGenres.Open;
+end;
+
+procedure TMainForm.actEditGenreExecute(Sender: TObject);
+begin
+  AddEditGenreForm.SetIsNew(False);
+  AddEditGenreForm.Show;
 end;
 
 end.

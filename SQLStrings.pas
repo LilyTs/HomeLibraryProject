@@ -28,7 +28,8 @@ const
                   + 'WHERE Book_id = :Book_id';
 
   sqlGetGenres = 'SELECT * FROM Genre';
-  sqlInsertGenre = 'INSERT INTO Genre VALUES(:Genre_id, :FIO, :ParentGenre_id)';
+  sqlInsertGenre = 'INSERT INTO Genre VALUES(:Genre_id, :Name, :ParentGenre_id)';
+  sqlInsertGenreWithoutParent = 'INSERT INTO Genre VALUES(:Genre_id, :Name, null)';
   sqlDeleteGenre = 'DELETE FROM Genre WHERE Genre_id = :Genre_id';
   sqlEditGenre = 'UPDATE Genre SET Name = :Name, ParentGenre_id = :ParentGenre_id'
                 + 'WHERE Genre_id = :Genre_id';

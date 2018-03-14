@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 244
-  Top = 142
+  Left = 274
+  Top = 140
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 489
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 804
     Height = 450
-    ActivePage = tsPubHouses
+    ActivePage = tsGenres
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -288,7 +288,7 @@ object MainForm: TMainForm
       ImageIndex = 3
       object dbgridGenres: TDBGrid
         Left = 0
-        Top = 0
+        Top = 29
         Width = 790
         Height = 300
         Align = alTop
@@ -325,12 +325,44 @@ object MainForm: TMainForm
       end
       object dbnavGenres: TDBNavigator
         Left = 0
-        Top = 300
+        Top = 329
         Width = 790
         Height = 25
         DataSource = dsrcGenres
+        VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
         Align = alTop
         TabOrder = 1
+      end
+      object toolBarGenres: TToolBar
+        Left = 0
+        Top = 0
+        Width = 790
+        Height = 29
+        ButtonHeight = 36
+        ButtonWidth = 39
+        Caption = 'toolBarPubHouses'
+        Images = ImageList
+        TabOrder = 2
+        object btnAddGenre: TToolButton
+          Left = 0
+          Top = 2
+          Action = actAddGenre
+        end
+        object btnDeleteGenre: TToolButton
+          Left = 39
+          Top = 2
+          Action = actDeleteGenre
+        end
+        object btnEditGenre: TToolButton
+          Left = 78
+          Top = 2
+          Action = actEditGenre
+        end
+        object btnRefreshGenres: TToolButton
+          Left = 117
+          Top = 2
+          Action = actRefreshGenres
+        end
       end
     end
     object tsPubHouses: TTabSheet
@@ -902,6 +934,10 @@ object MainForm: TMainForm
   object IBTransactionUpdateBooks: TIBTransaction
     Active = False
     DefaultDatabase = IBDatabase
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
     AutoStopAction = saNone
     Left = 196
     Top = 416
@@ -927,5 +963,49 @@ object MainForm: TMainForm
       Caption = 'actRefreshBooks'
       ImageIndex = 3
     end
+  end
+  object actListGenres: TActionList
+    Images = ImageList
+    Left = 276
+    Top = 416
+    object actAddGenre: TAction
+      Caption = 'actAddGenre'
+      ImageIndex = 0
+      OnExecute = actAddGenreExecute
+    end
+    object actDeleteGenre: TAction
+      Caption = 'actDeleteGenre'
+      ImageIndex = 1
+      OnExecute = actDeleteGenreExecute
+    end
+    object actEditGenre: TAction
+      Caption = 'actEditGenre'
+      ImageIndex = 2
+      OnExecute = actEditGenreExecute
+    end
+    object actRefreshGenres: TAction
+      Caption = 'actRefreshGenres'
+      ImageIndex = 3
+      OnExecute = actRefreshGenresExecute
+    end
+  end
+  object ibqUpdateGenres: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransactionUpdateGenres
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 308
+    Top = 416
+  end
+  object IBTransactionUpdateGenres: TIBTransaction
+    Active = False
+    DefaultDatabase = IBDatabase
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    AutoStopAction = saNone
+    Left = 340
+    Top = 416
   end
 end

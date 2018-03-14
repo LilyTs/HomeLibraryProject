@@ -67,7 +67,7 @@ end;
 procedure TAddEditBookForm.btnSaveBookClick(Sender: TObject);
 var c: Integer;
 begin
-  if (edBookName.Text = '') or (edAuthor.Text = '') or (cbPubHouse.ItemIndex < 0) or (edBookID.Visible and (edBookID.Text = '')) then
+  if (edBookName.Text = '') or (edPubYear.Text = '') or (edAuthor.Text = '') or (cbPubHouse.ItemIndex < 0) or (edBookID.Visible and (edBookID.Text = '')) then
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
