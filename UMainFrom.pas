@@ -88,6 +88,11 @@ type
     actDeleteGenre: TAction;
     actEditGenre: TAction;
     actRefreshGenres: TAction;
+    btnSearchBook: TToolButton;
+    actSearchBook: TAction;
+    ibqSearchBook: TIBQuery;
+    IBTransactionSearchBook: TIBTransaction;
+    dsSearchBook: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -103,6 +108,8 @@ type
     procedure actDeleteGenreExecute(Sender: TObject);
     procedure actRefreshGenresExecute(Sender: TObject);
     procedure actEditGenreExecute(Sender: TObject);
+    procedure actSearchBookExecute(Sender: TObject);
+    procedure actRefreshBooksExecute(Sender: TObject);
   private
   
   public
@@ -115,7 +122,8 @@ var
 
 implementation
 
-uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm, UAddEditGenreForm;
+uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
+     UAddEditGenreForm, USearchBookForm;
 
 {$R *.dfm}
 
@@ -314,6 +322,21 @@ procedure TMainForm.actEditGenreExecute(Sender: TObject);
 begin
   AddEditGenreForm.SetIsNew(False);
   AddEditGenreForm.Show;
+end;
+
+procedure TMainForm.actSearchBookExecute(Sender: TObject);
+begin
+  SearchBookForm.Show;
+end;
+
+procedure TMainForm.actRefreshBooksExecute(Sender: TObject);
+begin
+  with ibqBooks do
+      begin
+        Close;
+        SQL.Text := sqlGetBooks;
+        Open;
+      end;
 end;
 
 end.

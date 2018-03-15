@@ -1,6 +1,6 @@
 object AddEditGenreForm: TAddEditGenreForm
-  Left = 477
-  Top = 197
+  Left = 554
+  Top = 298
   Width = 361
   Height = 229
   Caption = 'Genre'

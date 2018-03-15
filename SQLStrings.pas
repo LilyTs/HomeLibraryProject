@@ -19,7 +19,7 @@ const
                 + 'SocialNumber = :SocialNumber, Email = :Email, Comment = :Comment '
                 + 'WHERE Friend_id = :Friend_id';
 
-  sqlGetBooks = 'SELECT * FROM Book';
+  sqlGetBooks = 'SELECT * FROM Book'; 
   sqlInsertBook = 'INSERT INTO Book '
                     + 'VALUES(:Book_id, :Name, :Author, :PicAuthor, :Translator, :PubYear, :Comment, :PubHouse_id)';
   sqlDeleteBook = 'DELETE FROM Book '
@@ -45,3 +45,4 @@ const
 implementation
 
 end.
+
