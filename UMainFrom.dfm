@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 255
-  Top = 144
+  Left = 269
+  Top = 133
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 804
     Height = 450
-    ActivePage = tsBooks
+    ActivePage = tsPubHouses
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11

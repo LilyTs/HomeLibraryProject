@@ -111,10 +111,11 @@ type
     procedure actEditGenreExecute(Sender: TObject);
     procedure actSearchBookExecute(Sender: TObject);
     procedure actRefreshBooksExecute(Sender: TObject);
+    procedure actDeleteBookNewExecute(Sender: TObject);
   private
   
   public
-    procedure MyIdle(Sender: TObject; var Done: Boolean);
+    procedure MyIdle(Sender: TObject; var Done: boolean);
   end;
 
 var
@@ -341,17 +342,24 @@ begin
     end;
 end;
 
-procedure TMainForm.MyIdle(Sender: TObject; var Done: Boolean);
+procedure TMainForm.MyIdle(Sender: TObject; var Done: boolean);
 begin
   Done := True;
-  actDeleteBook.Enabled := dbgridBooks.FieldCount > 0;
+  actDeleteBook.Enabled := not ibqBooks.IsEmpty;
   actEditBook.Enabled := actDeleteBook.Enabled;
-  actDeleteFriend.Enabled := dbgridFriends.FieldCount > 0;
+  actSearchBook.Enabled := actDeleteBook.Enabled;
+  actDeleteFriend.Enabled := not ibqFriends.IsEmpty;
   actEditFriend.Enabled := actDeleteFriend.Enabled;
-  actDeleteGenre.Enabled := dbgridGenres.FieldCount > 0;
+  actDeleteGenre.Enabled := not ibqGenres.IsEmpty;
   actEditGenre.Enabled := actDeleteGenre.Enabled;
-  actDeletePubHouse.Enabled := dbgridPubHouses.FieldCount > 0;
+  actDeletePubHouse.Enabled := not ibqPubHouses.IsEmpty;
   actEditPubHouse.Enabled := actDeletePubHouse.Enabled;
+end;
+
+procedure TMainForm.actDeleteBookNewExecute(Sender: TObject);
+var i: Integer;
+begin
+  i := 0;
 end;
 
 end.
