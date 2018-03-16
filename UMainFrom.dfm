@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 528
-  Top = 8
+  Left = 382
+  Top = 73
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -455,10 +455,13 @@ object MainForm: TMainForm
     end
   end
   object IBDatabase: TIBDatabase
-    DatabaseName = 'D:\LIB.FDB'
+    DatabaseName = 
+      'C:\Users\Lilia\Desktop\Studies\3_year\6 semester\DataBases ('#1050#1072#1096#1080 +
+      #1088#1089#1082#1072#1103' '#1048'.'#1048'.)\Delphi project for report\HomeLibraryProject\App\LIB' +
+      'RARYDB.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
-      'password=admin')
+      'password=masterkey')
     LoginPrompt = False
     DefaultTransaction = IBTransaction
     IdleTimer = 0

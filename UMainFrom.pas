@@ -332,11 +332,11 @@ end;
 procedure TMainForm.actRefreshBooksExecute(Sender: TObject);
 begin
   with ibqBooks do
-      begin
-        Close;
-        SQL.Text := sqlGetBooks;
-        Open;
-      end;
+    begin
+      Close;
+      SQL.Text := sqlGetBooks;
+      Open;
+    end;
 end;
 
 end.
