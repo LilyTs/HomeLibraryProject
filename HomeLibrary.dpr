@@ -24,5 +24,6 @@ begin
   AddEditPubHouseForm.Hide;
   AddEditFriendForm.Hide;
   AddEditBookForm.Hide;
+  SearchBookForm.Hide;
   Application.Run;
 end.

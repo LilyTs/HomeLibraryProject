@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
   IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls, IBUpdateSQL,
-  ActnList, ImgList, ToolWin, SQLStrings;
+  ActnList, ImgList, ToolWin, SQLStrings, AppEvnts;
 
 type
   TMainForm = class(TForm)
@@ -93,6 +93,7 @@ type
     ibqSearchBook: TIBQuery;
     IBTransactionSearchBook: TIBTransaction;
     dsSearchBook: TDataSource;
+    ApplicationEvents: TApplicationEvents;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -113,7 +114,7 @@ type
   private
   
   public
-    { Public declarations }
+    procedure MyIdle(Sender: TObject; var Done: Boolean);
   end;
 
 var
@@ -130,6 +131,7 @@ uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
 procedure TMainForm.FormCreate(Sender: TObject);
 var IniFile: TIniFile;
 begin
+  ApplicationEvents.OnIdle := MyIdle;
   try
     IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
     try
@@ -337,6 +339,19 @@ begin
       SQL.Text := sqlGetBooks;
       Open;
     end;
+end;
+
+procedure TMainForm.MyIdle(Sender: TObject; var Done: Boolean);
+begin
+  Done := True;
+  actDeleteBook.Enabled := dbgridBooks.FieldCount > 0;
+  actEditBook.Enabled := actDeleteBook.Enabled;
+  actDeleteFriend.Enabled := dbgridFriends.FieldCount > 0;
+  actEditFriend.Enabled := actDeleteFriend.Enabled;
+  actDeleteGenre.Enabled := dbgridGenres.FieldCount > 0;
+  actEditGenre.Enabled := actDeleteGenre.Enabled;
+  actDeletePubHouse.Enabled := dbgridPubHouses.FieldCount > 0;
+  actEditPubHouse.Enabled := actDeletePubHouse.Enabled;
 end;
 
 end.

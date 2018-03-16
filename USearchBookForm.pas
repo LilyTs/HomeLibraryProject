@@ -82,64 +82,61 @@ end;
 procedure TSearchBookForm.btnSearchBookClick(Sender: TObject);
 var first: Boolean;
 begin
-  //with MainForm.ibqBooks do
-    //begin
-      try
-        first := True;
-        MainForm.ibqBooks.Close;
-        //MainForm.dsrcBooks.DataSet := MainForm.dsSearchBook;
-        MainForm.ibqBooks.SQL.Text := sqlGetBooks;
-        if cbName.Checked then
+    try
+      first := True;
+      MainForm.ibqBooks.Close;
+      //MainForm.dsrcBooks.DataSet := MainForm.dsSearchBook;
+      MainForm.ibqBooks.SQL.Text := sqlGetBooks;
+      if cbName.Checked then
+        begin
+          MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Name =  ''' + edtSearchName.Text + '''';
+          first := False;
+        end;
+
+      if cbAuthor.Checked then
+        if first then
           begin
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Name =  ''' + edtSearchName.Text + '''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Author =  ''' + edtSearchAuthor.Text + '''';
             first := False;
-          end;
+          end
+        else
+          MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Author =  ''' + edtSearchAuthor.Text + '''';
 
-        if cbAuthor.Checked then
-          if first then
-            begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Author =  ''' + edtSearchAuthor.Text + '''';
-              first := False;
-            end
-          else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Author =  ''' + edtSearchAuthor.Text + '''';
+      if cbPubHouse.Checked then
+        if first then
+          begin
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouse_id =  ' +
+              IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));
+            first := False;
+          end
+        else
+          MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouse_id =  ' +
+            IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));
 
-        if cbPubHouse.Checked then
-          if first then
-            begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouse_id =  ' +
-                IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));
-              first := False;
-            end
-          else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouse_id =  ' +
-              IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));       
-
-        if cbGenre.Checked then
-          if first then
-            begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Book_id = (SELECT book_id FROM BookGenre '
-              + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name =  '' '
-              + edtSearchGenre.Text + '))';
-              first := False;
-            end
-          else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Book_id = (SELECT book_id FROM BookGenre '
+      if cbGenre.Checked then
+        if first then
+          begin
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Book_id = (SELECT book_id FROM BookGenre '
             + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name =  '' '
             + edtSearchGenre.Text + '))';
+            first := False;
+          end
+        else
+          MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Book_id = (SELECT book_id FROM BookGenre '
+          + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name =  '' '
+          + edtSearchGenre.Text + '))';
             
-          MainForm.ibqBooks.Open;
+        MainForm.ibqBooks.Open;
 
-          if first then
-            MessageDlg('Fields are not selected!', mtError, [mbOk], 0);
-      except
-        on E: EDatabaseError do
-          begin
-            Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
-            Halt;
-          end;
-      end;
-    //end;
+        if first then
+          MessageDlg('Fields are not selected!', mtError, [mbOk], 0);
+    except
+      on E: EDatabaseError do
+        begin
+          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+          Halt;
+        end;
+    end;
   Self.Hide;
 end;
 

@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 382
-  Top = 73
+  Left = 255
+  Top = 144
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -1177,5 +1177,9 @@ object MainForm: TMainForm
     DataSet = ibqSearchBook
     Left = 664
     Top = 456
+  end
+  object ApplicationEvents: TApplicationEvents
+    Left = 764
+    Top = 416
   end
 end
