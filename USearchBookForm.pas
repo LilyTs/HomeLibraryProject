@@ -87,7 +87,6 @@ begin
       try
         isFirst := True;
         MainForm.ibqBooks.Close;
-        //MainForm.dsrcBooks.DataSet := MainForm.dsSearchBook;
         MainForm.ibqBooks.SQL.Text := sqlGetBooks;
         if cbName.Checked then
           begin

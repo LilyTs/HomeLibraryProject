@@ -1,9 +1,10 @@
 object AddEditBookForm: TAddEditBookForm
-  Left = 488
-  Top = 175
-  Width = 380
-  Height = 411
+  Left = 485
+  Top = 145
+  BorderStyle = bsSingle
   Caption = 'Book'
+  ClientHeight = 457
+  ClientWidth = 364
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -63,6 +64,13 @@ object AddEditBookForm: TAddEditBookForm
     Height = 13
     Caption = 'Comment:'
   end
+  object lblGenresForBook: TLabel
+    Left = 56
+    Top = 312
+    Width = 37
+    Height = 13
+    Caption = 'Genres:'
+  end
   object edBookName: TEdit
     Left = 104
     Top = 24
@@ -121,7 +129,7 @@ object AddEditBookForm: TAddEditBookForm
   end
   object btnSaveBook: TButton
     Left = 104
-    Top = 320
+    Top = 408
     Width = 80
     Height = 25
     Caption = 'Save'
@@ -131,12 +139,20 @@ object AddEditBookForm: TAddEditBookForm
   end
   object btnCancelBook: TButton
     Left = 216
-    Top = 320
+    Top = 408
     Width = 80
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 8
     OnClick = btnCancelBookClick
+  end
+  object checklistGenres: TCheckListBox
+    Left = 104
+    Top = 312
+    Width = 240
+    Height = 73
+    ItemHeight = 13
+    TabOrder = 9
   end
 end

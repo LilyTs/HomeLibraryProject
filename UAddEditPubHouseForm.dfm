@@ -1,8 +1,8 @@
 object AddEditPubHouseForm: TAddEditPubHouseForm
-  Left = 548
+  Left = 550
   Top = 294
   BorderStyle = bsSingle
-  Caption = 'AddEditPubHouseForm'
+  Caption = 'Publishing House'
   ClientHeight = 128
   ClientWidth = 242
   Color = clBtnFace

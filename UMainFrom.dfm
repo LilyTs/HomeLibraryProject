@@ -1,10 +1,10 @@
 object MainForm: TMainForm
-  Left = 269
-  Top = 133
+  Left = 258
+  Top = 139
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
-  ClientWidth = 804
+  ClientWidth = 941
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,9 +19,9 @@ object MainForm: TMainForm
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 804
+    Width = 945
     Height = 450
-    ActivePage = tsPubHouses
+    ActivePage = tsBooks
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -67,7 +67,7 @@ object MainForm: TMainForm
       object dbgridBooks: TDBGrid
         Left = 0
         Top = 29
-        Width = 790
+        Width = 931
         Height = 300
         Align = alTop
         DataSource = dsrcBooks
@@ -109,8 +109,8 @@ object MainForm: TMainForm
           end
           item
             Expanded = False
-            FieldName = 'PUBHOUSE_ID'
-            Title.Caption = 'Publication House ID'
+            FieldName = 'PUBHOUSEName'
+            Title.Caption = 'Publication House'
             Width = 104
             Visible = True
           end
@@ -134,12 +134,18 @@ object MainForm: TMainForm
             Title.Caption = 'Comment'
             Width = 100
             Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Genres'
+            Width = 125
+            Visible = True
           end>
       end
       object dbnavBooks: TDBNavigator
         Left = 0
         Top = 329
-        Width = 790
+        Width = 931
         Height = 25
         DataSource = dsrcBooks
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
@@ -149,7 +155,7 @@ object MainForm: TMainForm
       object toolBarBooks: TToolBar
         Left = 0
         Top = 0
-        Width = 790
+        Width = 931
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -190,7 +196,7 @@ object MainForm: TMainForm
       object dbgridFriends: TDBGrid
         Left = 0
         Top = 29
-        Width = 790
+        Width = 931
         Height = 300
         Align = alTop
         DataSource = dsrcFriends
@@ -248,7 +254,7 @@ object MainForm: TMainForm
       object dbnavFriends: TDBNavigator
         Left = 0
         Top = 329
-        Width = 790
+        Width = 931
         Height = 25
         DataSource = dsrcFriends
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
@@ -258,7 +264,7 @@ object MainForm: TMainForm
       object toolBarFriends: TToolBar
         Left = 0
         Top = 0
-        Width = 790
+        Width = 931
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -294,7 +300,7 @@ object MainForm: TMainForm
       object dbgridGenres: TDBGrid
         Left = 0
         Top = 29
-        Width = 790
+        Width = 931
         Height = 300
         Align = alTop
         DataSource = dsrcGenres
@@ -331,7 +337,7 @@ object MainForm: TMainForm
       object dbnavGenres: TDBNavigator
         Left = 0
         Top = 329
-        Width = 790
+        Width = 931
         Height = 25
         DataSource = dsrcGenres
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
@@ -341,7 +347,7 @@ object MainForm: TMainForm
       object toolBarGenres: TToolBar
         Left = 0
         Top = 0
-        Width = 790
+        Width = 931
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -377,7 +383,7 @@ object MainForm: TMainForm
       object dbgridPubHouses: TDBGrid
         Left = 0
         Top = 29
-        Width = 790
+        Width = 931
         Height = 300
         Align = alTop
         DataSource = dsrcPubHouses
@@ -420,7 +426,7 @@ object MainForm: TMainForm
       object toolBarPubHouses: TToolBar
         Left = 0
         Top = 0
-        Width = 790
+        Width = 931
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -489,7 +495,6 @@ object MainForm: TMainForm
     CachedUpdates = False
     SQL.Strings = (
       'Select * from GENRE;')
-    UpdateObject = ibUpdateSQlGenres
     Left = 88
     Top = 456
   end
@@ -554,21 +559,6 @@ object MainForm: TMainForm
   object dsrcPubHouses: TDataSource
     DataSet = ibqPubHouses
     Left = 408
-    Top = 456
-  end
-  object ibUpdateSQlGenres: TIBUpdateSQL
-    RefreshSQL.Strings = (
-      'SELECT * FROM Genre;')
-    ModifySQL.Strings = (
-      'UPDATE Genre'
-      'SET  Name = :Name, ParentGenre_id = :ParentGenre_id'
-      'WHERE Genre_id = :Genre_id; ')
-    InsertSQL.Strings = (
-      'INSERT INTO Genre VALUES(:Genre_id, :Name, :ParentGenre_id);')
-    DeleteSQL.Strings = (
-      'DELETE FROM Genre'
-      'WHERE Genre_id = :Genre_id;')
-    Left = 504
     Top = 456
   end
   object ImageList: TImageList
@@ -1100,6 +1090,7 @@ object MainForm: TMainForm
     object actEditBook: TAction
       Caption = 'actEditBook'
       ImageIndex = 2
+      OnExecute = actEditBookExecute
     end
     object actRefreshBooks: TAction
       Caption = 'actRefreshBooks'
@@ -1182,6 +1173,19 @@ object MainForm: TMainForm
   end
   object ApplicationEvents: TApplicationEvents
     Left = 764
+    Top = 416
+  end
+  object ibqGenresForBook: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 380
+    Top = 416
+  end
+  object dsrcGenresForBooks: TDataSource
+    DataSet = ibqGenresForBook
+    Left = 412
     Top = 416
   end
 end

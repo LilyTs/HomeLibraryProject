@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB;
+  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB, CheckLst, DB;
 
 type
   TAddEditBookForm = class(TForm)
@@ -24,6 +24,8 @@ type
     edBookComment: TEdit;
     btnSaveBook: TButton;
     btnCancelBook: TButton;
+    lblGenresForBook: TLabel;
+    checklistGenres: TCheckListBox;
     procedure edPubYearKeyPress(Sender: TObject; var Key: Char);
     procedure btnCancelBookClick(Sender: TObject);
     procedure btnSaveBookClick(Sender: TObject);
@@ -81,6 +83,7 @@ begin
             else
               begin
                 SQL.Text := sqlEditBook;
+                ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
               end;
             ParamByName('Name').AsString := edBookName.Text;
             ParamByName('Author').AsString := edAuthor.Text;
@@ -114,6 +117,13 @@ begin
     begin
       cbPubHouse.Items.Add(MainForm.ibqPubHouses.Fields.Fields[1].Value);
       MainForm.ibqPubHouses.Next;
+    end;
+  checklistGenres.Clear;
+  MainForm.ibqGenres.First;
+  for i := 0 to MainForm.dbgridGenres.FieldCount do//.ibqGenres.RecordCount do
+    begin
+      checklistGenres.Items.Add(MainForm.ibqGenres.Fields.Fields[1].Value);
+      MainForm.ibqGenres.Next;
     end;
   if IsNew then
     begin

@@ -19,12 +19,13 @@ const
                 + 'SocialNumber = :SocialNumber, Email = :Email, Comment = :Comment '
                 + 'WHERE Friend_id = :Friend_id';
 
-  sqlGetBooks = 'SELECT * FROM Book'; 
+  sqlGetBooks = 'SELECT * FROM Book';
+  sqlGetBooksWithPubHouseName = 'SELECT B.Book_id, B.Name, B.Author, B.PubYear, PH.Name AS PubHouseName, B.PicAuthor, B.Translator, B.Comment  FROM Book B JOIN PublishingHouse PH ON B.PubHouse_id = PH.PubHouse_id';
   sqlInsertBook = 'INSERT INTO Book(Book_id, Name, Author, PicAuthor, Translator, PubYear, PubHouse_id, Comment) '
                     + 'VALUES(null, :Name, :Author, :PicAuthor, :Translator, :PubYear, :PubHouse_id, :Comment)';
   sqlDeleteBook = 'DELETE FROM Book '
                     + 'WHERE Book_id = :Book_id';
-  sqlEditBook = 'UPDATE Book SET Name = :Name, Author = :Author, Translator = :Translator, PubYear = :PubYear, Comment = :Comment, PubHouse_id = :PubHouse_id'
+  sqlEditBook = 'UPDATE Book SET Name = :Name, Author = :Author, PicAuthor = :PicAuthor, Translator = :Translator, PubYear = :PubYear, Comment = :Comment, PubHouse_id = :PubHouse_id '
                   + 'WHERE Book_id = :Book_id';
 
   sqlGetGenres = 'SELECT * FROM Genre';
@@ -40,6 +41,10 @@ const
   sqlEditBorrowing = 'UPDATE Borrowing SET IsLost = :IsLost, IsDamaged = :IsDamaged, '
                 + 'ReturnDate = :ReturnDate, Comment = :Comment '
                 + 'WHERE WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';
+
+  sqlGetGenresForBook = 'SELECT G.Name FROM BookGenre BG JOIN Genre G ON BG.Genre_id = G.Genre_id WHERE Book_id = :Book_id';
+  sqlInsertBookGenre = 'INSERT INTO BookGenre(Book_id, Genre_id) VALUES(:Book_id, :Genre_id)';
+  sqlDeleteBookGenre = 'DELETE FROM BookGenre WHERE Book_id = :Book_id';
 
 implementation
 

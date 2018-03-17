@@ -1,9 +1,10 @@
 object SearchBookForm: TSearchBookForm
-  Left = 273
-  Top = 233
-  Width = 382
-  Height = 320
-  Caption = 'Books'
+  Left = 493
+  Top = 243
+  BorderStyle = bsSingle
+  Caption = 'Search Books'
+  ClientHeight = 281
+  ClientWidth = 366
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -79,19 +80,21 @@ object SearchBookForm: TSearchBookForm
     TabOrder = 7
   end
   object btnSearchBook: TButton
-    Left = 88
+    Left = 72
     Top = 232
-    Width = 75
+    Width = 80
     Height = 25
     Caption = 'Search'
+    Default = True
     TabOrder = 8
     OnClick = btnSearchBookClick
   end
   object btnCancel: TButton
-    Left = 248
-    Top = 208
-    Width = 75
+    Left = 208
+    Top = 232
+    Width = 80
     Height = 25
+    Cancel = True
     Caption = 'Cancel'
     TabOrder = 9
     OnClick = btnCancelClick

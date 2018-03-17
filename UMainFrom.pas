@@ -22,7 +22,6 @@ type
     dsrcFriends: TDataSource;
     ibqPubHouses: TIBQuery;
     dsrcPubHouses: TDataSource;
-    ibUpdateSQlGenres: TIBUpdateSQL;
     ImageList: TImageList;
     actListPubHouses: TActionList;
     actAddPubHouse: TAction;
@@ -94,6 +93,8 @@ type
     IBTransactionSearchBook: TIBTransaction;
     dsSearchBook: TDataSource;
     ApplicationEvents: TApplicationEvents;
+    ibqGenresForBook: TIBQuery;
+    dsrcGenresForBooks: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -112,6 +113,7 @@ type
     procedure actSearchBookExecute(Sender: TObject);
     procedure actRefreshBooksExecute(Sender: TObject);
     procedure actDeleteBookExecute(Sender: TObject);
+    procedure actEditBookExecute(Sender: TObject);
   private
   
   public
@@ -131,6 +133,8 @@ uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
 
 procedure TMainForm.FormCreate(Sender: TObject);
 var IniFile: TIniFile;
+    i, j: Integer;
+    str: String;
 begin
   //ApplicationEvents.OnIdle := MyIdle;
   try
@@ -154,9 +158,27 @@ begin
       end;}
     with ibqBooks do
       begin
-        SQL.Text := sqlGetBooks;
+        SQL.Text := sqlGetBooksWithPubHouseName;
         Open;
       end;
+
+    {ibqGenresForBook.SQL.Text := sqlGetGenresForBook;
+    ibqGenresForBook.Prepare;
+    ibqBooks.First;
+    for i := 0 to ibqBooks.RecordCount do
+      begin
+        ibqGenresForBook.ParamByName('Book_id').AsInteger := ibqBooks.Fields[0].Value;
+        ibqGenresForBook.Open;
+        ibqGenresForBook.First;
+        str := '';
+        for j := 0 to ibqGenresForBook.RecordCount - 1 do
+          begin
+            str := str + VarToStr(ibqGenresForBook.DataSource.DataSet.Fields[j].Fields[0].Value);
+            ibqGenresForBook.Next;
+          end;
+        dbgridBooks.Fields[i].AsString := str;
+        Close;
+      end;}
     with ibqFriends do
       begin
         SQL.Text := sqlGetFriends;
@@ -337,7 +359,7 @@ begin
   with ibqBooks do
     begin
       Close;
-      SQL.Text := sqlGetBooks;
+      SQL.Text := sqlGetBooksWithPubHouseName;
       Open;
     end;
 end;
@@ -376,6 +398,12 @@ begin
         end;
       end;
     end;
+end;
+
+procedure TMainForm.actEditBookExecute(Sender: TObject);
+begin
+  AddEditBookForm.SetIsNew(False);
+  AddEditBookForm.Show;
 end;
 
 end.

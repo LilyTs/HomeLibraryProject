@@ -1,9 +1,10 @@
 object AddEditGenreForm: TAddEditGenreForm
   Left = 461
   Top = 292
-  Width = 361
-  Height = 204
+  BorderStyle = bsSingle
   Caption = 'Genre'
+  ClientHeight = 165
+  ClientWidth = 345
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

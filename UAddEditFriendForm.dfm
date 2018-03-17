@@ -1,9 +1,10 @@
 object AddEditFriendForm: TAddEditFriendForm
   Left = 457
   Top = 205
-  Width = 376
-  Height = 324
+  BorderStyle = bsSingle
   Caption = 'Friend'
+  ClientHeight = 285
+  ClientWidth = 360
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
