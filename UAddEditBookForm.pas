@@ -92,7 +92,7 @@ begin
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;
-            MainForm.actRefreshPubHousesExecute(MainForm);
+            MainForm.actRefreshBooksExecute(MainForm);
           except on E: EIBInterBaseError do
             begin
               if Transaction.Active then

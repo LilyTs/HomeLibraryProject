@@ -1095,6 +1095,7 @@ object MainForm: TMainForm
     object actDeleteBook: TAction
       Caption = 'actDeleteBook'
       ImageIndex = 1
+      OnExecute = actDeleteBookExecute
     end
     object actEditBook: TAction
       Caption = 'actEditBook'

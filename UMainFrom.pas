@@ -111,6 +111,7 @@ type
     procedure actEditGenreExecute(Sender: TObject);
     procedure actSearchBookExecute(Sender: TObject);
     procedure actRefreshBooksExecute(Sender: TObject);
+    procedure actDeleteBookExecute(Sender: TObject);
   private
   
   public
@@ -353,6 +354,28 @@ begin
   actEditGenre.Enabled := actDeleteGenre.Enabled;
   actDeletePubHouse.Enabled := not ibqPubHouses.IsEmpty;
   actEditPubHouse.Enabled := actDeletePubHouse.Enabled;
+end;
+
+procedure TMainForm.actDeleteBookExecute(Sender: TObject);
+begin
+  with ibqUpdateBooks do
+    begin
+      try
+        Close;
+        SQL.Text := sqlDeleteBook;
+        ParamByName('Book_id').AsInteger := dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+        ExecSQL;
+        Transaction.Commit;
+        Transaction.Active := False;
+        MainForm.actRefreshBooksExecute(self);
+      except on E: EIBInterBaseError do
+        begin
+          if Transaction.Active then
+            Transaction.Rollback;
+          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+        end;
+      end;
+    end;
 end;
 
 end.
