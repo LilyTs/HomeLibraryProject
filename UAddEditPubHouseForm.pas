@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, DB, IBCustomDataSet, IBDatabase, IBQuery, UMainFrom, SQLStrings;
+  Dialogs, StdCtrls, IB, IBCustomDataSet, IBDatabase, IBQuery, UMainFrom, SQLStrings;
 
 type
   TAddEditPubHouseForm = class(TForm)
@@ -12,10 +12,7 @@ type
     lblPubHouseName: TLabel;
     btnSavePubHouse: TButton;
     btnCancelPubHouse: TButton;
-    lblPubHouseID: TLabel;
-    edPubHouseID: TEdit;
     procedure btnSavePubHouseClick(Sender: TObject);
-    procedure edPubHouseIDKeyPress(Sender: TObject; var Key: Char);
     procedure btnCancelPubHouseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -35,7 +32,7 @@ implementation
 
 procedure TAddEditPubHouseForm.btnSavePubHouseClick(Sender: TObject);
 begin
-  if (edPubHouseName.Text = '') or (edPubHouseID.Visible and (edPubHouseID.Text = '')) then
+  if edPubHouseName.Text = '' then
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
@@ -43,11 +40,9 @@ begin
         begin
           try
             Close;
-            SQL.Clear;
             if IsNew then
               begin
                 SQL.Text := sqlInsertPubHouse;
-                ParamByName('PubHouse_id').AsInteger := StrToInt(edPubHouseID.Text);
               end
             else
               begin
@@ -59,7 +54,7 @@ begin
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshPubHousesExecute(MainForm);
-          except on E: EDatabaseError do
+          except on E: EIBInterBaseError do
             begin
               if Transaction.Active then
                 Transaction.Rollback;
@@ -71,22 +66,8 @@ begin
     Self.Hide;
 end;
 
-procedure TAddEditPubHouseForm.edPubHouseIDKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  case Key of
-    '0'..'9': ; // цифра
-    #8 : ; // клавиша <Back Space>
-    #13 : edPubHouseName.SetFocus ; // клавиша <Enter>, переводим фокус на следующий Edit
-    // остальные символы Ч запрещены
-    else Key := Chr(0); // символ не отображать
-  end;
-end;
-
 procedure TAddEditPubHouseForm.btnCancelPubHouseClick(Sender: TObject);
 begin
-  edPubHouseID.Text := '';
-  edPubHouseName.Text := '';
   Self.Hide;
 end;
 
@@ -97,10 +78,10 @@ end;
 
 procedure TAddEditPubHouseForm.FormShow(Sender: TObject);
 begin
-  lblPubHouseID.Visible := IsNew;
-  edPubHouseID.Visible := IsNew;
-  edPubHouseID.Clear;
-  edPubHouseName.Clear;
+  if IsNew then
+    edPubHouseName.Clear
+  else
+    edPubHouseName.Text := MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[1].Value;
 end;
 
 end.

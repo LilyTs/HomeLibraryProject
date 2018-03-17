@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, DB, SQLStrings;
+  Dialogs, StdCtrls, UMainFrom, IB, SQLStrings;
 
 type
   TSearchBookForm = class(TForm)
@@ -133,7 +133,7 @@ begin
           if isFirst then
             MessageDlg('Fields are not selected!', mtError, [mbOk], 0);
       except
-        on E: EDatabaseError do
+        on E: EIBInterBaseError do
           begin
             Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
             Halt;

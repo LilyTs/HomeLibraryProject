@@ -1,8 +1,8 @@
 object AddEditGenreForm: TAddEditGenreForm
-  Left = 554
-  Top = 298
+  Left = 461
+  Top = 292
   Width = 361
-  Height = 229
+  Height = 204
   Caption = 'Genre'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,35 +16,28 @@ object AddEditGenreForm: TAddEditGenreForm
   TextHeight = 13
   object lblGenreName: TLabel
     Left = 48
-    Top = 56
+    Top = 24
     Width = 31
     Height = 13
     Caption = 'Name:'
   end
   object lblParentGenre: TLabel
     Left = 16
-    Top = 96
+    Top = 64
     Width = 64
     Height = 13
     Caption = 'Parent genre:'
   end
-  object lblGenreID: TLabel
-    Left = 56
-    Top = 24
-    Width = 14
-    Height = 13
-    Caption = 'ID:'
-  end
   object edGenreName: TEdit
     Left = 88
-    Top = 56
+    Top = 24
     Width = 240
     Height = 21
     TabOrder = 0
   end
   object cbParentGenre: TComboBox
     Left = 88
-    Top = 96
+    Top = 64
     Width = 240
     Height = 21
     ItemHeight = 13
@@ -52,7 +45,7 @@ object AddEditGenreForm: TAddEditGenreForm
   end
   object btnSaveGenre: TButton
     Left = 88
-    Top = 144
+    Top = 112
     Width = 80
     Height = 25
     Caption = 'Save'
@@ -62,20 +55,12 @@ object AddEditGenreForm: TAddEditGenreForm
   end
   object btnCancelGenre: TButton
     Left = 200
-    Top = 144
+    Top = 112
     Width = 80
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 3
     OnClick = btnCancelGenreClick
-  end
-  object edGenre_id: TEdit
-    Left = 88
-    Top = 16
-    Width = 240
-    Height = 21
-    TabOrder = 4
-    OnKeyPress = edGenre_idKeyPress
   end
 end

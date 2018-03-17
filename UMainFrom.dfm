@@ -457,11 +457,12 @@ object MainForm: TMainForm
   object IBDatabase: TIBDatabase
     DatabaseName = 
       'C:\Users\Lilia\Desktop\Studies\3_year\6 semester\DataBases ('#1050#1072#1096#1080 +
-      #1088#1089#1082#1072#1103' '#1048'.'#1048'.)\Delphi project for report\HomeLibraryProject\App\LIB' +
-      'RARYDB.FDB'
+      #1088#1089#1082#1072#1103' '#1048'.'#1048'.)\Delphi project for report\HomeLibraryProject\App\HOM' +
+      'ELIBRARY.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
-      'password=masterkey')
+      'password=masterkey'
+      'lc_ctype=WIN1251')
     LoginPrompt = False
     DefaultTransaction = IBTransaction
     IdleTimer = 0

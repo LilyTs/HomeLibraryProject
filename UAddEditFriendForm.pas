@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, SQLStrings, DB;
+  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB;
 
 type
   TAddEditFriendForm = class(TForm)
@@ -47,7 +47,6 @@ begin
         begin
           try
             Close;
-            SQL.Clear;
             if IsNew then
               SQL.Text := sqlInsertFriend
             else
@@ -64,7 +63,7 @@ begin
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshFriendsExecute(MainForm);
-          except on E: EDatabaseError do
+          except on E: EIBInterBaseError do
             begin
               if Transaction.Active then
                 Transaction.Rollback;

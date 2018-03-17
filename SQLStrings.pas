@@ -5,7 +5,7 @@ interface
 const
   sqlGetPubHouses = 'SELECT * FROM PublishingHouse';
   sqlInsertPubHouse = 'INSERT INTO PublishingHouse '
-                    + 'VALUES(:PubHouse_id, :Name)';
+                    + 'VALUES(null, :Name)';
   sqlDeletePubHouse = 'DELETE FROM PublishingHouse '
                     + 'WHERE PubHouse_id = :PubHouse_id';
   sqlEditPubHouse = 'UPDATE PublishingHouse SET Name = :Name '
@@ -20,18 +20,17 @@ const
                 + 'WHERE Friend_id = :Friend_id';
 
   sqlGetBooks = 'SELECT * FROM Book'; 
-  sqlInsertBook = 'INSERT INTO Book '
-                    + 'VALUES(:Book_id, :Name, :Author, :PicAuthor, :Translator, :PubYear, :Comment, :PubHouse_id)';
+  sqlInsertBook = 'INSERT INTO Book(Book_id, Name, Author, PicAuthor, Translator, PubYear, PubHouse_id, Comment) '
+                    + 'VALUES(null, :Name, :Author, :PicAuthor, :Translator, :PubYear, :PubHouse_id, :Comment)';
   sqlDeleteBook = 'DELETE FROM Book '
                     + 'WHERE Book_id = :Book_id';
   sqlEditBook = 'UPDATE Book SET Name = :Name, Author = :Author, Translator = :Translator, PubYear = :PubYear, Comment = :Comment, PubHouse_id = :PubHouse_id'
                   + 'WHERE Book_id = :Book_id';
 
   sqlGetGenres = 'SELECT * FROM Genre';
-  sqlInsertGenre = 'INSERT INTO Genre VALUES(:Genre_id, :Name, :ParentGenre_id)';
-  sqlInsertGenreWithoutParent = 'INSERT INTO Genre VALUES(:Genre_id, :Name, null)';
+  sqlInsertGenre = 'INSERT INTO Genre VALUES(null, :Name, :ParentGenre_id)';
   sqlDeleteGenre = 'DELETE FROM Genre WHERE Genre_id = :Genre_id';
-  sqlEditGenre = 'UPDATE Genre SET Name = :Name, ParentGenre_id = :ParentGenre_id'
+  sqlEditGenre = 'UPDATE Genre SET Name = :Name, ParentGenre_id = :ParentGenre_id '
                 + 'WHERE Genre_id = :Genre_id';
 
   sqlGetBorrowings = 'SELECT * FROM Borrowing';

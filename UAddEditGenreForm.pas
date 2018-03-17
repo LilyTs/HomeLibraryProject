@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, DB, SQLStrings, UMainFrom;
+  Dialogs, StdCtrls, IB, SQLStrings, UMainFrom;
 
 type
   TAddEditGenreForm = class(TForm)
@@ -14,12 +14,9 @@ type
     cbParentGenre: TComboBox;
     btnSaveGenre: TButton;
     btnCancelGenre: TButton;
-    lblGenreID: TLabel;
-    edGenre_id: TEdit;
     procedure btnCancelGenreClick(Sender: TObject);
     procedure btnSaveGenreClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure edGenre_idKeyPress(Sender: TObject; var Key: Char);
   private
     IsNew: Boolean;
   public
@@ -45,7 +42,7 @@ end;
 
 procedure TAddEditGenreForm.btnSaveGenreClick(Sender: TObject);
 begin
-  if (edGenreName.Text = '') or (edGenre_id.Visible and (edGenre_id.Text = '')) then
+  if edGenreName.Text = '' then
       MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
@@ -53,30 +50,29 @@ begin
         begin
           try
             Close;
-            SQL.Clear;
             if IsNew then
               begin
+                SQL.Text := sqlInsertGenre;
                 if cbParentGenre.ItemIndex < 0 then
-                  SQL.Text := sqlInsertGenreWithoutParent
+                    ParamByName('ParentGenre_id').Value := Null
                 else
-                  begin
-                    SQL.Text := sqlInsertGenre;
-                    ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
-                  end;
-                ParamByName('Genre_id').AsInteger := StrToInt(edGenre_id.Text);
+                  ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
               end
             else
               begin
                 SQL.Text := sqlEditGenre;
                 ParamByName('Genre_id').AsInteger := MainForm.dbgridGenres.DataSource.DataSet.Fields.Fields[0].Value;
-                ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
+                if cbParentGenre.ItemIndex < 0 then
+                  ParamByName('ParentGenre_id').Value := Null
+                else
+                  ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
               end;
             ParamByName('Name').AsString := edGenreName.Text;
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshGenresExecute(MainForm);
-          except on E: EDatabaseError do
+          except on E: EIBInterBaseError do
             begin
               if Transaction.Active then
                 Transaction.Rollback;
@@ -90,20 +86,17 @@ end;
 
 procedure TAddEditGenreForm.FormShow(Sender: TObject);
 var i: Integer;
-    prevParentGenreID: String;
+    prevParentGenreID: Variant;
 begin
   if IsNew then
     begin
       edGenreName.Clear;
-      edGenre_id.Clear;
     end
   else
     begin
       edGenreName.Text := MainForm.dbgridGenres.DataSource.DataSet.Fields.Fields[1].Value;
       prevParentGenreID := MainForm.dbgridGenres.DataSource.DataSet.Fields.Fields[2].Value;
     end;
-  lblGenreID.Visible := IsNew;
-  edGenre_id.Visible := IsNew;
   cbParentGenre.Items.Clear;
   MainForm.ibqGenres.First;
   for i := 0 to MainForm.ibqGenres.RecordCount - 1 do
@@ -111,20 +104,8 @@ begin
       cbParentGenre.Items.Add(MainForm.ibqGenres.Fields.Fields[1].Value);
       MainForm.ibqGenres.Next;
     end;
-  if not IsNew then
+  if not IsNew and (prevParentGenreID <> Null) then
     cbParentGenre.ItemIndex := cbParentGenre.Items.IndexOf(MainForm.dbgridGenres.DataSource.DataSet.Lookup('Genre_id', prevParentGenreID, 'Name'));
-end;
-
-procedure TAddEditGenreForm.edGenre_idKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  case Key of
-    '0'..'9': ; // цифра
-    #8 : ;    // клавиша <Back Space>
-      // остальные символы Ч запрещены
-    else
-      Key := Chr(0); // символ не отображать
-  end;
 end;
 
 end.

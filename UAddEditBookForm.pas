@@ -4,12 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, SQLStrings, DB;
+  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB;
 
 type
   TAddEditBookForm = class(TForm)
-    lblBook_id: TLabel;
-    edBookID: TEdit;
     lblBookName: TLabel;
     edBookName: TEdit;
     lblAuthor: TLabel;
@@ -67,7 +65,7 @@ end;
 procedure TAddEditBookForm.btnSaveBookClick(Sender: TObject);
 var c: Integer;
 begin
-  if (edBookName.Text = '') or (edPubYear.Text = '') or (edAuthor.Text = '') or (cbPubHouse.ItemIndex < 0) or (edBookID.Visible and (edBookID.Text = '')) then
+  if (edBookName.Text = '') or (edPubYear.Text = '') or (edAuthor.Text = '') or (cbPubHouse.ItemIndex < 0) then
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
@@ -79,12 +77,10 @@ begin
             if IsNew then
               begin
                 SQL.Text := sqlInsertBook;
-                ParamByName('Book_id').AsInteger := StrToInt(edBookID.Text);
               end
             else
               begin
                 SQL.Text := sqlEditBook;
-                ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
               end;
             ParamByName('Name').AsString := edBookName.Text;
             ParamByName('Author').AsString := edAuthor.Text;
@@ -97,7 +93,7 @@ begin
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshPubHousesExecute(MainForm);
-          except on E: EDatabaseError do
+          except on E: EIBInterBaseError do
             begin
               if Transaction.Active then
                 Transaction.Rollback;
@@ -119,11 +115,8 @@ begin
       cbPubHouse.Items.Add(MainForm.ibqPubHouses.Fields.Fields[1].Value);
       MainForm.ibqPubHouses.Next;
     end;
-  lblBook_id.Visible := IsNew;
-  edBookID.Visible := IsNew;
   if IsNew then
     begin
-      edBookID.Clear;
       edBookName.Clear;
       edAuthor.Clear;
       edPicAuthor.Clear;

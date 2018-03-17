@@ -4,9 +4,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, DB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
+  Dialogs, IB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
   IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls, IBUpdateSQL,
-  ActnList, ImgList, ToolWin, SQLStrings, AppEvnts;
+  ActnList, ImgList, ToolWin, SQLStrings, AppEvnts, DB;
 
 type
   TMainForm = class(TForm)
@@ -111,7 +111,6 @@ type
     procedure actEditGenreExecute(Sender: TObject);
     procedure actSearchBookExecute(Sender: TObject);
     procedure actRefreshBooksExecute(Sender: TObject);
-    procedure actDeleteBookNewExecute(Sender: TObject);
   private
   
   public
@@ -132,7 +131,7 @@ uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
 procedure TMainForm.FormCreate(Sender: TObject);
 var IniFile: TIniFile;
 begin
-  ApplicationEvents.OnIdle := MyIdle;
+  //ApplicationEvents.OnIdle := MyIdle;
   try
     IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
     try
@@ -168,7 +167,7 @@ begin
         Open;
       end;
   except
-    on E: EDatabaseError do
+    on E: EIBInterBaseError do
       begin
         Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
         Halt;
@@ -207,7 +206,7 @@ begin
         Transaction.Commit;
         Transaction.Active := False;
         MainForm.actRefreshPubHousesExecute(self);
-      except on E: EDatabaseError do
+      except on E: EIBInterBaseError do
         begin
           if Transaction.Active then
             Transaction.Rollback;
@@ -234,7 +233,7 @@ begin
   try
     ibqFriends.Close;
     ibqFriends.Open;
-  except on E: EDatabaseError do
+  except on E: EIBInterBaseError do
     begin
       Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
     end;
@@ -246,7 +245,7 @@ begin
   try
     ibqPubHouses.Close;
     ibqPubHouses.Open;
-  except on E: EDatabaseError do
+  except on E: EIBInterBaseError do
     begin
       Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
     end;
@@ -265,7 +264,7 @@ begin
         Transaction.Commit;
         Transaction.Active := False;
         MainForm.actRefreshFriendsExecute(self);
-      except on E: EDatabaseError do
+      except on E: EIBInterBaseError do
         begin
           if Transaction.Active then
             Transaction.Rollback;
@@ -305,7 +304,7 @@ begin
         Transaction.Commit;
         Transaction.Active := False;
         MainForm.actRefreshGenresExecute(self);
-      except on E: EDatabaseError do
+      except on E: EIBInterBaseError do
         begin
           if Transaction.Active then
             Transaction.Rollback;
@@ -354,12 +353,6 @@ begin
   actEditGenre.Enabled := actDeleteGenre.Enabled;
   actDeletePubHouse.Enabled := not ibqPubHouses.IsEmpty;
   actEditPubHouse.Enabled := actDeletePubHouse.Enabled;
-end;
-
-procedure TMainForm.actDeleteBookNewExecute(Sender: TObject);
-var i: Integer;
-begin
-  i := 0;
 end;
 
 end.
