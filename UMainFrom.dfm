@@ -1,10 +1,10 @@
 object MainForm: TMainForm
-  Left = 258
-  Top = 139
+  Left = 243
+  Top = 121
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
-  ClientWidth = 941
+  ClientWidth = 945
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -138,7 +138,7 @@ object MainForm: TMainForm
           item
             Expanded = False
             FieldName = 'Genres'
-            Width = 125
+            Width = 120
             Visible = True
           end>
       end
