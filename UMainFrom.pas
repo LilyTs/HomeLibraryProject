@@ -136,7 +136,8 @@ var
 implementation
 
 uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
-     UAddEditGenreForm, USearchBookForm;
+     UAddEditGenreForm, USearchBookForm, USearchFriendForm,
+  USearchGenreForm, USearchPubHouseForm;
 
 {$R *.dfm}
 
@@ -278,7 +279,7 @@ procedure TMainForm.actRefreshFriendsExecute(Sender: TObject);
 begin
   try
     ibqFriends.Close;
-    SQL.Text := sqlGetFriends;           ////////????????/
+    ibqFriends.SQL.Text := sqlGetFriends;           ////////????????/
     ibqFriends.Open;
   except on E: EIBInterBaseError do
     begin
@@ -291,7 +292,7 @@ procedure TMainForm.actRefreshPubHousesExecute(Sender: TObject);
 begin
   try
     ibqPubHouses.Close;
-    SQL.Text := sqlGetPubHouses;      ////////////????????????????
+    ibqPubHouses.SQL.Text := sqlGetPubHouses;      ////////////????????????????
     ibqPubHouses.Open;
   except on E: EIBInterBaseError do
     begin

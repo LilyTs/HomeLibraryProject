@@ -119,13 +119,13 @@ begin
             begin
               MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Book_id = (SELECT book_id FROM BookGenre '
               + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name LIKE ''%'
-              + edtSearchGenre.Text + ''%''))';
+              + edtSearchGenre.Text + '%''))';
               isFirst := False;
             end
           else
             MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Book_id = (SELECT book_id FROM BookGenre '
             + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name LIKE ''%'
-            + edtSearchGenre.Text + ''%''))';
+            + edtSearchGenre.Text + '%''))';
 
           MainForm.ibqBooks.Open;
 
