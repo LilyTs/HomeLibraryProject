@@ -168,11 +168,11 @@ begin
       end;}
     with ibqBooks do
       begin
-        SQL.Text := sqlGetBooks;
+        SQL.Text := sqlGetBooksWithPubHouseName; //sqlGetBooks;
         Open;
         First;
       end;
-    str := '''';
+    {str := '''';
     with ibqGenresForBook do
       begin
         SQL.Text := sqlGetGenresForBook;
@@ -201,7 +201,7 @@ begin
         + ' AS Genres  FROM Book B JOIN PublishingHouse PH '
         + 'ON B.PubHouse_id = PH.PubHouse_id';
         Open;
-      end;
+      end;}
 
     with ibqFriends do
       begin
