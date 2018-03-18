@@ -47,27 +47,27 @@ begin
         MainForm.ibqFriends.SQL.Text := sqlGetFriends;
         if chkNameFriend.Checked then
           begin
-            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE FIO =  ''' + edtNameFriend.Text + '''';
+            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE LIKE ''%' + edtNameFriend.Text + '%''';
             isFirst := False;
           end;
 
         if chkPhoneFriend.Checked then
           if isFirst then
             begin
-              MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE PhoneNumber =  ''' + edtPhoneFriend.Text + '''';
+              MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE PhoneNumber LIKE ''%' + edtPhoneFriend.Text + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' AND PhoneNumber =  ''' + edtPhoneFriend.Text + '''';
+            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' AND PhoneNumber LIKE ''%' + edtPhoneFriend.Text + '%''';
 
         if chkCommentFriend.Checked then
           if isFirst then
             begin
-              MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE Comment =  ''' + edtCommentFriend.Text + '''';
+              MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE Comment LIKE ''%' + edtCommentFriend.Text + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' AND Comment =  ''' + edtCommentFriend.Text + '''';
+            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' AND Comment LIKE ''%' + edtCommentFriend.Text + '%''';
 
           MainForm.ibqFriends.Open;
 

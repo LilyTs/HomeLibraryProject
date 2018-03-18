@@ -40,7 +40,7 @@ begin
         MainForm.ibqGenres.Close;
         MainForm.ibqGenres.SQL.Text := sqlGetGenres;
 
-        MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text + ' WHERE Name =  ''' + edtNameGenre.Text + '''';
+        MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text + ' WHERE Name LIKE ''%' + edtNameGenre.Text + '%''';
 
         MainForm.ibqGenres.Open;
 

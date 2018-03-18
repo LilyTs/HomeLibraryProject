@@ -40,7 +40,7 @@ begin
         MainForm.ibqPubHouses.Close;
         MainForm.ibqPubHouses.SQL.Text := sqlGetPubHouses;
 
-        MainForm.ibqPubHouses.SQL.Text := MainForm.ibqPubHouses.SQL.Text + ' WHERE Name =  ''' + edtNamePubHouse.Text + '''';
+        MainForm.ibqPubHouses.SQL.Text := MainForm.ibqPubHouses.SQL.Text + ' WHERE Name LIKE ''%' + edtNamePubHouse.Text + '%''';
 
         MainForm.ibqPubHouses.Open;
 

@@ -90,24 +90,24 @@ begin
         MainForm.ibqBooks.SQL.Text := sqlGetBooks;
         if cbName.Checked then
           begin
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Name =  ''' + edtSearchName.Text + '''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Name LIKE ''%' + edtSearchName.Text + '%''';
             isFirst := False;
           end;
 
         if cbAuthor.Checked then
           if isFirst then
             begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Author =  ''' + edtSearchAuthor.Text + '''';
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Author LIKE ''%' + edtSearchAuthor.Text + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Author =  ''' + edtSearchAuthor.Text + '''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Author LIKE ''%' + edtSearchAuthor.Text + '%''';
 
         if cbPubHouse.Checked then
           if isFirst then
             begin
               MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouse_id =  ' +
-                IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));
+                IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));                    //////?????
               isFirst := False;
             end
           else
@@ -118,14 +118,14 @@ begin
           if isFirst then
             begin
               MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Book_id = (SELECT book_id FROM BookGenre '
-              + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name =  '' '
-              + edtSearchGenre.Text + '))';
+              + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name LIKE ''%'
+              + edtSearchGenre.Text + ''%''))';
               isFirst := False;
             end
           else
             MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Book_id = (SELECT book_id FROM BookGenre '
-            + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name =  '' '
-            + edtSearchGenre.Text + '))';
+            + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name LIKE ''%'
+            + edtSearchGenre.Text + ''%''))';
 
           MainForm.ibqBooks.Open;
 
