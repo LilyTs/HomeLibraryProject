@@ -95,6 +95,12 @@ type
     ApplicationEvents: TApplicationEvents;
     ibqGenresForBook: TIBQuery;
     dsrcGenresForBooks: TDataSource;
+    btnSearchFriends: TToolButton;
+    actSearchFriend: TAction;
+    actSearchPubHouse: TAction;
+    btnSearchPubHouse: TToolButton;
+    actSearchGenre: TAction;
+    btnSearchGenre: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -114,6 +120,9 @@ type
     procedure actRefreshBooksExecute(Sender: TObject);
     procedure actDeleteBookExecute(Sender: TObject);
     procedure actEditBookExecute(Sender: TObject);
+    procedure actSearchFriendExecute(Sender: TObject);
+    procedure actSearchGenreExecute(Sender: TObject);
+    procedure actSearchPubHouseExecute(Sender: TObject);
   private
   
   public
@@ -269,6 +278,7 @@ procedure TMainForm.actRefreshFriendsExecute(Sender: TObject);
 begin
   try
     ibqFriends.Close;
+    SQL.Text := sqlGetFriends;           ////////????????/
     ibqFriends.Open;
   except on E: EIBInterBaseError do
     begin
@@ -281,6 +291,7 @@ procedure TMainForm.actRefreshPubHousesExecute(Sender: TObject);
 begin
   try
     ibqPubHouses.Close;
+    SQL.Text := sqlGetPubHouses;      ////////////????????????????
     ibqPubHouses.Open;
   except on E: EIBInterBaseError do
     begin
@@ -352,9 +363,13 @@ begin
 end;
 
 procedure TMainForm.actRefreshGenresExecute(Sender: TObject);
-begin
-  ibqGenres.Close;
-  ibqGenres.Open;
+begin   
+  with ibqGenres do
+    begin
+      Close;
+      SQL.Text := sqlGetGenres;          ///////////////???///////
+      Open;
+    end
 end;
 
 procedure TMainForm.actEditGenreExecute(Sender: TObject);
@@ -418,6 +433,21 @@ procedure TMainForm.actEditBookExecute(Sender: TObject);
 begin
   AddEditBookForm.SetIsNew(False);
   AddEditBookForm.Show;
+end;
+
+procedure TMainForm.actSearchFriendExecute(Sender: TObject);
+begin
+  SearchFriendForm.Show;
+end;
+
+procedure TMainForm.actSearchGenreExecute(Sender: TObject);
+begin
+  SearchGenreForm.Show;
+end;
+
+procedure TMainForm.actSearchPubHouseExecute(Sender: TObject);
+begin
+  SearchPubHouseForm.Show;
 end;
 
 end.

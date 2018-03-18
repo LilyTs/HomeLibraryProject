@@ -8,7 +8,10 @@ uses
   UAddEditFriendForm in 'UAddEditFriendForm.pas' {AddEditFriendForm},
   UAddEditBookForm in 'UAddEditBookForm.pas' {AddEditBookForm},
   UAddEditGenreForm in 'UAddEditGenreForm.pas' {AddEditGenreForm},
-  USearchBookForm in 'USearchBookForm.pas' {SearchBookForm};
+  USearchBookForm in 'USearchBookForm.pas' {SearchBookForm},
+  USearchFriendForm in 'USearchFriendForm.pas' {SearchFriendForm},
+  USearchGenreForm in 'USearchGenreForm.pas' {SearchGenreForm},
+  USearchPubHouseForm in 'USearchPubHouseForm.pas' {SearchPubHouseForm};
 
 {$R *.res}
 
@@ -21,6 +24,9 @@ begin
   Application.CreateForm(TAddEditBookForm, AddEditBookForm);
   Application.CreateForm(TAddEditGenreForm, AddEditGenreForm);
   Application.CreateForm(TSearchBookForm, SearchBookForm);
+  Application.CreateForm(TSearchFriendForm, SearchFriendForm);
+  Application.CreateForm(TSearchGenreForm, SearchGenreForm);
+  Application.CreateForm(TSearchPubHouseForm, SearchPubHouseForm);
   AddEditPubHouseForm.Hide;
   AddEditFriendForm.Hide;
   AddEditBookForm.Hide;

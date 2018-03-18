@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 243
-  Top = 121
+  Left = 290
+  Top = 97
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 945
     Height = 450
-    ActivePage = tsBooks
+    ActivePage = tsFriends
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -38,7 +38,7 @@ object MainForm: TMainForm
       object dbgridBorrowings: TDBGrid
         Left = 0
         Top = 0
-        Width = 790
+        Width = 931
         Height = 300
         Align = alTop
         DataSource = dsrcBorrowings
@@ -53,7 +53,7 @@ object MainForm: TMainForm
       object dbnavBorrowings: TDBNavigator
         Left = 0
         Top = 300
-        Width = 790
+        Width = 931
         Height = 25
         DataSource = dsrcBorrowings
         Align = alTop
@@ -291,6 +291,11 @@ object MainForm: TMainForm
           Top = 2
           Action = actRefreshFriends
         end
+        object btnSearchFriends: TToolButton
+          Left = 156
+          Top = 2
+          Action = actSearchFriend
+        end
       end
     end
     object tsGenres: TTabSheet
@@ -374,6 +379,11 @@ object MainForm: TMainForm
           Top = 2
           Action = actRefreshGenres
         end
+        object btnSearchGenre: TToolButton
+          Left = 156
+          Top = 2
+          Action = actSearchGenre
+        end
       end
     end
     object tsPubHouses: TTabSheet
@@ -456,6 +466,11 @@ object MainForm: TMainForm
           Top = 2
           Caption = 'refresh'
           ImageIndex = 3
+        end
+        object btnSearchPubHouse: TToolButton
+          Left = 156
+          Top = 2
+          Action = actSearchPubHouse
         end
       end
     end
@@ -995,6 +1010,11 @@ object MainForm: TMainForm
       ShortCut = 116
       OnExecute = actRefreshPubHousesExecute
     end
+    object actSearchPubHouse: TAction
+      Caption = 'actSearchPubHouse'
+      ImageIndex = 4
+      OnExecute = actSearchPubHouseExecute
+    end
   end
   object ibqUpdatePubHouses: TIBQuery
     Database = IBDatabase
@@ -1037,6 +1057,11 @@ object MainForm: TMainForm
       ImageIndex = 3
       ShortCut = 116
       OnExecute = actRefreshFriendsExecute
+    end
+    object actSearchFriend: TAction
+      Caption = 'actSearchFriend'
+      ImageIndex = 4
+      OnExecute = actSearchFriendExecute
     end
   end
   object ibqUpdateFriends: TIBQuery
@@ -1126,6 +1151,11 @@ object MainForm: TMainForm
       Caption = 'actRefreshGenres'
       ImageIndex = 3
       OnExecute = actRefreshGenresExecute
+    end
+    object actSearchGenre: TAction
+      Caption = 'actSearchGenre'
+      ImageIndex = 4
+      OnExecute = actSearchGenreExecute
     end
   end
   object ibqUpdateGenres: TIBQuery
