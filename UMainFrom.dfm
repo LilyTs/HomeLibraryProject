@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 290
-  Top = 97
+  Left = 266
+  Top = 139
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -1216,6 +1216,38 @@ object MainForm: TMainForm
   object dsrcGenresForBooks: TDataSource
     DataSet = ibqGenresForBook
     Left = 412
+    Top = 416
+  end
+  object ibqUpdateBookGenre: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransactionUpdateBookGenre
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 452
+    Top = 416
+  end
+  object IBTransactionUpdateBookGenre: TIBTransaction
+    Active = False
+    DefaultDatabase = IBDatabase
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    AutoStopAction = saNone
+    Left = 484
+    Top = 416
+  end
+  object ibqBooksGenres: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 524
+    Top = 416
+  end
+  object dsrcBooksGenres: TDataSource
+    DataSet = ibqBooksGenres
+    Left = 556
     Top = 416
   end
 end

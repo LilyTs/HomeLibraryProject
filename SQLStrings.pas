@@ -43,8 +43,9 @@ const
                 + 'WHERE WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';
 
   sqlGetGenresForBook = 'SELECT G.Name FROM BookGenre BG JOIN Genre G ON BG.Genre_id = G.Genre_id WHERE Book_id = :Book_id';
+  sqlGetBooksGenres = 'SELECT * FROM BookGenre';
   sqlInsertBookGenre = 'INSERT INTO BookGenre(Book_id, Genre_id) VALUES(:Book_id, :Genre_id)';
-  sqlDeleteBookGenre = 'DELETE FROM BookGenre WHERE Book_id = :Book_id';
+  sqlDeleteBookGenre = 'DELETE FROM BookGenre WHERE Book_id = :Book_id AND Genre_id = :Genre_id';
 
 implementation
 

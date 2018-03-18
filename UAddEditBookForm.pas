@@ -65,43 +65,63 @@ begin
 end;
 
 procedure TAddEditBookForm.btnSaveBookClick(Sender: TObject);
-var c: Integer;
+var i: Integer;
 begin
   if (edBookName.Text = '') or (edPubYear.Text = '') or (edAuthor.Text = '') or (cbPubHouse.ItemIndex < 0) then
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
-      with MainForm.ibqUpdateBooks do
-        begin
-          try
-            Close;
-            SQL.Clear;
-            if IsNew then
-              begin
-                SQL.Text := sqlInsertBook;
-              end
-            else
-              begin
-                SQL.Text := sqlEditBook;
-                ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
-              end;
-            ParamByName('Name').AsString := edBookName.Text;
-            ParamByName('Author').AsString := edAuthor.Text;
-            ParamByName('PicAuthor').AsString := edPicAuthor.Text;
-            ParamByName('Translator').AsString := edTranslator.Text;
-            ParamByName('PubYear').AsInteger := StrToInt(edPubYear.Text);
-            ParamByName('Comment').AsString := edBookComment.Text;
-            ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.Lookup('Name', cbPubHouse.Items[cbPubHouse.ItemIndex], 'PubHouse_id');
-            ExecSQL;
-            Transaction.Commit;
-            Transaction.Active := False;
-            MainForm.actRefreshBooksExecute(MainForm);
-          except on E: EIBInterBaseError do
+        try
+          with MainForm.ibqUpdateBooks do
             begin
-              if Transaction.Active then
-                Transaction.Rollback;
-              Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+              Close;
+              if IsNew then
+                begin
+                  SQL.Text := sqlInsertBook;
+                end
+              else
+                begin
+                  SQL.Text := sqlEditBook;
+                  ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+                end;
+              ParamByName('Name').AsString := edBookName.Text;
+              ParamByName('Author').AsString := edAuthor.Text;
+              ParamByName('PicAuthor').AsString := edPicAuthor.Text;
+              ParamByName('Translator').AsString := edTranslator.Text;
+              ParamByName('PubYear').AsInteger := StrToInt(edPubYear.Text);
+              ParamByName('Comment').AsString := edBookComment.Text;
+              ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.Lookup('Name', cbPubHouse.Items[cbPubHouse.ItemIndex], 'PubHouse_id');
+              ExecSQL;
+              Transaction.Commit;
+              Transaction.Active := False;
             end;
+          with MainForm.ibqUpdateBookGenre do
+            begin
+              Close;
+              if IsNew then
+                begin
+                  SQL.Text := sqlInsertBookGenre;
+                  ParamByName('Book_id').Value := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+                  for i := 0 to checklistGenres.Items.Count - 1 do
+                    begin
+                      if checklistGenres.Checked[i] then
+                        begin
+                          ParamByName('Genre_id').Value := MainForm.ibqGenres.Lookup('Name', checklistGenres.Items.ValueFromIndex[i] , 'Genre_id');
+                          ExecSQL;
+                        end;
+                    end;
+                  Transaction.Commit;
+                  Transaction.Active := False;
+                end;
+            end;
+          MainForm.actRefreshBooksExecute(MainForm);
+        except on E: EIBInterBaseError do
+          begin
+            if MainForm.ibqUpdateBooks.Transaction.Active then
+              MainForm.ibqUpdateBooks.Transaction.Rollback;
+            if MainForm.ibqUpdateBookGenre.Transaction.Active then
+              MainForm.ibqUpdateBookGenre.Transaction.Rollback;
+            Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
           end;
         end;
     end;
@@ -113,14 +133,14 @@ var i: Integer;
 begin
   cbPubHouse.Items.Clear;
   MainForm.ibqPubHouses.First;
-  for i := 0 to MainForm.ibqPubHouses.RecordCount - 1 do
+  while not MainForm.ibqPubHouses.Eof do
     begin
       cbPubHouse.Items.Add(MainForm.ibqPubHouses.Fields.Fields[1].Value);
       MainForm.ibqPubHouses.Next;
     end;
   checklistGenres.Clear;
   MainForm.ibqGenres.First;
-  for i := 0 to MainForm.dbgridGenres.FieldCount do//.ibqGenres.RecordCount do
+  while not MainForm.ibqGenres.Eof do
     begin
       checklistGenres.Items.Add(MainForm.ibqGenres.Fields.Fields[1].Value);
       MainForm.ibqGenres.Next;
@@ -143,6 +163,18 @@ begin
       edPicAuthor.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[5].Value;
       edTranslator.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[6].Value;
       edBookComment.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[7].Value;
+      with MainForm.ibqGenresForBook do
+        begin
+          Close;
+          SQL.Text := sqlGetGenresForBook;
+          ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+          Open;
+        end;   
+      for i := 0 to checklistGenres.Items.Count - 1 do
+        begin
+          if MainForm.ibqGenresForBook.Locate('Name', checklistGenres.Items.ValueFromIndex[i], [loPartialKey]) then  //почему-то checklistGenres.Items.ValueFromIndex[i] дает название без первой буквы 
+            checklistGenres.Checked[i] := True;
+        end;
     end;
 end;
 

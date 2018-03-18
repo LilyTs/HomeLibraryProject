@@ -101,6 +101,10 @@ type
     btnSearchPubHouse: TToolButton;
     actSearchGenre: TAction;
     btnSearchGenre: TToolButton;
+    ibqUpdateBookGenre: TIBQuery;
+    IBTransactionUpdateBookGenre: TIBTransaction;
+    ibqBooksGenres: TIBQuery;
+    dsrcBooksGenres: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -202,7 +206,11 @@ begin
         + 'ON B.PubHouse_id = PH.PubHouse_id';
         Open;
       end;}
-
+    with ibqBooksGenres do
+      begin
+        SQL.Text := sqlGetBooksGenres;
+        Open;
+      end;
     with ibqFriends do
       begin
         SQL.Text := sqlGetFriends;
@@ -231,6 +239,8 @@ begin
   ibqPubHouses.Close;
   ibqUpdateFriends.Close;
   ibqUpdatePubHouses.Close;
+  ibqBooksGenres.Close;
+  ibqGenresForBook.Close;
   IBDatabase.Connected := False;
   IBDatabase.Close;
 end;
