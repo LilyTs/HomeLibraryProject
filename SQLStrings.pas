@@ -34,7 +34,12 @@ const
   sqlEditGenre = 'UPDATE Genre SET Name = :Name, ParentGenre_id = :ParentGenre_id '
                 + 'WHERE Genre_id = :Genre_id';
 
-  sqlGetBorrowings = 'SELECT * FROM Borrowing';
+  sqlGetBorrowings = 'SELECT BK.Name, F.FIO, B.BorrowDate,'
+  + 'CASE B.IsLost WHEN True THEN ''+'' WHEN False THEN '''' END, '
+  + 'CASE B.IsDamaged WHEN True THEN ''+'' WHEN False THEN '''' END, '
+  + 'B.ReturnDate, B.Comment '
+  + 'FROM Borrowing B JOIN Friend F ON B.Friend_id = F.Friend_id '
+  + 'JOIN Book BK ON B.Book_id = BK.Book_id'; 
   sqlInsertBorrowings = 'INSERT INTO Borrowings VALUES(:Book_id, :Friend_id, :Borrowdate, '
                   + ':IsLost, :IsDamaged, :ReturnDate, :Comment)';
   sqlDeleteBorrowing = 'DELETE FROM Borrowing WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';

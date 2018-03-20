@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 266
-  Top = 139
+  Left = 250
+  Top = 182
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 945
     Height = 450
-    ActivePage = tsBooks
+    ActivePage = tsMain
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -49,6 +49,56 @@ object MainForm: TMainForm
         TitleFont.Height = -11
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'NAME'
+            Title.Caption = 'Book Name'
+            Width = 200
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'FIO'
+            Title.Caption = 'Friend'
+            Width = 200
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'BORROWDATE'
+            Title.Caption = 'Borrow Date'#13#10
+            Width = 80
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CASE'
+            Title.Caption = 'Is Lost'
+            Width = 50
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CASE1'
+            Title.Caption = 'Is Damaged'
+            Width = 70
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'RETURNDATE'
+            Title.Caption = 'Return Date'
+            Width = 80
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'COMMENT'
+            Title.Caption = 'Comment'
+            Width = 228
+            Visible = True
+          end>
       end
       object dbnavBorrowings: TDBNavigator
         Left = 0
@@ -518,6 +568,15 @@ object MainForm: TMainForm
     Transaction = IBTransaction
     BufferChunks = 1000
     CachedUpdates = False
+    SQL.Strings = (
+      'SELECT BK.NAME, F.FIO, B.BorrowDate,'
+      '  CASE B.IsLost WHEN True THEN '#39'+'#39' WHEN False THEN '#39#39' END, '
+      '  CASE B.IsDamaged WHEN True THEN '#39'+'#39' WHEN False THEN '#39#39' END,'
+      '  B.ReturnDate, B.Comment'
+      'FROM BORROWING B JOIN FRIEND F '
+      '   ON B.FRIEND_ID = F.FRIEND_ID'
+      '  JOIN BOOK BK '
+      '   ON B.BOOK_ID = BK.BOOK_ID;')
     Left = 160
     Top = 456
   end

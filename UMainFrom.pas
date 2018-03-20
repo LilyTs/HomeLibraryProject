@@ -165,14 +165,14 @@ begin
         SQL.Text := sqlGetGenres;
         Open;
       end; 
-    {with ibqBorrowings do
+    with ibqBorrowings do
       begin
         SQL.Text := sqlGetBorrowings;
         Open;
-      end;}
+      end;
     with ibqBooks do
       begin
-        SQL.Text := sqlGetBooksWithPubHouseName; //sqlGetBooks;
+        SQL.Text := sqlGetBooksWithPubHouseName;
         Open;
         First;
       end;
@@ -289,7 +289,7 @@ procedure TMainForm.actRefreshFriendsExecute(Sender: TObject);
 begin
   try
     ibqFriends.Close;
-    ibqFriends.SQL.Text := sqlGetFriends;           ////////????????/
+    ibqFriends.SQL.Text := sqlGetFriends;
     ibqFriends.Open;
   except on E: EIBInterBaseError do
     begin
@@ -302,7 +302,7 @@ procedure TMainForm.actRefreshPubHousesExecute(Sender: TObject);
 begin
   try
     ibqPubHouses.Close;
-    ibqPubHouses.SQL.Text := sqlGetPubHouses;      ////////////????????????????
+    ibqPubHouses.SQL.Text := sqlGetPubHouses;
     ibqPubHouses.Open;
   except on E: EIBInterBaseError do
     begin
