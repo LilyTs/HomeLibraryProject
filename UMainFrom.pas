@@ -144,6 +144,7 @@ type
     procedure actAddBorrowingExecute(Sender: TObject);
     procedure actRefreshBorrowingsExecute(Sender: TObject);
     procedure actEditBorrowingExecute(Sender: TObject);
+    procedure actDeleteBorrowingExecute(Sender: TObject);
   private
   
   public
@@ -498,6 +499,30 @@ procedure TMainForm.actEditBorrowingExecute(Sender: TObject);
 begin
   AddEditBorrowingForm.SetIsNew(False);
   AddEditBorrowingForm.Show;
+end;
+
+procedure TMainForm.actDeleteBorrowingExecute(Sender: TObject);
+begin
+  with ibqUpdateBorrowings do
+    begin
+      try
+        Close;
+        SQL.Text := sqlDeleteBorrowing;
+        ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
+        ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
+        ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
+        ExecSQL;
+        Transaction.Commit;
+        Transaction.Active := False;
+        MainForm.actRefreshBorrowingsExecute(self);
+      except on E: EIBInterBaseError do
+        begin
+          if Transaction.Active then
+            Transaction.Rollback;
+          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+        end;
+      end;
+    end;
 end;
 
 end.

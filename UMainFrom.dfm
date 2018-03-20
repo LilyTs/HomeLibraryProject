@@ -1359,6 +1359,7 @@ object MainForm: TMainForm
     end
     object actDeleteBorrowing: TAction
       Caption = 'actDeleteBorrowing'
+      OnExecute = actDeleteBorrowingExecute
     end
     object actEditBorrowing: TAction
       Caption = 'actEditBorrowing'
