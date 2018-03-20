@@ -11,7 +11,8 @@ uses
   USearchBookForm in 'USearchBookForm.pas' {SearchBookForm},
   USearchFriendForm in 'USearchFriendForm.pas' {SearchFriendForm},
   USearchGenreForm in 'USearchGenreForm.pas' {SearchGenreForm},
-  USearchPubHouseForm in 'USearchPubHouseForm.pas' {SearchPubHouseForm};
+  USearchPubHouseForm in 'USearchPubHouseForm.pas' {SearchPubHouseForm},
+  UAddEditBorrowingForm in 'UAddEditBorrowingForm.pas' {AddEditBorrowingForm};
 
 {$R *.res}
 
@@ -27,6 +28,7 @@ begin
   Application.CreateForm(TSearchFriendForm, SearchFriendForm);
   Application.CreateForm(TSearchGenreForm, SearchGenreForm);
   Application.CreateForm(TSearchPubHouseForm, SearchPubHouseForm);
+  Application.CreateForm(TAddEditBorrowingForm, AddEditBorrowingForm);
   AddEditPubHouseForm.Hide;
   AddEditFriendForm.Hide;
   AddEditBookForm.Hide;

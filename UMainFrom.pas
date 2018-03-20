@@ -105,6 +105,20 @@ type
     IBTransactionUpdateBookGenre: TIBTransaction;
     ibqBooksGenres: TIBQuery;
     dsrcBooksGenres: TDataSource;
+    toolBar2: TToolBar;
+    btnAddBorrowing: TToolButton;
+    btnDeleteBorrowing: TToolButton;
+    btnEditBorrowing: TToolButton;
+    btnRefreshBorrowings: TToolButton;
+    btnSearchBorrowings: TToolButton;
+    actListBorrowings: TActionList;
+    ibqUpdateBorrowings: TIBQuery;
+    IBTransactionUpdateBorrowings: TIBTransaction;
+    actAddBorrowing: TAction;
+    actDeleteBorrowing: TAction;
+    actEditBorrowing: TAction;
+    actRefreshBorrowings: TAction;
+    actSearchBorrowings: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -127,6 +141,7 @@ type
     procedure actSearchFriendExecute(Sender: TObject);
     procedure actSearchGenreExecute(Sender: TObject);
     procedure actSearchPubHouseExecute(Sender: TObject);
+    procedure actAddBorrowingExecute(Sender: TObject);
   private
   
   public
@@ -141,7 +156,7 @@ implementation
 
 uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
      UAddEditGenreForm, USearchBookForm, USearchFriendForm,
-  USearchGenreForm, USearchPubHouseForm;
+  USearchGenreForm, USearchPubHouseForm, UAddEditBorrowingForm;
 
 {$R *.dfm}
 
@@ -459,6 +474,12 @@ end;
 procedure TMainForm.actSearchPubHouseExecute(Sender: TObject);
 begin
   SearchPubHouseForm.Show;
+end;
+
+procedure TMainForm.actAddBorrowingExecute(Sender: TObject);
+begin
+  AddEditBorrowingForm.SetIsNew(True);
+  AddEditBorrowingForm.Show;
 end;
 
 end.

@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 250
-  Top = 182
+  Left = 209
+  Top = 122
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -37,7 +37,7 @@ object MainForm: TMainForm
       Caption = 'Main'
       object dbgridBorrowings: TDBGrid
         Left = 0
-        Top = 0
+        Top = 29
         Width = 931
         Height = 300
         Align = alTop
@@ -102,12 +102,53 @@ object MainForm: TMainForm
       end
       object dbnavBorrowings: TDBNavigator
         Left = 0
-        Top = 300
+        Top = 329
         Width = 931
         Height = 25
         DataSource = dsrcBorrowings
         Align = alTop
         TabOrder = 1
+      end
+      object toolBar2: TToolBar
+        Left = 0
+        Top = 0
+        Width = 931
+        Height = 29
+        ButtonHeight = 36
+        ButtonWidth = 39
+        Caption = 'toolBarPubHouses'
+        Images = ImageList
+        TabOrder = 2
+        object btnAddBorrowing: TToolButton
+          Left = 0
+          Top = 2
+          Action = actAddBorrowing
+          ImageIndex = 0
+        end
+        object btnDeleteBorrowing: TToolButton
+          Left = 39
+          Top = 2
+          Action = actDeleteBorrowing
+          ImageIndex = 1
+        end
+        object btnEditBorrowing: TToolButton
+          Left = 78
+          Top = 2
+          Action = actEditBorrowing
+          ImageIndex = 2
+        end
+        object btnRefreshBorrowings: TToolButton
+          Left = 117
+          Top = 2
+          Action = actRefreshBorrowings
+          ImageIndex = 3
+        end
+        object btnSearchBorrowings: TToolButton
+          Left = 156
+          Top = 2
+          Action = actSearchBorrowings
+          ImageIndex = 4
+        end
       end
     end
     object tsBooks: TTabSheet
@@ -1307,6 +1348,45 @@ object MainForm: TMainForm
   object dsrcBooksGenres: TDataSource
     DataSet = ibqBooksGenres
     Left = 556
+    Top = 416
+  end
+  object actListBorrowings: TActionList
+    Left = 596
+    Top = 416
+    object actAddBorrowing: TAction
+      Caption = 'actAddBorrowing'
+      OnExecute = actAddBorrowingExecute
+    end
+    object actDeleteBorrowing: TAction
+      Caption = 'actDeleteBorrowing'
+    end
+    object actEditBorrowing: TAction
+      Caption = 'actEditBorrowing'
+    end
+    object actRefreshBorrowings: TAction
+      Caption = 'actRefreshBorrowings'
+    end
+    object actSearchBorrowings: TAction
+      Caption = 'actSearchBorrowings'
+    end
+  end
+  object ibqUpdateBorrowings: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransactionUpdateBorrowings
+    BufferChunks = 1000
+    CachedUpdates = False
+    Left = 628
+    Top = 416
+  end
+  object IBTransactionUpdateBorrowings: TIBTransaction
+    Active = False
+    DefaultDatabase = IBDatabase
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    AutoStopAction = saNone
+    Left = 660
     Top = 416
   end
 end
