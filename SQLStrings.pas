@@ -41,10 +41,10 @@ const
     + 'FROM Borrowing B JOIN Friend F ON B.Friend_id = F.Friend_id '
     + 'JOIN Book BK ON B.Book_id = BK.Book_id'; 
   sqlInsertBorrowing = 'INSERT INTO Borrowing(Book_id, Friend_id, BorrowDate, IsLost, '
-    + 'IsDamaged, ReturnDate, Comment) VALUES(:Book_id, :Friend_id, CAST(:BorrowDate AS Date), '
-    + ':IsLost, :IsDamaged, CAST(:ReturnDate AS Date), :Comment)';
+    + 'IsDamaged, ReturnDate, Comment) VALUES(:Book_id, :Friend_id, :BorrowDate, '
+    + 'CASE :IsLost WHEN ''False'' THEN False ELSE True END, CASE :IsDamaged WHEN ''False'' THEN False ELSE True END, :ReturnDate, :Comment)';
   sqlDeleteBorrowing = 'DELETE FROM Borrowing WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';
-  sqlEditBorrowing = 'UPDATE Borrowing SET IsLost = :IsLost, IsDamaged = :IsDamaged, '
+  sqlEditBorrowing = 'UPDATE Borrowing SET IsLost = CASE :IsLost WHEN ''False'' THEN False ELSE True END, IsDamaged = CASE :IsDamaged WHEN ''False'' THEN False ELSE True END, '
     + 'ReturnDate = :ReturnDate, Comment = :Comment '
     + 'WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND BorrowDate = :BorrowDate';
 

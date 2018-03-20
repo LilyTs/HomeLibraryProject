@@ -2,7 +2,7 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
   Left = 401
   Top = 138
   BorderStyle = bsSingle
-  Caption = 'AddEditBorrowingForm'
+  Caption = 'Borrowing'
   ClientHeight = 434
   ClientWidth = 359
   Color = clBtnFace

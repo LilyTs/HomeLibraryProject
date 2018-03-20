@@ -64,7 +64,7 @@ begin
                 SQL.Text := sqlInsertBorrowing;
                 ParamByName('Book_id').AsInteger := MainForm.ibqBooks.Lookup('Name', cbBookNames.Items[cbBookNames.ItemIndex], 'Book_id');
                 ParamByName('Friend_id').AsInteger := MainForm.ibqFriends.Lookup('FIO', cbFriends.Items[cbFriends.ItemIndex], 'Friend_id');
-                ParamByName('BorrowDate').AsString := DateToStr(dtpBorrowDate.Date);
+                ParamByName('BorrowDate').AsDate := dtpBorrowDate.Date;
               end
             else
               begin
@@ -73,11 +73,11 @@ begin
                 ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
                 ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
               end;
-            ParamByName('IsLost').AsBoolean := chBoxIsLost.Checked;
-            ParamByName('IsDamaged').AsBoolean := chBoxIsDamaged.Checked;
-            ParamByName('ReturnDate').AsString := DateToStr(dtpReturnDate.Date);
+            ParamByName('IsLost').AsString := BoolToStr(chBoxIsLost.Checked, True);
+            ParamByName('IsDamaged').AsString := BoolToStr(chBoxIsDamaged.Checked, True);
+            ParamByName('ReturnDate').AsDate := dtpReturnDate.Date;
             ParamByName('Comment').AsString := memoComment.Text;
-            ExecSQL; //need to fix dynamic sql error: unknown sql data type!!!!
+            ExecSQL; 
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshBorrowingsExecute(MainForm);
@@ -116,6 +116,10 @@ begin
   if IsNew then
     begin
       memoComment.Lines.Clear;
+      cbBookNames.ItemIndex := -1;
+      cbFriends.ItemIndex := -1;
+      chBoxIsLost.Checked := False; 
+      chBoxIsDamaged.Checked := False;
     end
   else
     begin
