@@ -142,6 +142,8 @@ type
     procedure actSearchGenreExecute(Sender: TObject);
     procedure actSearchPubHouseExecute(Sender: TObject);
     procedure actAddBorrowingExecute(Sender: TObject);
+    procedure actRefreshBorrowingsExecute(Sender: TObject);
+    procedure actEditBorrowingExecute(Sender: TObject);
   private
   
   public
@@ -479,6 +481,22 @@ end;
 procedure TMainForm.actAddBorrowingExecute(Sender: TObject);
 begin
   AddEditBorrowingForm.SetIsNew(True);
+  AddEditBorrowingForm.Show;
+end;
+
+procedure TMainForm.actRefreshBorrowingsExecute(Sender: TObject);
+begin
+  with ibqBorrowings do
+    begin
+      Close;
+      SQL.Text := sqlGetBorrowings;
+      Open;
+    end;
+end;
+
+procedure TMainForm.actEditBorrowingExecute(Sender: TObject);
+begin
+  AddEditBorrowingForm.SetIsNew(False);
   AddEditBorrowingForm.Show;
 end;
 

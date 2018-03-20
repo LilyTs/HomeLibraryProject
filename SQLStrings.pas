@@ -32,20 +32,21 @@ const
   sqlInsertGenre = 'INSERT INTO Genre VALUES(null, :Name, :ParentGenre_id)';
   sqlDeleteGenre = 'DELETE FROM Genre WHERE Genre_id = :Genre_id';
   sqlEditGenre = 'UPDATE Genre SET Name = :Name, ParentGenre_id = :ParentGenre_id '
-                + 'WHERE Genre_id = :Genre_id';
+    + 'WHERE Genre_id = :Genre_id';
 
   sqlGetBorrowings = 'SELECT BK.Name, F.FIO, B.BorrowDate,'
-  + 'CASE B.IsLost WHEN True THEN ''+'' WHEN False THEN '''' END, '
-  + 'CASE B.IsDamaged WHEN True THEN ''+'' WHEN False THEN '''' END, '
-  + 'B.ReturnDate, B.Comment '
-  + 'FROM Borrowing B JOIN Friend F ON B.Friend_id = F.Friend_id '
-  + 'JOIN Book BK ON B.Book_id = BK.Book_id'; 
-  sqlInsertBorrowings = 'INSERT INTO Borrowings VALUES(:Book_id, :Friend_id, :Borrowdate, '
-                  + ':IsLost, :IsDamaged, :ReturnDate, :Comment)';
+    + 'CASE B.IsLost WHEN True THEN ''+'' WHEN False THEN '''' END, '
+    + 'CASE B.IsDamaged WHEN True THEN ''+'' WHEN False THEN '''' END, '
+    + 'B.ReturnDate, B.Comment '
+    + 'FROM Borrowing B JOIN Friend F ON B.Friend_id = F.Friend_id '
+    + 'JOIN Book BK ON B.Book_id = BK.Book_id'; 
+  sqlInsertBorrowing = 'INSERT INTO Borrowing(Book_id, Friend_id, BorrowDate, IsLost, '
+    + 'IsDamaged, ReturnDate, Comment) VALUES(:Book_id, :Friend_id, CAST(:BorrowDate AS Date), '
+    + ':IsLost, :IsDamaged, CAST(:ReturnDate AS Date), :Comment)';
   sqlDeleteBorrowing = 'DELETE FROM Borrowing WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';
   sqlEditBorrowing = 'UPDATE Borrowing SET IsLost = :IsLost, IsDamaged = :IsDamaged, '
-                + 'ReturnDate = :ReturnDate, Comment = :Comment '
-                + 'WHERE WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND Borrowdate = :BorrowDate';
+    + 'ReturnDate = :ReturnDate, Comment = :Comment '
+    + 'WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND BorrowDate = :BorrowDate';
 
   sqlGetGenresForBook = 'SELECT G.Name FROM BookGenre BG JOIN Genre G ON BG.Genre_id = G.Genre_id WHERE Book_id = :Book_id';
   sqlGetBooksGenres = 'SELECT * FROM BookGenre';

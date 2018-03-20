@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, CheckLst, ComCtrls;
+  Dialogs, StdCtrls, CheckLst, ComCtrls, UMainFrom, SQLStrings, IB;
 
 type
   TAddEditBorrowingForm = class(TForm)
@@ -23,6 +23,8 @@ type
     dtpBorrowDate: TDateTimePicker;
     memoComment: TMemo;
     procedure btnCancelBookClick(Sender: TObject);
+    procedure btnSaveBookClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     IsNew: Boolean;
   public
@@ -44,6 +46,84 @@ end;
 procedure TAddEditBorrowingForm.SetIsNew(New: Boolean);
 begin
   IsNew := New;
+end;
+
+procedure TAddEditBorrowingForm.btnSaveBookClick(Sender: TObject);
+begin
+  if IsNew and (cbBookNames.ItemIndex = -1) then
+    MessageDlg('Book name field can''t be empty!', mtError, [mbOk], 0)
+  else
+    if IsNew and (cbFriends.ItemIndex = -1) then
+      MessageDlg('Friend name field can''t be empty!', mtError, [mbOk], 0)
+    else  
+      with MainForm.ibqUpdateBorrowings do
+          try
+            Close;
+            if IsNew then
+              begin
+                SQL.Text := sqlInsertBorrowing;
+                ParamByName('Book_id').AsInteger := MainForm.ibqBooks.Lookup('Name', cbBookNames.Items[cbBookNames.ItemIndex], 'Book_id');
+                ParamByName('Friend_id').AsInteger := MainForm.ibqFriends.Lookup('FIO', cbFriends.Items[cbFriends.ItemIndex], 'Friend_id');
+                ParamByName('BorrowDate').AsString := DateToStr(dtpBorrowDate.Date);
+              end
+            else
+              begin
+                SQL.Text := sqlEditBorrowing;
+                ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
+                ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
+                ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
+              end;
+            ParamByName('IsLost').AsBoolean := chBoxIsLost.Checked;
+            ParamByName('IsDamaged').AsBoolean := chBoxIsDamaged.Checked;
+            ParamByName('ReturnDate').AsString := DateToStr(dtpReturnDate.Date);
+            ParamByName('Comment').AsString := memoComment.Text;
+            ExecSQL; //need to fix dynamic sql error: unknown sql data type!!!!
+            Transaction.Commit;
+            Transaction.Active := False;
+            MainForm.actRefreshBorrowingsExecute(MainForm);
+          except on E: EIBInterBaseError do
+            begin
+              if Transaction.Active then
+                Transaction.Rollback;
+              Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+            end;
+          end;
+    Self.Hide;
+end;
+
+procedure TAddEditBorrowingForm.FormShow(Sender: TObject);
+begin    
+  cbBookNames.Visible := IsNew;
+  cbFriends.Visible := IsNew;
+  dtpBorrowDate.Visible := IsNew;
+  lblBookName.Visible := IsNew;
+  lblFriend.Visible := IsNew;
+  lblBorrowDate.Visible := IsNew;
+  cbBookNames.Items.Clear;
+  MainForm.ibqBooks.First;
+  while not MainForm.ibqBooks.Eof do
+    begin
+      cbBookNames.Items.Add(MainForm.ibqBooks.Fields.Fields[1].Value);
+      MainForm.ibqBooks.Next;
+    end;
+  cbFriends.Items.Clear;
+  MainForm.ibqFriends.First;
+  while not MainForm.ibqFriends.Eof do
+    begin
+      cbFriends.Items.Add(MainForm.ibqFriends.Fields.Fields[1].Value);
+      MainForm.ibqFriends.Next;
+    end;
+  if IsNew then
+    begin
+      memoComment.Lines.Clear;
+    end
+  else
+    begin
+      chBoxIsLost.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[3].Value = '+');
+      chBoxIsDamaged.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[4].Value = '+');
+      dtpReturnDate.Date := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[5].Value;
+      memoComment.Text := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[6].Value;
+    end;
 end;
 
 end.

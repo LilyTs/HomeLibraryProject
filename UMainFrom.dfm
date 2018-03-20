@@ -1362,9 +1362,11 @@ object MainForm: TMainForm
     end
     object actEditBorrowing: TAction
       Caption = 'actEditBorrowing'
+      OnExecute = actEditBorrowingExecute
     end
     object actRefreshBorrowings: TAction
       Caption = 'actRefreshBorrowings'
+      OnExecute = actRefreshBorrowingsExecute
     end
     object actSearchBorrowings: TAction
       Caption = 'actSearchBorrowings'

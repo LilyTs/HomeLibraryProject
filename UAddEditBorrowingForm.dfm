@@ -1,6 +1,6 @@
 object AddEditBorrowingForm: TAddEditBorrowingForm
-  Left = 440
-  Top = 179
+  Left = 401
+  Top = 138
   BorderStyle = bsSingle
   Caption = 'AddEditBorrowingForm'
   ClientHeight = 434
@@ -12,6 +12,7 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lblBookName: TLabel
@@ -57,6 +58,7 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
     Caption = 'Save'
     Default = True
     TabOrder = 0
+    OnClick = btnSaveBookClick
   end
   object btnCancelBook: TButton
     Left = 208
@@ -106,7 +108,7 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
     Width = 240
     Height = 89
     Lines.Strings = (
-      'memoComment')
+      '')
     MaxLength = 150
     ParentShowHint = False
     ShowHint = False
