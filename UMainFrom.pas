@@ -378,7 +378,7 @@ begin
   with ibqGenres do
     begin
       Close;
-      SQL.Text := sqlGetGenres;          ///////////////???///////
+      SQL.Text := sqlGetGenres; 
       Open;
     end
 end;

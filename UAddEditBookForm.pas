@@ -93,26 +93,32 @@ begin
               ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.Lookup('Name', cbPubHouse.Items[cbPubHouse.ItemIndex], 'PubHouse_id');
               ExecSQL;
               Transaction.Commit;
-              Transaction.Active := False;
+              Transaction.Active := False; 
+              MainForm.actRefreshBooksExecute(MainForm);
+              MainForm.dbgridBooks.DataSource.DataSet.Locate('Name', edBookName.Text, []);
             end;
           with MainForm.ibqUpdateBookGenre do
             begin
               Close;
-              if IsNew then
+              if not IsNew then
                 begin
-                  SQL.Text := sqlInsertBookGenre;
+                  SQL.Text := sqlDeleteGenresForBook;
                   ParamByName('Book_id').Value := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
-                  for i := 0 to checklistGenres.Items.Count - 1 do
-                    begin
-                      if checklistGenres.Checked[i] then
-                        begin
-                          ParamByName('Genre_id').Value := MainForm.ibqGenres.Lookup('Name', checklistGenres.Items.ValueFromIndex[i] , 'Genre_id');
-                          ExecSQL;
-                        end;
-                    end;
-                  Transaction.Commit;
-                  Transaction.Active := False;
+                  ExecSQL;
                 end;
+              SQL.Text := sqlInsertBookGenre;
+              ParamByName('Book_id').Value := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+              for i := 0 to checklistGenres.Items.Count - 1 do
+                begin
+                  if checklistGenres.Checked[i] then
+                    begin
+                      ParamByName('Genre_id').Value := MainForm.ibqGenres.Lookup('Name', checklistGenres.Items[i] , 'Genre_id');
+                      if ParamByName('Genre_id').Value <> Null then
+                        ExecSQL;
+                    end;
+                end;
+              Transaction.Commit;
+              Transaction.Active := False;
             end;
           MainForm.actRefreshBooksExecute(MainForm);
         except on E: EIBInterBaseError do
@@ -172,7 +178,7 @@ begin
         end;   
       for i := 0 to checklistGenres.Items.Count - 1 do
         begin
-          if MainForm.ibqGenresForBook.Locate('Name', checklistGenres.Items.ValueFromIndex[i], [loPartialKey]) then  //почему-то checklistGenres.Items.ValueFromIndex[i] дает название без первой буквы 
+          if MainForm.ibqGenresForBook.Locate('Name', checklistGenres.Items[i], [loCaseInsensitive]) then
             checklistGenres.Checked[i] := True;
         end;
     end;

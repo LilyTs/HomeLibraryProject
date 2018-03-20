@@ -46,6 +46,7 @@ const
   sqlGetBooksGenres = 'SELECT * FROM BookGenre';
   sqlInsertBookGenre = 'INSERT INTO BookGenre(Book_id, Genre_id) VALUES(:Book_id, :Genre_id)';
   sqlDeleteBookGenre = 'DELETE FROM BookGenre WHERE Book_id = :Book_id AND Genre_id = :Genre_id';
+  sqlDeleteGenresForBook = 'DELETE FROM BookGenre WHERE Book_id = :Book_id';
 
 implementation
 
