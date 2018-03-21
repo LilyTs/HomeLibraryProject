@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 945
     Height = 450
-    ActivePage = tsMain
+    ActivePage = tsPubHouses
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11

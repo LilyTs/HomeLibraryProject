@@ -1,9 +1,10 @@
 object SearchPubHouseForm: TSearchPubHouseForm
   Left = 374
   Top = 227
-  Width = 334
-  Height = 250
+  BorderStyle = bsSingle
   Caption = 'Publishing Houses'
+  ClientHeight = 211
+  ClientWidth = 318
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,6 +27,7 @@ object SearchPubHouseForm: TSearchPubHouseForm
     Width = 75
     Height = 25
     Caption = 'Search'
+    Default = True
     TabOrder = 0
     OnClick = btnSearchPubHouseClick
   end
@@ -34,7 +36,8 @@ object SearchPubHouseForm: TSearchPubHouseForm
     Top = 152
     Width = 75
     Height = 25
-    Caption = 'btnCancelPubHouse'
+    Cancel = True
+    Caption = 'Cancel'
     TabOrder = 1
     OnClick = btnCancelPubHouseClick
   end

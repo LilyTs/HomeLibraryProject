@@ -45,7 +45,7 @@ begin
         MainForm.ibqPubHouses.Open;
 
         if edtNamePubHouse.Text = '' then
-          MessageDlg('Fields are not selected!', mtError, [mbOk], 0);
+          MessageDlg('The field is empty!', mtError, [mbOk], 0);
       except
         on E: EIBInterBaseError do
           begin

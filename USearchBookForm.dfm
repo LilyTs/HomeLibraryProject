@@ -3,7 +3,7 @@ object SearchBookForm: TSearchBookForm
   Top = 221
   BorderStyle = bsSingle
   Caption = 'Search Books'
-  ClientHeight = 281
+  ClientHeight = 339
   ClientWidth = 366
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -80,8 +80,8 @@ object SearchBookForm: TSearchBookForm
     TabOrder = 7
   end
   object btnSearchBook: TButton
-    Left = 72
-    Top = 232
+    Left = 32
+    Top = 288
     Width = 80
     Height = 25
     Caption = 'Search'
@@ -90,8 +90,8 @@ object SearchBookForm: TSearchBookForm
     OnClick = btnSearchBookClick
   end
   object btnCancel: TButton
-    Left = 208
-    Top = 232
+    Left = 240
+    Top = 288
     Width = 80
     Height = 25
     Cancel = True

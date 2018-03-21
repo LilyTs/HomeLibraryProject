@@ -1,9 +1,10 @@
 object SearchGenreForm: TSearchGenreForm
-  Left = 574
-  Top = 238
-  Width = 536
-  Height = 307
+  Left = 626
+  Top = 355
+  BorderStyle = bsSingle
   Caption = 'Genres'
+  ClientHeight = 268
+  ClientWidth = 520
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,6 +27,7 @@ object SearchGenreForm: TSearchGenreForm
     Width = 75
     Height = 25
     Caption = 'Search'
+    Default = True
     TabOrder = 0
     OnClick = btnSearchGenreClick
   end
@@ -34,6 +36,7 @@ object SearchGenreForm: TSearchGenreForm
     Top = 200
     Width = 75
     Height = 25
+    Cancel = True
     Caption = 'Cancel'
     TabOrder = 1
     OnClick = btnCancelGenreClick

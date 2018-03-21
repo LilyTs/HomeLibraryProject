@@ -1,9 +1,10 @@
 object SearchFriendForm: TSearchFriendForm
   Left = 519
   Top = 286
-  Width = 445
-  Height = 308
+  BorderStyle = bsSingle
   Caption = 'Friends'
+  ClientHeight = 269
+  ClientWidth = 429
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -64,6 +65,7 @@ object SearchFriendForm: TSearchFriendForm
     Width = 75
     Height = 25
     Caption = 'Search'
+    Default = True
     TabOrder = 6
     OnClick = btnSearchFriendClick
   end
@@ -72,6 +74,7 @@ object SearchFriendForm: TSearchFriendForm
     Top = 192
     Width = 75
     Height = 25
+    Cancel = True
     Caption = 'Cancel'
     TabOrder = 7
     OnClick = btnCancelFriendClick
