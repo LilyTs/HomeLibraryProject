@@ -114,6 +114,7 @@ object SearchBookForm: TSearchBookForm
     Height = 17
     Caption = 'Translator'
     TabOrder = 11
+    OnClick = cbTranslatorClick
   end
   object edtTranslator: TEdit
     Left = 192
@@ -136,5 +137,6 @@ object SearchBookForm: TSearchBookForm
     Height = 17
     Caption = 'Picture Author'
     TabOrder = 14
+    OnClick = cbPicAuthorClick
   end
 end

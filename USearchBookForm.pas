@@ -30,6 +30,8 @@ type
     procedure cbGenreClick(Sender: TObject);
     procedure btnSearchBookClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
+    procedure cbPicAuthorClick(Sender: TObject);
+    procedure cbTranslatorClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,6 +52,8 @@ begin
   edtSearchAuthor.Visible := False;
   edtSearchPubHouse.Visible := False;
   edtSearchGenre.Visible := False;
+  edtTranslator.Visible := False;
+  edtPicAutor.Visible := False;
 end;
 
 procedure TSearchBookForm.cbNameClick(Sender: TObject);
@@ -61,7 +65,7 @@ begin
 end;
 
 procedure TSearchBookForm.cbAuthorClick(Sender: TObject);
-begin     
+begin
   if cbAuthor.Checked then
     edtSearchAuthor.Visible := True
   else
@@ -168,6 +172,22 @@ end;
 procedure TSearchBookForm.btnCancelClick(Sender: TObject);
 begin
   Self.Hide;
+end;
+
+procedure TSearchBookForm.cbPicAuthorClick(Sender: TObject);
+begin
+  if cbPicAuthor.Checked then
+    edtPicAutorAuthor.Visible := True
+  else
+    edtPicAutorAuthor.Visible := False;
+end;
+
+procedure TSearchBookForm.cbTranslatorClick(Sender: TObject);
+begin
+  if cbTranslator.Checked then
+    edtTranslator.Visible := True
+  else
+    edtTranslator.Visible := False;
 end;
 
 end.
