@@ -18,6 +18,11 @@ type
     edtSearchGenre: TEdit;
     btnSearchBook: TButton;
     btnCancel: TButton;
+    cbYear: TCheckBox;
+    cbTranslator: TCheckBox;
+    edtTranslator: TEdit;
+    edtPicAutor: TEdit;
+    cbPicAuthor: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure cbNameClick(Sender: TObject);
     procedure cbAuthorClick(Sender: TObject);
@@ -102,6 +107,24 @@ begin
             end
           else
             MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Author LIKE ''%' + edtSearchAuthor.Text + '%''';
+
+        if cbPicAuthor.Checked then
+          if isFirst then
+            begin
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PicAuthor LIKE ''%' + edtPicAutorAuthor.Text + '%''';
+              isFirst := False;
+            end
+          else
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PicAuthor LIKE ''%' + edtPicAutorAuthor.Text + '%''';
+
+        if cbTranslator.Checked then
+          if isFirst then
+            begin
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Translator LIKE ''%' + edtTranslator.Text + '%''';
+              isFirst := False;
+            end
+          else
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Translator LIKE ''%' + edtTranslator.Text + '%''';
 
         if cbPubHouse.Checked then
           if isFirst then
