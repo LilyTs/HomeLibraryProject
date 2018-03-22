@@ -14,7 +14,6 @@ type
     edtSearchName: TEdit;
     edtSearchAuthor: TEdit;
     cbGenre: TCheckBox;
-    edtSearchPubHouse: TEdit;
     edtSearchGenre: TEdit;
     btnSearchBook: TButton;
     btnCancel: TButton;
@@ -23,6 +22,11 @@ type
     edtTranslator: TEdit;
     edtPicAutor: TEdit;
     cbPicAuthor: TCheckBox;
+    edtYearFrom: TEdit;
+    cbbPubHouse: TComboBox;
+    edtYearTo: TEdit;
+    lblYearFrom: TLabel;
+    lblYearTo: TLabel;
     procedure FormShow(Sender: TObject);
     procedure cbNameClick(Sender: TObject);
     procedure cbAuthorClick(Sender: TObject);
@@ -32,6 +36,8 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure cbPicAuthorClick(Sender: TObject);
     procedure cbTranslatorClick(Sender: TObject);
+    procedure cbYearClick(Sender: TObject);
+    procedure edtYearFromKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -54,6 +60,19 @@ begin
   edtSearchGenre.Visible := False;
   edtTranslator.Visible := False;
   edtPicAutor.Visible := False;
+  cbbPubHouse.Visible := False;
+  edtYearTo.Visible := False;
+  edtYearFrom.Visible := False;
+  lblYearTo.Visible := False;
+  lblYearFrom.Visible := False;
+  
+  cbbPubHouse.Items.Clear;
+  MainForm.ibqPubHouses.First;
+  while not MainForm.ibqPubHouses.Eof do
+    begin
+      cbbPubHouse.Items.Add(MainForm.ibqPubHouses.Fields.Fields[1].Value);
+      MainForm.ibqPubHouses.Next;
+    end;
 end;
 
 procedure TSearchBookForm.cbNameClick(Sender: TObject);
@@ -75,9 +94,9 @@ end;
 procedure TSearchBookForm.cbPubHouseClick(Sender: TObject);
 begin
   if cbPubHouse.Checked then
-    edtSearchPubHouse.Visible := True
+    cbbPubHouse.Visible := True
   else
-    edtSearchPubHouse.Visible := False;
+    cbbPubHouse.Visible := False;
 end;
 
 procedure TSearchBookForm.cbGenreClick(Sender: TObject);
@@ -134,12 +153,12 @@ begin
           if isFirst then
             begin
               MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouse_id =  ' +
-                IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));                    //////?????
+                MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
               isFirst := False;
             end
           else
             MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouse_id =  ' +
-              IntToStr(MainForm.ibqPubHouses.Lookup('Name', edtSearchPubHouse.Text, 'PubHouse_id'));
+              MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
 
         if cbGenre.Checked then
           if isFirst then
@@ -153,6 +172,44 @@ begin
             MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Book_id = (SELECT book_id FROM BookGenre '
             + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name LIKE ''%'
             + edtSearchGenre.Text + '%''))';
+
+        if cbYear.Checked then 
+          if isFirst then
+            begin
+              if edtYearFrom <> '' and edtYearTo <> '' then
+              begin
+                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
+                isFirst := False;
+              end
+              else if edtYearFrom <> '' then
+              begin
+                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear >= ' + edtYearFrom.Text;
+                isFirst := False;
+              end
+              else if edtYearTo <> '' then
+              begin
+                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear <= ' + edtYearTo.Text;
+                isFirst := False;
+              end
+            end
+          else 
+            begin
+              if edtYearFrom <> '' and edtYearTo <> '' then
+              begin
+                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
+                isFirst := False;
+              end
+              else if edtYearFrom <> '' then
+              begin
+                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear >= ' + edtYearFrom.Text;
+                isFirst := False;
+              end
+              else if edtYearTo <> '' then
+              begin
+                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear <= ' + edtYearTo.Text;
+                isFirst := False;
+              end
+            end
 
           MainForm.ibqBooks.Open;
 
@@ -188,6 +245,35 @@ begin
     edtTranslator.Visible := True
   else
     edtTranslator.Visible := False;
+end;
+
+procedure TSearchBookForm.cbYearClick(Sender: TObject);
+begin
+  if cbYear.Checked then
+  begin
+    edtYearTo.Visible := True;
+    edtYearFrom.Visible := True;
+    lblYearTo.Visible := True;
+    lblYearFrom.Visible := True;
+  end
+  else
+  begin
+    edtYearTo.Visible := False;
+    edtYearFrom.Visible := False;
+    lblYearTo.Visible := False;
+    lblYearFrom.Visible := False;
+  end
+end;
+
+procedure TSearchBookForm.edtYearFromKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  case Key of
+    '0'..'9': ; // цифра
+    #8 : ; // клавиша <Back Space>
+    // остальные символы запрещены
+    else Key := Chr(0); // символ не отображать
+  end;
 end;
 
 end.

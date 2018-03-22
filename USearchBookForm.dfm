@@ -3,7 +3,7 @@ object SearchBookForm: TSearchBookForm
   Top = 230
   BorderStyle = bsSingle
   Caption = 'Search Books'
-  ClientHeight = 351
+  ClientHeight = 392
   ClientWidth = 344
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,6 +15,32 @@ object SearchBookForm: TSearchBookForm
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object lblYearFrom: TLabel
+    Left = 32
+    Top = 304
+    Width = 32
+    Height = 20
+    Caption = 'from'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblYearTo: TLabel
+    Left = 200
+    Top = 304
+    Width = 14
+    Height = 20
+    Caption = 'to'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
   object cbName: TCheckBox
     Left = 32
     Top = 24
@@ -35,7 +61,7 @@ object SearchBookForm: TSearchBookForm
   end
   object cbPubHouse: TCheckBox
     Left = 32
-    Top = 184
+    Top = 224
     Width = 121
     Height = 17
     Caption = 'Publishing House'
@@ -58,45 +84,38 @@ object SearchBookForm: TSearchBookForm
   end
   object cbGenre: TCheckBox
     Left = 32
-    Top = 224
+    Top = 184
     Width = 97
     Height = 17
     Caption = 'Genre'
     TabOrder = 5
     OnClick = cbGenreClick
   end
-  object edtSearchPubHouse: TEdit
+  object edtSearchGenre: TEdit
     Left = 192
     Top = 184
     Width = 121
     Height = 21
     TabOrder = 6
   end
-  object edtSearchGenre: TEdit
-    Left = 192
-    Top = 224
-    Width = 121
-    Height = 21
-    TabOrder = 7
-  end
   object btnSearchBook: TButton
     Left = 32
-    Top = 312
+    Top = 352
     Width = 80
     Height = 25
     Caption = 'Search'
     Default = True
-    TabOrder = 8
+    TabOrder = 7
     OnClick = btnSearchBookClick
   end
   object btnCancel: TButton
     Left = 240
-    Top = 312
+    Top = 352
     Width = 80
     Height = 25
     Cancel = True
     Caption = 'Cancel'
-    TabOrder = 9
+    TabOrder = 8
     OnClick = btnCancelClick
   end
   object cbYear: TCheckBox
@@ -105,7 +124,8 @@ object SearchBookForm: TSearchBookForm
     Width = 97
     Height = 17
     Caption = 'Publication Year'
-    TabOrder = 10
+    TabOrder = 9
+    OnClick = cbYearClick
   end
   object cbTranslator: TCheckBox
     Left = 32
@@ -113,7 +133,7 @@ object SearchBookForm: TSearchBookForm
     Width = 97
     Height = 17
     Caption = 'Translator'
-    TabOrder = 11
+    TabOrder = 10
     OnClick = cbTranslatorClick
   end
   object edtTranslator: TEdit
@@ -121,14 +141,14 @@ object SearchBookForm: TSearchBookForm
     Top = 144
     Width = 121
     Height = 21
-    TabOrder = 12
+    TabOrder = 11
   end
   object edtPicAutor: TEdit
     Left = 192
     Top = 104
     Width = 121
     Height = 21
-    TabOrder = 13
+    TabOrder = 12
   end
   object cbPicAuthor: TCheckBox
     Left = 32
@@ -136,7 +156,31 @@ object SearchBookForm: TSearchBookForm
     Width = 97
     Height = 17
     Caption = 'Picture Author'
-    TabOrder = 14
+    TabOrder = 13
     OnClick = cbPicAuthorClick
+  end
+  object edtYearFrom: TEdit
+    Left = 96
+    Top = 304
+    Width = 73
+    Height = 21
+    TabOrder = 14
+    OnKeyPress = edtYearFromKeyPress
+  end
+  object cbbPubHouse: TComboBox
+    Left = 192
+    Top = 224
+    Width = 121
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 15
+  end
+  object edtYearTo: TEdit
+    Left = 240
+    Top = 304
+    Width = 73
+    Height = 21
+    TabOrder = 16
+    OnKeyPress = edtYearFromKeyPress
   end
 end
