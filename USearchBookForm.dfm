@@ -1,6 +1,6 @@
 object SearchBookForm: TSearchBookForm
-  Left = 941
-  Top = 192
+  Left = 1050
+  Top = 157
   BorderStyle = bsSingle
   Caption = 'Search Books'
   ClientHeight = 361

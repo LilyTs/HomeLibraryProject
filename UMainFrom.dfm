@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 133
-  Top = 128
+  Left = 58
+  Top = 110
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 525

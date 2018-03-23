@@ -18,6 +18,10 @@ type
     btnCancelFriend: TButton;
     procedure btnCancelFriendClick(Sender: TObject);
     procedure btnSearchFriendClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure chkNameFriendClick(Sender: TObject);
+    procedure chkPhoneFriendClick(Sender: TObject);
+    procedure chkCommentFriendClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,6 +86,40 @@ begin
       end;
     end;
   Self.Hide;
+end;
+
+procedure TSearchFriendForm.FormShow(Sender: TObject);
+begin
+  edtNameFriend.Visible := False;
+  edtPhoneFriend.Visible := False;
+  edtCommentFriend.Visible := False;
+  chkNameFriend.Checked := False;
+  chkPhoneFriend.Checked := False;
+  chkCommentFriend.Checked := False;
+end;
+
+procedure TSearchFriendForm.chkNameFriendClick(Sender: TObject);
+begin
+  if chkNameFriend.Checked then
+    edtNameFriend.Visible := True
+  else
+    edtNameFriend.Visible := False;
+end;
+
+procedure TSearchFriendForm.chkPhoneFriendClick(Sender: TObject);
+begin
+  if chkPhoneFriend.Checked then
+    edtPhoneFriend.Visible := True
+  else
+    edtPhoneFriend.Visible := False;
+end;
+
+procedure TSearchFriendForm.chkCommentFriendClick(Sender: TObject);
+begin
+  if chkCommentFriend.Checked then
+    edtCommentFriend.Visible := True
+  else
+    edtCommentFriend.Visible := False;
 end;
 
 end.

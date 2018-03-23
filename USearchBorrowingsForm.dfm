@@ -1,6 +1,6 @@
 object SearchBorrowingForm: TSearchBorrowingForm
-  Left = 522
-  Top = 262
+  Left = 1045
+  Top = 190
   BorderStyle = bsSingle
   Caption = 'Borrowings'
   ClientHeight = 334
@@ -12,11 +12,12 @@ object SearchBorrowingForm: TSearchBorrowingForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lblSearchBorrowDateFrom: TLabel
     Left = 128
-    Top = 216
+    Top = 232
     Width = 26
     Height = 16
     Caption = 'from'
@@ -29,7 +30,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object lblSearchBorrowDateTo: TLabel
     Left = 264
-    Top = 216
+    Top = 232
     Width = 11
     Height = 16
     Caption = 'to'
@@ -42,7 +43,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object lblSearchReturnDateFrom: TLabel
     Left = 128
-    Top = 168
+    Top = 184
     Width = 26
     Height = 16
     Caption = 'from'
@@ -55,7 +56,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object lblSearchReturnDateTo: TLabel
     Left = 264
-    Top = 168
+    Top = 184
     Width = 11
     Height = 16
     Caption = 'to'
@@ -77,7 +78,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object dtpSearchFrom: TDateTimePicker
     Left = 160
-    Top = 216
+    Top = 232
     Width = 89
     Height = 21
     Date = 43182.611451250000000000
@@ -95,7 +96,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object dtpSearchBorrowDateTo: TDateTimePicker
     Left = 280
-    Top = 216
+    Top = 232
     Width = 89
     Height = 21
     Date = 43182.613483229160000000
@@ -104,7 +105,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object chkSearchBorrowDate: TCheckBox
     Left = 24
-    Top = 216
+    Top = 232
     Width = 97
     Height = 17
     Caption = 'Borrow Date'
@@ -142,7 +143,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object dtpSearchBorrowReturnDateFrom: TDateTimePicker
     Left = 160
-    Top = 168
+    Top = 184
     Width = 89
     Height = 21
     Date = 43182.620157314810000000
@@ -151,7 +152,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object dtpSearchBorrowReturnDateTo: TDateTimePicker
     Left = 280
-    Top = 168
+    Top = 184
     Width = 89
     Height = 21
     Date = 43182.624575509260000000
@@ -160,10 +161,40 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object chkSearchReturnDate: TCheckBox
     Left = 24
-    Top = 168
+    Top = 184
     Width = 97
     Height = 17
     Caption = 'Return Date'
     TabOrder = 11
+  end
+  object chkSearchIsLost: TCheckBox
+    Left = 24
+    Top = 104
+    Width = 97
+    Height = 17
+    Caption = 'Is Lost'
+    TabOrder = 12
+  end
+  object chkSearchIsDamaged: TCheckBox
+    Left = 24
+    Top = 144
+    Width = 97
+    Height = 17
+    Caption = 'Is Damaged'
+    TabOrder = 13
+  end
+  object chkSearchLostTrue: TCheckBox
+    Left = 248
+    Top = 104
+    Width = 97
+    Height = 17
+    TabOrder = 14
+  end
+  object chkSearchIsDamagedTrue: TCheckBox
+    Left = 248
+    Top = 144
+    Width = 97
+    Height = 17
+    TabOrder = 15
   end
 end

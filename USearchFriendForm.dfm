@@ -13,6 +13,7 @@ object SearchFriendForm: TSearchFriendForm
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object chkNameFriend: TCheckBox
@@ -22,6 +23,7 @@ object SearchFriendForm: TSearchFriendForm
     Height = 17
     Caption = 'Name'
     TabOrder = 0
+    OnClick = chkNameFriendClick
   end
   object chkPhoneFriend: TCheckBox
     Left = 48
@@ -30,6 +32,7 @@ object SearchFriendForm: TSearchFriendForm
     Height = 17
     Caption = 'Phone'
     TabOrder = 1
+    OnClick = chkPhoneFriendClick
   end
   object chkCommentFriend: TCheckBox
     Left = 48
@@ -38,6 +41,7 @@ object SearchFriendForm: TSearchFriendForm
     Height = 17
     Caption = 'Comment'
     TabOrder = 2
+    OnClick = chkCommentFriendClick
   end
   object edtNameFriend: TEdit
     Left = 176
