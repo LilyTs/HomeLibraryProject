@@ -103,14 +103,14 @@ begin
   MainForm.ibqBooks.First;
   while not MainForm.ibqBooks.Eof do
     begin
-      cbBookNames.Items.Add(MainForm.ibqBooks.Fields.Fields[1].Value);
+      cbBookNames.Items.Add(MainForm.ibqBooks.FieldValues['Name']);
       MainForm.ibqBooks.Next;
     end;
   cbFriends.Items.Clear;
   MainForm.ibqFriends.First;
   while not MainForm.ibqFriends.Eof do
     begin
-      cbFriends.Items.Add(MainForm.ibqFriends.Fields.Fields[1].Value);
+      cbFriends.Items.Add(MainForm.ibqFriends.FieldValues['FIO']);
       MainForm.ibqFriends.Next;
     end;
   if IsNew then
@@ -123,10 +123,10 @@ begin
     end
   else
     begin
-      chBoxIsLost.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[3].Value = '+');
-      chBoxIsDamaged.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[4].Value = '+');
-      dtpReturnDate.Date := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[5].Value;
-      memoComment.Text := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[6].Value;
+      chBoxIsLost.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['IsLost'] = '+');
+      chBoxIsDamaged.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['IsDamaged'] = '+');
+      dtpReturnDate.Date := MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['ReturnDate'];
+      memoComment.Text := MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['Comment'];
     end;
 end;
 

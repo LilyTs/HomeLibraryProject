@@ -163,13 +163,13 @@ begin
     end
   else
     begin
-      edBookName.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[1].Value;
-      edAuthor.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[2].Value;
-      edPubYear.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[3].Value;
-      cbPubHouse.ItemIndex := cbPubHouse.Items.IndexOf(MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[4].Value);
-      edPicAuthor.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[5].Value;
-      edTranslator.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[6].Value;
-      edBookComment.Text := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[7].Value;
+      edBookName.Text := MainForm.dbgridBooks.DataSource.DataSet.FieldValues['Name'];
+      edAuthor.Text := MainForm.dbgridBooks.DataSource.DataSet.FieldValues['Author'];
+      edPubYear.Text := MainForm.dbgridBooks.DataSource.DataSet.FieldValues['PubYear'];
+      cbPubHouse.ItemIndex := cbPubHouse.Items.IndexOf(MainForm.dbgridBooks.DataSource.DataSet.FieldValues['PubHouseName']);
+      edPicAuthor.Text := MainForm.dbgridBooks.DataSource.DataSet.FieldValues['PicAuthor'];
+      edTranslator.Text := MainForm.dbgridBooks.DataSource.DataSet.FieldValues['Translator'];
+      edBookComment.Text := MainForm.dbgridBooks.DataSource.DataSet.FieldValues['Comment'];
       with MainForm.ibqGenresForBook do
         begin
           Close;

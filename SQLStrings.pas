@@ -20,6 +20,7 @@ const
                 + 'WHERE Friend_id = :Friend_id';
 
   sqlGetBooks = 'SELECT * FROM Book';
+  sqlGetBooksWithPubHouseAndGenres = 'SELECT * FROM GetBooksWithPubHouseAndGenres';
   sqlGetBooksWithPubHouseName = 'SELECT B.Book_id, B.Name, B.Author, B.PubYear, PH.Name AS PubHouseName, B.PicAuthor, B.Translator, B.Comment FROM Book B JOIN PublishingHouse PH ON B.PubHouse_id = PH.PubHouse_id';
   sqlInsertBook = 'INSERT INTO Book(Book_id, Name, Author, PicAuthor, Translator, PubYear, PubHouse_id, Comment) '
                     + 'VALUES(null, :Name, :Author, :PicAuthor, :Translator, :PubYear, :PubHouse_id, :Comment)';
@@ -35,8 +36,8 @@ const
     + 'WHERE Genre_id = :Genre_id';
 
   sqlGetBorrowings = 'SELECT BK.Name, F.FIO, B.BorrowDate,'
-    + 'CASE B.IsLost WHEN True THEN ''+'' WHEN False THEN '''' END, '
-    + 'CASE B.IsDamaged WHEN True THEN ''+'' WHEN False THEN '''' END, '
+    + 'CASE B.IsLost WHEN True THEN ''+'' WHEN False THEN '''' END AS IsLost, '
+    + 'CASE B.IsDamaged WHEN True THEN ''+'' WHEN False THEN '''' END AS IsDamaged, '
     + 'B.ReturnDate, B.Comment '
     + 'FROM Borrowing B JOIN Friend F ON B.Friend_id = F.Friend_id '
     + 'JOIN Book BK ON B.Book_id = BK.Book_id'; 

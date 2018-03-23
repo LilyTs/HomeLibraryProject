@@ -1,10 +1,10 @@
 object MainForm: TMainForm
-  Left = 209
-  Top = 122
+  Left = 245
+  Top = 106
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
-  ClientWidth = 945
+  ClientWidth = 1037
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object MainForm: TMainForm
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 945
+    Width = 1041
     Height = 450
     ActivePage = tsBooks
     Font.Charset = DEFAULT_CHARSET
@@ -38,7 +38,7 @@ object MainForm: TMainForm
       object dbgridBorrowings: TDBGrid
         Left = 0
         Top = 29
-        Width = 931
+        Width = 1027
         Height = 300
         Align = alTop
         DataSource = dsrcBorrowings
@@ -73,14 +73,14 @@ object MainForm: TMainForm
           end
           item
             Expanded = False
-            FieldName = 'CASE'
+            FieldName = 'ISLOST'
             Title.Caption = 'Is Lost'
             Width = 50
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'CASE1'
+            FieldName = 'ISDAMAGED'
             Title.Caption = 'Is Damaged'
             Width = 70
             Visible = True
@@ -96,14 +96,14 @@ object MainForm: TMainForm
             Expanded = False
             FieldName = 'COMMENT'
             Title.Caption = 'Comment'
-            Width = 228
+            Width = 323
             Visible = True
           end>
       end
       object dbnavBorrowings: TDBNavigator
         Left = 0
         Top = 329
-        Width = 931
+        Width = 1027
         Height = 25
         DataSource = dsrcBorrowings
         Align = alTop
@@ -112,7 +112,7 @@ object MainForm: TMainForm
       object toolBar2: TToolBar
         Left = 0
         Top = 0
-        Width = 931
+        Width = 1027
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -158,11 +158,11 @@ object MainForm: TMainForm
       object dbgridBooks: TDBGrid
         Left = 0
         Top = 29
-        Width = 931
+        Width = 1027
         Height = 300
         Align = alTop
         DataSource = dsrcBooks
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -228,15 +228,15 @@ object MainForm: TMainForm
           end
           item
             Expanded = False
-            FieldName = 'Genres'
-            Width = 120
+            FieldName = 'GENRES'
+            Width = 500
             Visible = True
           end>
       end
       object dbnavBooks: TDBNavigator
         Left = 0
         Top = 329
-        Width = 931
+        Width = 1027
         Height = 25
         DataSource = dsrcBooks
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
@@ -246,7 +246,7 @@ object MainForm: TMainForm
       object toolBarBooks: TToolBar
         Left = 0
         Top = 0
-        Width = 931
+        Width = 1027
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -287,7 +287,7 @@ object MainForm: TMainForm
       object dbgridFriends: TDBGrid
         Left = 0
         Top = 29
-        Width = 931
+        Width = 1027
         Height = 300
         Align = alTop
         DataSource = dsrcFriends
@@ -345,7 +345,7 @@ object MainForm: TMainForm
       object dbnavFriends: TDBNavigator
         Left = 0
         Top = 329
-        Width = 931
+        Width = 1027
         Height = 25
         DataSource = dsrcFriends
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
@@ -355,7 +355,7 @@ object MainForm: TMainForm
       object toolBarFriends: TToolBar
         Left = 0
         Top = 0
-        Width = 931
+        Width = 1027
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -396,7 +396,7 @@ object MainForm: TMainForm
       object dbgridGenres: TDBGrid
         Left = 0
         Top = 29
-        Width = 931
+        Width = 1027
         Height = 300
         Align = alTop
         DataSource = dsrcGenres
@@ -433,7 +433,7 @@ object MainForm: TMainForm
       object dbnavGenres: TDBNavigator
         Left = 0
         Top = 329
-        Width = 931
+        Width = 1027
         Height = 25
         DataSource = dsrcGenres
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
@@ -443,7 +443,7 @@ object MainForm: TMainForm
       object toolBarGenres: TToolBar
         Left = 0
         Top = 0
-        Width = 931
+        Width = 1027
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -484,7 +484,7 @@ object MainForm: TMainForm
       object dbgridPubHouses: TDBGrid
         Left = 0
         Top = 29
-        Width = 931
+        Width = 1027
         Height = 300
         Align = alTop
         DataSource = dsrcPubHouses
@@ -516,7 +516,7 @@ object MainForm: TMainForm
       object dbnavPubHouses: TDBNavigator
         Left = 0
         Top = 325
-        Width = 796
+        Width = 1024
         Height = 25
         DataSource = dsrcPubHouses
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
@@ -527,7 +527,7 @@ object MainForm: TMainForm
       object toolBarPubHouses: TToolBar
         Left = 0
         Top = 0
-        Width = 931
+        Width = 1027
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
@@ -611,8 +611,12 @@ object MainForm: TMainForm
     CachedUpdates = False
     SQL.Strings = (
       'SELECT BK.NAME, F.FIO, B.BorrowDate,'
-      '  CASE B.IsLost WHEN True THEN '#39'+'#39' WHEN False THEN '#39#39' END, '
-      '  CASE B.IsDamaged WHEN True THEN '#39'+'#39' WHEN False THEN '#39#39' END,'
+      
+        '  CASE B.IsLost WHEN True THEN '#39'+'#39' WHEN False THEN '#39#39' END AS IsL' +
+        'ost, '
+      
+        '  CASE B.IsDamaged WHEN True THEN '#39'+'#39' WHEN False THEN '#39#39' END AS ' +
+        'IsDamaged,'
       '  B.ReturnDate, B.Comment'
       'FROM BORROWING B JOIN FRIEND F '
       '   ON B.FRIEND_ID = F.FRIEND_ID'
@@ -637,7 +641,7 @@ object MainForm: TMainForm
     BufferChunks = 1000
     CachedUpdates = False
     SQL.Strings = (
-      'select * from BOOK')
+      'select * from GetBooksWithPubHouseAndGenres;')
     Left = 232
     Top = 456
   end

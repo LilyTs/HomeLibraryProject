@@ -191,40 +191,10 @@ begin
       end;
     with ibqBooks do
       begin
-        SQL.Text := sqlGetBooksWithPubHouseName;
+        SQL.Text := sqlGetBooksWithPubHouseAndGenres;
         Open;
         First;
       end;
-    {str := '''';
-    with ibqGenresForBook do
-      begin
-        SQL.Text := sqlGetGenresForBook;
-        for i := 0 to ibqBooks.RecordCount - 1 do
-          begin
-            ParamByName('Book_id').AsInteger := ibqBooks.Fields.Fields[0].Value;
-            Open;
-            First;
-            str := str + ibqGenresForBook.Fields[0].Value;
-            Next;
-            for j := 1 to ibqGenresForBook.RecordCount - 1 do
-              begin
-                str := str + ', ' + ibqGenresForBook.Fields[0].Value;
-                Next;
-              end;
-            ibqBooks.Next;
-          end;
-
-      end;
-    str := str + '''';
-    with ibqBooks do
-      begin
-        SQL.Text := 'SELECT B.Book_id, B.Name, B.Author, B.PubYear, '
-        + 'PH.Name AS PubHouseName, B.PicAuthor, B.Translator, B.Comment, '
-        + str
-        + ' AS Genres  FROM Book B JOIN PublishingHouse PH '
-        + 'ON B.PubHouse_id = PH.PubHouse_id';
-        Open;
-      end;}
     with ibqBooksGenres do
       begin
         SQL.Text := sqlGetBooksGenres;
@@ -418,7 +388,7 @@ begin
   with ibqBooks do
     begin
       Close;
-      SQL.Text := sqlGetBooksWithPubHouseName;
+      SQL.Text := sqlGetBooksWithPubHouseAndGenres;
       Open;
     end;
 end;

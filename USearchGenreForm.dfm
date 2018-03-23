@@ -2,7 +2,7 @@ object SearchGenreForm: TSearchGenreForm
   Left = 359
   Top = 283
   BorderStyle = bsSingle
-  Caption = 'Search Genres'
+  Caption = 'Get'
   ClientHeight = 124
   ClientWidth = 323
   Color = clBtnFace
