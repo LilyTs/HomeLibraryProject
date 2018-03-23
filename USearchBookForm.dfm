@@ -1,9 +1,9 @@
 object SearchBookForm: TSearchBookForm
-  Left = 903
-  Top = 230
+  Left = 941
+  Top = 192
   BorderStyle = bsSingle
   Caption = 'Search Books'
-  ClientHeight = 405
+  ClientHeight = 361
   ClientWidth = 387
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,27 +17,27 @@ object SearchBookForm: TSearchBookForm
   PixelsPerInch = 96
   TextHeight = 13
   object lblYearFrom: TLabel
-    Left = 32
-    Top = 304
-    Width = 32
-    Height = 20
+    Left = 152
+    Top = 264
+    Width = 26
+    Height = 16
     Caption = 'from'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
   end
   object lblYearTo: TLabel
-    Left = 200
-    Top = 304
-    Width = 14
-    Height = 20
+    Left = 272
+    Top = 264
+    Width = 11
+    Height = 16
     Caption = 'to'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
@@ -100,8 +100,8 @@ object SearchBookForm: TSearchBookForm
     TabOrder = 6
   end
   object btnSearchBook: TButton
-    Left = 64
-    Top = 352
+    Left = 32
+    Top = 320
     Width = 80
     Height = 25
     Caption = 'Search'
@@ -110,8 +110,8 @@ object SearchBookForm: TSearchBookForm
     OnClick = btnSearchBookClick
   end
   object btnCancel: TButton
-    Left = 176
-    Top = 352
+    Left = 280
+    Top = 320
     Width = 80
     Height = 25
     Cancel = True
@@ -161,8 +161,8 @@ object SearchBookForm: TSearchBookForm
     OnClick = cbPicAuthorClick
   end
   object edtYearFrom: TEdit
-    Left = 96
-    Top = 304
+    Left = 184
+    Top = 264
     Width = 73
     Height = 21
     TabOrder = 14
@@ -177,8 +177,8 @@ object SearchBookForm: TSearchBookForm
     TabOrder = 15
   end
   object edtYearTo: TEdit
-    Left = 240
-    Top = 304
+    Left = 288
+    Top = 264
     Width = 73
     Height = 21
     TabOrder = 16

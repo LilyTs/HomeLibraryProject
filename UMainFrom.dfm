@@ -1,9 +1,9 @@
 object MainForm: TMainForm
-  Left = 209
-  Top = 122
+  Left = 133
+  Top = 128
   BorderStyle = bsSingle
   Caption = 'My Library'
-  ClientHeight = 534
+  ClientHeight = 525
   ClientWidth = 945
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 945
     Height = 450
-    ActivePage = tsBooks
+    ActivePage = tsMain
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -146,8 +146,7 @@ object MainForm: TMainForm
         object btnSearchBorrowings: TToolButton
           Left = 156
           Top = 2
-          Action = actSearchBorrowings
-          ImageIndex = 4
+          Action = actSearchGenre
         end
       end
     end
@@ -1371,6 +1370,7 @@ object MainForm: TMainForm
     end
     object actSearchBorrowings: TAction
       Caption = 'actSearchBorrowings'
+      OnExecute = actSearchBorrowingsExecute
     end
   end
   object ibqUpdateBorrowings: TIBQuery
