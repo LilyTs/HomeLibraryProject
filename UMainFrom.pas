@@ -145,6 +145,7 @@ type
     procedure actRefreshBorrowingsExecute(Sender: TObject);
     procedure actEditBorrowingExecute(Sender: TObject);
     procedure actDeleteBorrowingExecute(Sender: TObject);
+    procedure actSearchBorrowingsExecute(Sender: TObject);
   private
   
   public
@@ -160,7 +161,7 @@ implementation
 uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
      UAddEditGenreForm, USearchBookForm, USearchFriendForm,
   USearchGenreForm, USearchPubHouseForm, UAddEditBorrowingForm,
-  UAddEditPubHouseForm1;
+  UAddEditPubHouseForm1, USearchBorrowingsForm;
 
 {$R *.dfm}
 
@@ -500,6 +501,11 @@ begin
         end;
       end;
     end;
+end;
+
+procedure TMainForm.actSearchBorrowingsExecute(Sender: TObject);
+begin
+  SearchBorrowingForm.Show;
 end;
 
 end.

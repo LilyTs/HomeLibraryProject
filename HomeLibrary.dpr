@@ -12,7 +12,8 @@ uses
   USearchGenreForm in 'USearchGenreForm.pas' {SearchGenreForm},
   USearchPubHouseForm in 'USearchPubHouseForm.pas' {SearchPubHouseForm},
   UAddEditBorrowingForm in 'UAddEditBorrowingForm.pas' {AddEditBorrowingForm},
-  UAddEditPubHouseForm in 'UAddEditPubHouseForm.pas' {AddEditPubHouseForm};
+  UAddEditPubHouseForm in 'UAddEditPubHouseForm.pas' {AddEditPubHouseForm},
+  USearchBorrowingsForm in 'USearchBorrowingsForm.pas' {SearchBorrowingForm};
 
 {$R *.res}
 
@@ -21,6 +22,7 @@ begin
   Application.Title := 'My Library';
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TAddEditPubHouseForm, AddEditPubHouseForm);
+  Application.CreateForm(TSearchBorrowingForm, SearchBorrowingForm);
   Application.ShowMainForm := True;
   Application.CreateForm(TAddEditFriendForm, AddEditFriendForm);
   Application.CreateForm(TAddEditBookForm, AddEditBookForm);

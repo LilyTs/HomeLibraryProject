@@ -64,7 +64,15 @@ begin
   edtYearFrom.Visible := False;
   lblYearTo.Visible := False;
   lblYearFrom.Visible := False;
-  
+
+  cbName.Checked := False;
+  cbAuthor.Checked := False;
+  cbPicAuthor.Checked := False;
+  cbTranslator.Checked := False;
+  cbGenre.Checked := False;
+  cbPubHouse.Checked := False;
+  cbYear.Checked := False;
+
   cbbPubHouse.Items.Clear;
   MainForm.ibqPubHouses.First;
   while not MainForm.ibqPubHouses.Eof do
