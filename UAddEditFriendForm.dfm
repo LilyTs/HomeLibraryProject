@@ -1,6 +1,6 @@
 object AddEditFriendForm: TAddEditFriendForm
-  Left = 457
-  Top = 205
+  Left = 744
+  Top = 53
   BorderStyle = bsSingle
   Caption = 'Friend'
   ClientHeight = 285

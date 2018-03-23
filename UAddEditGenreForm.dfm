@@ -1,6 +1,6 @@
 object AddEditGenreForm: TAddEditGenreForm
-  Left = 461
-  Top = 292
+  Left = 419
+  Top = 374
   BorderStyle = bsSingle
   Caption = 'Genre'
   ClientHeight = 165
@@ -12,6 +12,7 @@ object AddEditGenreForm: TAddEditGenreForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

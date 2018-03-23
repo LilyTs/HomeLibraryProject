@@ -3,8 +3,8 @@ object SearchBookForm: TSearchBookForm
   Top = 230
   BorderStyle = bsSingle
   Caption = 'Search Books'
-  ClientHeight = 392
-  ClientWidth = 344
+  ClientHeight = 405
+  ClientWidth = 387
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +12,7 @@ object SearchBookForm: TSearchBookForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -69,16 +70,16 @@ object SearchBookForm: TSearchBookForm
     OnClick = cbPubHouseClick
   end
   object edtSearchName: TEdit
-    Left = 192
+    Left = 160
     Top = 24
-    Width = 121
+    Width = 200
     Height = 21
     TabOrder = 3
   end
   object edtSearchAuthor: TEdit
-    Left = 192
+    Left = 160
     Top = 64
-    Width = 121
+    Width = 200
     Height = 21
     TabOrder = 4
   end
@@ -92,14 +93,14 @@ object SearchBookForm: TSearchBookForm
     OnClick = cbGenreClick
   end
   object edtSearchGenre: TEdit
-    Left = 192
+    Left = 160
     Top = 184
-    Width = 121
+    Width = 200
     Height = 21
     TabOrder = 6
   end
   object btnSearchBook: TButton
-    Left = 32
+    Left = 64
     Top = 352
     Width = 80
     Height = 25
@@ -109,7 +110,7 @@ object SearchBookForm: TSearchBookForm
     OnClick = btnSearchBookClick
   end
   object btnCancel: TButton
-    Left = 240
+    Left = 176
     Top = 352
     Width = 80
     Height = 25
@@ -137,16 +138,16 @@ object SearchBookForm: TSearchBookForm
     OnClick = cbTranslatorClick
   end
   object edtTranslator: TEdit
-    Left = 192
+    Left = 160
     Top = 144
-    Width = 121
+    Width = 200
     Height = 21
     TabOrder = 11
   end
   object edtPicAutor: TEdit
-    Left = 192
+    Left = 160
     Top = 104
-    Width = 121
+    Width = 200
     Height = 21
     TabOrder = 12
   end
@@ -168,9 +169,9 @@ object SearchBookForm: TSearchBookForm
     OnKeyPress = edtYearFromKeyPress
   end
   object cbbPubHouse: TComboBox
-    Left = 192
+    Left = 160
     Top = 224
-    Width = 121
+    Width = 200
     Height = 21
     ItemHeight = 13
     TabOrder = 15

@@ -1,10 +1,10 @@
 object SearchFriendForm: TSearchFriendForm
-  Left = 519
-  Top = 286
+  Left = 525
+  Top = 344
   BorderStyle = bsSingle
-  Caption = 'Friends'
-  ClientHeight = 269
-  ClientWidth = 429
+  Caption = 'Search Friends'
+  ClientHeight = 235
+  ClientWidth = 396
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +12,7 @@ object SearchFriendForm: TSearchFriendForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   PixelsPerInch = 96
   TextHeight = 13
   object chkNameFriend: TCheckBox
@@ -39,29 +40,29 @@ object SearchFriendForm: TSearchFriendForm
     TabOrder = 2
   end
   object edtNameFriend: TEdit
-    Left = 240
+    Left = 176
     Top = 40
-    Width = 121
+    Width = 200
     Height = 21
     TabOrder = 3
   end
   object edtPhoneFriend: TEdit
-    Left = 240
-    Top = 88
-    Width = 121
+    Left = 176
+    Top = 80
+    Width = 200
     Height = 21
     TabOrder = 4
   end
   object edtCommentFriend: TEdit
-    Left = 240
+    Left = 176
     Top = 128
-    Width = 121
+    Width = 200
     Height = 21
     TabOrder = 5
   end
   object btnSearchFriend: TButton
-    Left = 48
-    Top = 200
+    Left = 96
+    Top = 184
     Width = 75
     Height = 25
     Caption = 'Search'
@@ -70,8 +71,8 @@ object SearchFriendForm: TSearchFriendForm
     OnClick = btnSearchFriendClick
   end
   object btnCancelFriend: TButton
-    Left = 288
-    Top = 192
+    Left = 208
+    Top = 184
     Width = 75
     Height = 25
     Cancel = True

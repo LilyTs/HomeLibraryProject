@@ -91,6 +91,7 @@ begin
               ParamByName('PubYear').AsInteger := StrToInt(edPubYear.Text);
               ParamByName('Comment').AsString := edBookComment.Text;
               ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.Lookup('Name', cbPubHouse.Items[cbPubHouse.ItemIndex], 'PubHouse_id');
+              Transaction.Active := True;
               ExecSQL;
               Transaction.Commit;
               Transaction.Active := False; 

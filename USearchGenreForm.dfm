@@ -1,10 +1,10 @@
 object SearchGenreForm: TSearchGenreForm
-  Left = 626
-  Top = 355
+  Left = 359
+  Top = 283
   BorderStyle = bsSingle
-  Caption = 'Genres'
-  ClientHeight = 268
-  ClientWidth = 520
+  Caption = 'Search Genres'
+  ClientHeight = 124
+  ClientWidth = 323
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,18 +12,19 @@ object SearchGenreForm: TSearchGenreForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   PixelsPerInch = 96
   TextHeight = 13
   object lblNameGenre: TLabel
-    Left = 80
-    Top = 88
-    Width = 28
+    Left = 24
+    Top = 24
+    Width = 31
     Height = 13
-    Caption = 'Name'
+    Caption = 'Name:'
   end
   object btnSearchGenre: TButton
-    Left = 96
-    Top = 200
+    Left = 64
+    Top = 72
     Width = 75
     Height = 25
     Caption = 'Search'
@@ -32,8 +33,8 @@ object SearchGenreForm: TSearchGenreForm
     OnClick = btnSearchGenreClick
   end
   object btnCancelGenre: TButton
-    Left = 328
-    Top = 200
+    Left = 176
+    Top = 72
     Width = 75
     Height = 25
     Cancel = True
@@ -42,9 +43,9 @@ object SearchGenreForm: TSearchGenreForm
     OnClick = btnCancelGenreClick
   end
   object edtNameGenre: TEdit
-    Left = 216
-    Top = 96
-    Width = 121
+    Left = 64
+    Top = 24
+    Width = 240
     Height = 21
     TabOrder = 2
   end

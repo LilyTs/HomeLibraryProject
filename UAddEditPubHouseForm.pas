@@ -4,17 +4,17 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, IB, IBCustomDataSet, IBDatabase, IBQuery, UMainFrom, SQLStrings;
+  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB;
 
 type
   TAddEditPubHouseForm = class(TForm)
-    edPubHouseName: TEdit;
     lblPubHouseName: TLabel;
+    edPubHouseName: TEdit;
     btnSavePubHouse: TButton;
     btnCancelPubHouse: TButton;
-    procedure btnSavePubHouseClick(Sender: TObject);
-    procedure btnCancelPubHouseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnCancelPubHouseClick(Sender: TObject);
+    procedure btnSavePubHouseClick(Sender: TObject);
   private
     IsNew: Boolean;
   public
@@ -28,7 +28,23 @@ implementation
 
 {$R *.dfm}
 
-{ TAddEditPubHouseForm }
+procedure TAddEditPubHouseForm.FormShow(Sender: TObject);
+begin
+  if IsNew then
+    edPubHouseName.Clear
+  else
+    edPubHouseName.Text := MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[1].Value;
+end;
+
+procedure TAddEditPubHouseForm.SetIsNew(New: Boolean);
+begin
+  IsNew := New;
+end;
+
+procedure TAddEditPubHouseForm.btnCancelPubHouseClick(Sender: TObject);
+begin
+  Hide;
+end;
 
 procedure TAddEditPubHouseForm.btnSavePubHouseClick(Sender: TObject);
 begin
@@ -64,24 +80,6 @@ begin
         end;
     end;
     Self.Hide;
-end;
-
-procedure TAddEditPubHouseForm.btnCancelPubHouseClick(Sender: TObject);
-begin
-  Self.Hide;
-end;
-
-procedure TAddEditPubHouseForm.SetIsNew(New: Boolean);
-begin
-  IsNew := New;
-end;
-
-procedure TAddEditPubHouseForm.FormShow(Sender: TObject);
-begin
-  if IsNew then
-    edPubHouseName.Clear
-  else
-    edPubHouseName.Text := MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[1].Value;
 end;
 
 end.

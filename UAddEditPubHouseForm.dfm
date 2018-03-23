@@ -1,10 +1,10 @@
 object AddEditPubHouseForm: TAddEditPubHouseForm
-  Left = 550
-  Top = 294
+  Left = 849
+  Top = 261
   BorderStyle = bsSingle
   Caption = 'Publishing House'
-  ClientHeight = 128
-  ClientWidth = 242
+  ClientHeight = 123
+  ClientWidth = 271
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,27 +12,26 @@ object AddEditPubHouseForm: TAddEditPubHouseForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDefault
-  Visible = True
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lblPubHouseName: TLabel
-    Left = 16
+    Left = 32
     Top = 24
     Width = 31
     Height = 13
     Caption = 'Name:'
   end
   object edPubHouseName: TEdit
-    Left = 56
+    Left = 72
     Top = 24
     Width = 169
     Height = 21
     TabOrder = 0
   end
   object btnSavePubHouse: TButton
-    Left = 24
+    Left = 40
     Top = 72
     Width = 80
     Height = 25
@@ -42,7 +41,7 @@ object AddEditPubHouseForm: TAddEditPubHouseForm
     OnClick = btnSavePubHouseClick
   end
   object btnCancelPubHouse: TButton
-    Left = 136
+    Left = 152
     Top = 72
     Width = 80
     Height = 25

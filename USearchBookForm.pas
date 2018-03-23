@@ -56,11 +56,10 @@ procedure TSearchBookForm.FormShow(Sender: TObject);
 begin
   edtSearchName.Visible := False;
   edtSearchAuthor.Visible := False;
-  edtSearchPubHouse.Visible := False;
+  cbbPubHouse.Visible := False;
   edtSearchGenre.Visible := False;
   edtTranslator.Visible := False;
   edtPicAutor.Visible := False;
-  cbbPubHouse.Visible := False;
   edtYearTo.Visible := False;
   edtYearFrom.Visible := False;
   lblYearTo.Visible := False;
@@ -134,11 +133,11 @@ begin
         if cbPicAuthor.Checked then
           if isFirst then
             begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PicAuthor LIKE ''%' + edtPicAutorAuthor.Text + '%''';
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PicAuthor LIKE ''%' + edtPicAutor.Text + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PicAuthor LIKE ''%' + edtPicAutorAuthor.Text + '%''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PicAuthor LIKE ''%' + edtPicAutor.Text + '%''';
 
         if cbTranslator.Checked then
           if isFirst then
@@ -153,12 +152,12 @@ begin
           if isFirst then
             begin
               MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouse_id =  ' +
-                MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
+                MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id');
               isFirst := False;
             end
           else
             MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouse_id =  ' +
-              MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
+              MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id');
 
         if cbGenre.Checked then
           if isFirst then
@@ -176,17 +175,17 @@ begin
         if cbYear.Checked then 
           if isFirst then
             begin
-              if edtYearFrom <> '' and edtYearTo <> '' then
+              if (edtYearFrom.Text <> '') and (edtYearTo.Text <> '') then
               begin
                 MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
                 isFirst := False;
               end
-              else if edtYearFrom <> '' then
+              else if edtYearFrom.Text <> '' then
               begin
                 MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear >= ' + edtYearFrom.Text;
                 isFirst := False;
               end
-              else if edtYearTo <> '' then
+              else if edtYearTo.Text <> '' then
               begin
                 MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear <= ' + edtYearTo.Text;
                 isFirst := False;
@@ -194,22 +193,22 @@ begin
             end
           else 
             begin
-              if edtYearFrom <> '' and edtYearTo <> '' then
+              if (edtYearFrom.Text <> '') and (edtYearTo.Text <> '') then
               begin
                 MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
                 isFirst := False;
               end
-              else if edtYearFrom <> '' then
+              else if edtYearFrom.Text <> '' then
               begin
                 MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear >= ' + edtYearFrom.Text;
                 isFirst := False;
               end
-              else if edtYearTo <> '' then
+              else if edtYearTo.Text <> '' then
               begin
                 MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear <= ' + edtYearTo.Text;
                 isFirst := False;
               end
-            end
+            end;
 
           MainForm.ibqBooks.Open;
 
@@ -234,9 +233,9 @@ end;
 procedure TSearchBookForm.cbPicAuthorClick(Sender: TObject);
 begin
   if cbPicAuthor.Checked then
-    edtPicAutorAuthor.Visible := True
+    edtPicAutor.Visible := True
   else
-    edtPicAutorAuthor.Visible := False;
+    edtPicAutor.Visible := False;
 end;
 
 procedure TSearchBookForm.cbTranslatorClick(Sender: TObject);

@@ -159,7 +159,8 @@ implementation
 
 uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
      UAddEditGenreForm, USearchBookForm, USearchFriendForm,
-  USearchGenreForm, USearchPubHouseForm, UAddEditBorrowingForm;
+  USearchGenreForm, USearchPubHouseForm, UAddEditBorrowingForm,
+  UAddEditPubHouseForm1;
 
 {$R *.dfm}
 
@@ -168,7 +169,7 @@ var IniFile: TIniFile;
     i, j: Integer;
     str: String;
 begin
-  //ApplicationEvents.OnIdle := MyIdle;
+  ApplicationEvents.OnIdle := MyIdle;
   try
     IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
     try
@@ -264,7 +265,7 @@ begin
 end;
 
 procedure TMainForm.actAddPubHouseExecute(Sender: TObject);
-begin  
+begin
   AddEditPubHouseForm.SetIsNew(True);
   AddEditPubHouseForm.Show;
 end;
@@ -430,10 +431,16 @@ begin
   actSearchBook.Enabled := actDeleteBook.Enabled;
   actDeleteFriend.Enabled := not ibqFriends.IsEmpty;
   actEditFriend.Enabled := actDeleteFriend.Enabled;
+  actSearchFriend.Enabled := actDeleteFriend.Enabled;
   actDeleteGenre.Enabled := not ibqGenres.IsEmpty;
   actEditGenre.Enabled := actDeleteGenre.Enabled;
+  actSearchGenre.Enabled := actDeleteGenre.Enabled;
   actDeletePubHouse.Enabled := not ibqPubHouses.IsEmpty;
   actEditPubHouse.Enabled := actDeletePubHouse.Enabled;
+  actSearchPubHouse.Enabled := actDeletePubHouse.Enabled;
+  actDeleteBorrowing.Enabled := not ibqBorrowings.IsEmpty;
+  actEditBorrowing.Enabled := actDeleteBorrowing.Enabled;
+  actSearchBorrowings.Enabled := actDeleteBorrowing.Enabled;
 end;
 
 procedure TMainForm.actDeleteBookExecute(Sender: TObject);
