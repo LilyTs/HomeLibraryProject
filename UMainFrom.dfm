@@ -1,19 +1,10 @@
 object MainForm: TMainForm
-<<<<<<< HEAD
   Left = 245
   Top = 106
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
   ClientWidth = 1037
-=======
-  Left = 58
-  Top = 110
-  BorderStyle = bsSingle
-  Caption = 'My Library'
-  ClientHeight = 525
-  ClientWidth = 945
->>>>>>> 7b1e95688d0b3b3d782a7d5c6f67043f67b2ed4c
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
