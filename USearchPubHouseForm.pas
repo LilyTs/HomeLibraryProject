@@ -14,6 +14,7 @@ type
     edtNamePubHouse: TEdit;
     procedure btnCancelPubHouseClick(Sender: TObject);
     procedure btnSearchPubHouseClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,6 +56,12 @@ begin
       end;
     end;
   Self.Hide;
+end;
+
+procedure TSearchPubHouseForm.FormShow(Sender: TObject);
+begin
+  edtNamePubHouse.Clear;
+  edtNamePubHouse.SetFocus;
 end;
 
 end.

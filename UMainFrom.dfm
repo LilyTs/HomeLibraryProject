@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 245
-  Top = 106
+  Left = 272
+  Top = 97
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-    ActivePage = tsMain
+    ActivePage = tsFriends
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -146,7 +146,8 @@ object MainForm: TMainForm
         object btnSearchBorrowings: TToolButton
           Left = 156
           Top = 2
-          Action = actSearchGenre
+          Action = actSearchBorrowings
+          ImageIndex = 4
         end
       end
     end

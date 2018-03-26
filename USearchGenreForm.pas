@@ -14,6 +14,7 @@ type
     edtNameGenre: TEdit;
     procedure btnCancelGenreClick(Sender: TObject);
     procedure btnSearchGenreClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,6 +56,12 @@ begin
       end;
     end;
   Self.Hide;
+end;
+
+procedure TSearchGenreForm.FormShow(Sender: TObject);
+begin
+  edtNameGenre.Clear;
+  edtNameGenre.SetFocus;
 end;
 
 end.
