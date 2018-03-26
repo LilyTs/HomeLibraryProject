@@ -1,11 +1,6 @@
 object MainForm: TMainForm
-<<<<<<< HEAD
   Left = 218
   Top = 139
-=======
-  Left = 272
-  Top = 97
->>>>>>> c67e0e9b021124fea13bf0d5b90a2e614e6d62f0
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -26,11 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-<<<<<<< HEAD
-    ActivePage = tsPubHouses
-=======
     ActivePage = tsFriends
->>>>>>> c67e0e9b021124fea13bf0d5b90a2e614e6d62f0
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -156,10 +147,7 @@ object MainForm: TMainForm
           Left = 156
           Top = 2
           Action = actSearchBorrowings
-<<<<<<< HEAD
-=======
           ImageIndex = 4
->>>>>>> c67e0e9b021124fea13bf0d5b90a2e614e6d62f0
         end
       end
     end
