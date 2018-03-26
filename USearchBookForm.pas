@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, IB, SQLStrings;
+  Dialogs, StdCtrls, UMainFrom, IB, SQLStrings, StrUtils;
 
 type
   TSearchBookForm = class(TForm)
@@ -131,10 +131,10 @@ begin
       try
         isFirst := True;
         MainForm.ibqBooks.Close;
-        MainForm.ibqBooks.SQL.Text := sqlGetBooks;
+        MainForm.ibqBooks.SQL.Text := sqlGetBooksWithPubHouseAndGenres;
         if cbName.Checked then
           begin
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE LOWER(Name) LIKE ''%' + LowerCase(edtSearchName.Text) + '%''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE LOWER(Name) LIKE ''%' + AnsiLowerCase(edtSearchName.Text) + '%''';
             isFirst := False;
           end;
 
@@ -168,26 +168,24 @@ begin
         if cbPubHouse.Checked then
           if isFirst then
             begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouse_id =  ' +
-                IntToStr(MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouseName = ''' +
+                MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'Name') + '''';
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouse_id =  ' +
-              IntToStr(MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouseName =  ' +
+              MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'Name');
 
         if cbGenre.Checked then
           if isFirst then
             begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Book_id = (SELECT book_id FROM BookGenre '
-              + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name LIKE ''%'
-              + edtSearchGenre.Text + '%''))';
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE LOWER(Genres) LIKE ''%'
+                + AnsiLowerCase(edtSearchGenre.Text) + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Book_id = (SELECT book_id FROM BookGenre '
-            + 'WHERE Genre_id = (SELECT Genre_id FROM Genre WHERE Name LIKE ''%'
-            + edtSearchGenre.Text + '%''))';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND LOWER(Genres) LIKE ''%'
+              + AnsiLowerCase(edtSearchGenre.Text) + '%''';
 
         if cbYear.Checked then 
           if isFirst then

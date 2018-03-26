@@ -100,9 +100,6 @@ begin
   edtNameFriend.Clear;
   edtPhoneFriend.Clear;
   edtCommentFriend.Clear;
-  chkNameFriend.Clear;
-  chkPhoneFriend.Clear;
-  chkCommentFriend.Clear;
 end;
 
 procedure TSearchFriendForm.chkNameFriendClick(Sender: TObject);
