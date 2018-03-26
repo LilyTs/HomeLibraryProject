@@ -65,6 +65,15 @@ begin
   lblYearTo.Visible := False;
   lblYearFrom.Visible := False;
 
+  edtSearchName.Clear;
+  edtSearchAuthor.Clear;
+  cbbPubHouse.Clear;
+  edtSearchGenre.Clear;
+  edtTranslator.Clear;
+  edtPicAutor.Clear;
+  edtYearTo.Clear;
+  edtYearFrom.Clear;
+
   cbName.Checked := False;
   cbAuthor.Checked := False;
   cbPicAuthor.Checked := False;
@@ -125,7 +134,7 @@ begin
         MainForm.ibqBooks.SQL.Text := sqlGetBooks;
         if cbName.Checked then
           begin
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Name LIKE ''%' + edtSearchName.Text + '%''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE LOWER(Name) LIKE ''%' + LowerCase(edtSearchName.Text) + '%''';
             isFirst := False;
           end;
 

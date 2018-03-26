@@ -1,6 +1,6 @@
 object SearchBorrowingForm: TSearchBorrowingForm
-  Left = 1045
-  Top = 190
+  Left = 933
+  Top = 154
   BorderStyle = bsSingle
   Caption = 'Borrowings'
   ClientHeight = 334
