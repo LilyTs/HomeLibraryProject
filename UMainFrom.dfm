@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 245
-  Top = 106
+  Left = 218
+  Top = 139
   BorderStyle = bsSingle
   Caption = 'My Library'
   ClientHeight = 534
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-    ActivePage = tsMain
+    ActivePage = tsPubHouses
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -109,14 +109,14 @@ object MainForm: TMainForm
         Align = alTop
         TabOrder = 1
       end
-      object toolBar2: TToolBar
+      object toolBarBorrowings: TToolBar
         Left = 0
         Top = 0
         Width = 1027
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
-        Caption = 'toolBarPubHouses'
+        Caption = 'toolBarBorrowings'
         Images = ImageList
         TabOrder = 2
         object btnAddBorrowing: TToolButton
@@ -146,7 +146,7 @@ object MainForm: TMainForm
         object btnSearchBorrowings: TToolButton
           Left = 156
           Top = 2
-          Action = actSearchGenre
+          Action = actSearchBorrowings
         end
       end
     end
@@ -154,84 +154,6 @@ object MainForm: TMainForm
       BorderWidth = 3
       Caption = 'Books'
       ImageIndex = 1
-      object dbgridBooks: TDBGrid
-        Left = 0
-        Top = 29
-        Width = 1027
-        Height = 300
-        Align = alTop
-        DataSource = dsrcBooks
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
-        TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'MS Sans Serif'
-        TitleFont.Style = []
-        Columns = <
-          item
-            Expanded = False
-            FieldName = 'BOOK_ID'
-            Title.Caption = 'Book ID'
-            Width = 45
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'NAME'
-            Title.Caption = 'Name'
-            Width = 150
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'AUTHOR'
-            Title.Caption = 'Author'
-            Width = 100
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'PUBYEAR'
-            Title.Caption = 'Publication Year'
-            Width = 83
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'PUBHOUSEName'
-            Title.Caption = 'Publication House'
-            Width = 104
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'PICAUTHOR'
-            Title.Caption = 'Picture author'
-            Width = 100
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'TRANSLATOR'
-            Title.Caption = 'Translator'
-            Width = 100
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'COMMENT'
-            Title.Caption = 'Comment'
-            Width = 100
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'GENRES'
-            Width = 500
-            Visible = True
-          end>
-      end
       object dbnavBooks: TDBNavigator
         Left = 0
         Top = 329
@@ -240,7 +162,7 @@ object MainForm: TMainForm
         DataSource = dsrcBooks
         VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
         Align = alTop
-        TabOrder = 1
+        TabOrder = 0
       end
       object toolBarBooks: TToolBar
         Left = 0
@@ -251,7 +173,7 @@ object MainForm: TMainForm
         ButtonWidth = 39
         Caption = 'toolBarPubHouses'
         Images = ImageList
-        TabOrder = 2
+        TabOrder = 1
         object btnAddBook: TToolButton
           Left = 0
           Top = 2
@@ -277,6 +199,85 @@ object MainForm: TMainForm
           Top = 2
           Action = actSearchBook
         end
+      end
+      object dbgridBooks: TDBGrid
+        Left = 0
+        Top = 29
+        Width = 1027
+        Height = 300
+        Align = alTop
+        DataSource = dsrcBooks
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+        TabOrder = 2
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'BOOK_ID'
+            Title.Caption = 'ID'
+            Width = 30
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NAME'
+            Title.Caption = 'Name'
+            Width = 140
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'AUTHOR'
+            Title.Caption = 'Author'
+            Width = 105
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'PUBYEAR'
+            Title.Caption = 'Publication Year'
+            Width = 85
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'PUBHOUSENAME'
+            Title.Caption = 'Publishing House'
+            Width = 90
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'PICAUTHOR'
+            Title.Caption = 'Picture Author'
+            Width = 105
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'TRANSLATOR'
+            Title.Caption = 'Translator'
+            Width = 105
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'COMMENT'
+            Title.Caption = 'Comment'
+            Width = 120
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'GENRES'
+            Title.Caption = 'Genres'
+            Width = 223
+            Visible = True
+          end>
       end
     end
     object tsFriends: TTabSheet
@@ -358,7 +359,7 @@ object MainForm: TMainForm
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
-        Caption = 'toolBarPubHouses'
+        Caption = 'toolBarFriends'
         Images = ImageList
         TabOrder = 2
         object btnAddFriend: TToolButton
@@ -446,7 +447,7 @@ object MainForm: TMainForm
         Height = 29
         ButtonHeight = 36
         ButtonWidth = 39
-        Caption = 'toolBarPubHouses'
+        Caption = 'toolBarGenres'
         Images = ImageList
         TabOrder = 2
         object btnAddGenre: TToolButton
@@ -554,8 +555,7 @@ object MainForm: TMainForm
         object btnRefreshPubHouses: TToolButton
           Left = 117
           Top = 2
-          Caption = 'refresh'
-          ImageIndex = 3
+          Action = actRefreshPubHouses
         end
         object btnSearchPubHouse: TToolButton
           Left = 156
@@ -1374,6 +1374,7 @@ object MainForm: TMainForm
     end
     object actSearchBorrowings: TAction
       Caption = 'actSearchBorrowings'
+      ImageIndex = 4
       OnExecute = actSearchBorrowingsExecute
     end
   end

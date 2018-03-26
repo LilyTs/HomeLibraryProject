@@ -160,12 +160,12 @@ begin
           if isFirst then
             begin
               MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubHouse_id =  ' +
-                MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id');
+                IntToStr(MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
               isFirst := False;
             end
           else
             MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouse_id =  ' +
-              MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id');
+              IntToStr(MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'PubHouse_id'));
 
         if cbGenre.Checked then
           if isFirst then

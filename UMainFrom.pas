@@ -35,7 +35,6 @@ type
     dbgridBorrowings: TDBGrid;
     dbnavBorrowings: TDBNavigator;
     tsBooks: TTabSheet;
-    dbgridBooks: TDBGrid;
     dbnavBooks: TDBNavigator;
     tsFriends: TTabSheet;
     dbgridFriends: TDBGrid;
@@ -105,7 +104,7 @@ type
     IBTransactionUpdateBookGenre: TIBTransaction;
     ibqBooksGenres: TIBQuery;
     dsrcBooksGenres: TDataSource;
-    toolBar2: TToolBar;
+    toolBarBorrowings: TToolBar;
     btnAddBorrowing: TToolButton;
     btnDeleteBorrowing: TToolButton;
     btnEditBorrowing: TToolButton;
@@ -119,6 +118,7 @@ type
     actEditBorrowing: TAction;
     actRefreshBorrowings: TAction;
     actSearchBorrowings: TAction;
+    dbgridBooks: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);

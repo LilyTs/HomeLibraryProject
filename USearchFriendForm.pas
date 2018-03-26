@@ -51,7 +51,7 @@ begin
         MainForm.ibqFriends.SQL.Text := sqlGetFriends;
         if chkNameFriend.Checked then
           begin
-            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE LIKE ''%' + edtNameFriend.Text + '%''';
+            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE FIO LIKE ''%' + edtNameFriend.Text + '%''';
             isFirst := False;
           end;
 

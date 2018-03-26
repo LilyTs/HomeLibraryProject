@@ -1,9 +1,9 @@
 object SearchBookForm: TSearchBookForm
-  Left = 1050
-  Top = 157
+  Left = 735
+  Top = 111
   BorderStyle = bsSingle
   Caption = 'Search Books'
-  ClientHeight = 361
+  ClientHeight = 365
   ClientWidth = 387
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET

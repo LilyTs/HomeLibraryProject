@@ -119,8 +119,8 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
     Top = 224
     Width = 240
     Height = 21
-    Date = 43179.754420231480000000
-    Time = 43179.754420231480000000
+    Date = 0.754420231482072300
+    Time = 0.754420231482072300
     TabOrder = 7
   end
   object dtpBorrowDate: TDateTimePicker
@@ -128,8 +128,8 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
     Top = 104
     Width = 240
     Height = 21
-    Date = 43179.754420231480000000
-    Time = 43179.754420231480000000
+    Date = 0.754420231482072300
+    Time = 0.754420231482072300
     TabOrder = 4
   end
 end

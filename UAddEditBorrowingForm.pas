@@ -92,7 +92,9 @@ begin
 end;
 
 procedure TAddEditBorrowingForm.FormShow(Sender: TObject);
-begin    
+begin
+  dtpBorrowDate.Date := Now;
+  dtpReturnDate.Date := Now; 
   cbBookNames.Visible := IsNew;
   cbFriends.Visible := IsNew;
   dtpBorrowDate.Visible := IsNew;
