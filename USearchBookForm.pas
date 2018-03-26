@@ -173,8 +173,8 @@ begin
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouseName =  ' +
-              MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'Name');
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubHouseName = ''' +
+                MainForm.ibqPubHouses.Lookup('Name', cbbPubHouse.Items[cbbPubHouse.ItemIndex], 'Name') + '''';
 
         if cbGenre.Checked then
           if isFirst then
