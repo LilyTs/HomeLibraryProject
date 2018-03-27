@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, UMainFrom, IB, SQLStrings, StdCtrls;
+  Dialogs, UMainFrom, IB, SQLStrings, StdCtrls, StrUtils;
 
 type
   TSearchFriendForm = class(TForm)
@@ -51,7 +51,7 @@ begin
         MainForm.ibqFriends.SQL.Text := sqlGetFriends;
         if chkNameFriend.Checked then
           begin
-            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE FIO LIKE ''%' + edtNameFriend.Text + '%''';
+            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE LOWER(FIO) LIKE ''%' + AnsiLowerCase(edtNameFriend.Text) + '%''';
             isFirst := False;
           end;
 
@@ -67,11 +67,11 @@ begin
         if chkCommentFriend.Checked then
           if isFirst then
             begin
-              MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE Comment LIKE ''%' + edtCommentFriend.Text + '%''';
+              MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' WHERE LOWER(Comment) LIKE ''%' + AnsiLowerCase(edtCommentFriend.Text) + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' AND Comment LIKE ''%' + edtCommentFriend.Text + '%''';
+            MainForm.ibqFriends.SQL.Text := MainForm.ibqFriends.SQL.Text + ' AND LOWER(Comment) LIKE ''%' + AnsiLowerCase(edtCommentFriend.Text) + '%''';
 
           MainForm.ibqFriends.Open;
 
@@ -93,6 +93,7 @@ begin
   edtNameFriend.Visible := False;
   edtPhoneFriend.Visible := False;
   edtCommentFriend.Visible := False;
+
   chkNameFriend.Checked := False;
   chkPhoneFriend.Checked := False;
   chkCommentFriend.Checked := False;

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, IB, SQLStrings;
+  Dialogs, StdCtrls, UMainFrom, IB, SQLStrings, StrUtils;
 
 type
   TSearchPubHouseForm = class(TForm)
@@ -41,7 +41,7 @@ begin
         MainForm.ibqPubHouses.Close;
         MainForm.ibqPubHouses.SQL.Text := sqlGetPubHouses;
 
-        MainForm.ibqPubHouses.SQL.Text := MainForm.ibqPubHouses.SQL.Text + ' WHERE Name LIKE ''%' + edtNamePubHouse.Text + '%''';
+        MainForm.ibqPubHouses.SQL.Text := MainForm.ibqPubHouses.SQL.Text + ' WHERE LOWER(Name) LIKE ''%' + AnsiLowerCase(edtNamePubHouse.Text) + '%''';
 
         MainForm.ibqPubHouses.Open;
 

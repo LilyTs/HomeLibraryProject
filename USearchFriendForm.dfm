@@ -1,6 +1,6 @@
 object SearchFriendForm: TSearchFriendForm
-  Left = 525
-  Top = 344
+  Left = 752
+  Top = 247
   BorderStyle = bsSingle
   Caption = 'Search Friends'
   ClientHeight = 235

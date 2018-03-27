@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, UMainFrom, IB, SQLStrings, StdCtrls;
+  Dialogs, UMainFrom, IB, SQLStrings, StdCtrls, StrUtils;
 
 type
   TSearchGenreForm = class(TForm)
@@ -41,7 +41,7 @@ begin
         MainForm.ibqGenres.Close;
         MainForm.ibqGenres.SQL.Text := sqlGetGenres;
 
-        MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text + ' WHERE Name LIKE ''%' + edtNameGenre.Text + '%''';
+        MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text + ' WHERE LOWER(Name) LIKE ''%' + AnsiLowerCase(edtNameGenre.Text) + '%''';
 
         MainForm.ibqGenres.Open;
 

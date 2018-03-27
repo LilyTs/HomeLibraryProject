@@ -18,7 +18,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   TextHeight = 13
   object lblSearchBorrowDateFrom: TLabel
     Left = 128
-    Top = 232
+    Top = 184
     Width = 26
     Height = 16
     Caption = 'from'
@@ -31,7 +31,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object lblSearchBorrowDateTo: TLabel
     Left = 264
-    Top = 232
+    Top = 184
     Width = 11
     Height = 16
     Caption = 'to'
@@ -44,7 +44,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object lblSearchReturnDateFrom: TLabel
     Left = 128
-    Top = 184
+    Top = 232
     Width = 26
     Height = 16
     Caption = 'from'
@@ -57,7 +57,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object lblSearchReturnDateTo: TLabel
     Left = 264
-    Top = 184
+    Top = 232
     Width = 11
     Height = 16
     Caption = 'to'
@@ -76,10 +76,11 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Caption = 'Search'
     Default = True
     TabOrder = 0
+    OnClick = btnSearchBorrowingClick
   end
   object dtpSearchFrom: TDateTimePicker
     Left = 160
-    Top = 232
+    Top = 184
     Width = 89
     Height = 21
     Date = 43182.611451250000000000
@@ -94,10 +95,11 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 2
+    OnClick = btnCancelBorrowingClick
   end
   object dtpSearchBorrowDateTo: TDateTimePicker
     Left = 280
-    Top = 232
+    Top = 184
     Width = 89
     Height = 21
     Date = 43182.613483229160000000
@@ -106,11 +108,12 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object chkSearchBorrowDate: TCheckBox
     Left = 24
-    Top = 232
+    Top = 184
     Width = 97
     Height = 17
     Caption = 'Borrow Date'
     TabOrder = 4
+    OnClick = chkSearchBorrowDateClick
   end
   object edtSearchBorrowName: TEdit
     Left = 248
@@ -126,6 +129,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Height = 17
     Caption = 'Book name'
     TabOrder = 6
+    OnClick = chkSearchBorrowNameClick
   end
   object chkSearchBorrowFriend: TCheckBox
     Left = 24
@@ -134,6 +138,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Height = 17
     Caption = 'Friend'
     TabOrder = 7
+    OnClick = chkSearchBorrowFriendClick
   end
   object edtSearchBorrowFriend: TEdit
     Left = 248
@@ -144,7 +149,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object dtpSearchBorrowReturnDateFrom: TDateTimePicker
     Left = 160
-    Top = 184
+    Top = 232
     Width = 89
     Height = 21
     Date = 43182.620157314810000000
@@ -153,7 +158,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object dtpSearchBorrowReturnDateTo: TDateTimePicker
     Left = 280
-    Top = 184
+    Top = 232
     Width = 89
     Height = 21
     Date = 43182.624575509260000000
@@ -162,11 +167,12 @@ object SearchBorrowingForm: TSearchBorrowingForm
   end
   object chkSearchReturnDate: TCheckBox
     Left = 24
-    Top = 184
+    Top = 232
     Width = 97
     Height = 17
     Caption = 'Return Date'
     TabOrder = 11
+    OnClick = chkSearchReturnDateClick
   end
   object chkSearchIsLost: TCheckBox
     Left = 24
@@ -175,6 +181,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Height = 17
     Caption = 'Is Lost'
     TabOrder = 12
+    OnClick = chkSearchIsLostClick
   end
   object chkSearchIsDamaged: TCheckBox
     Left = 24
@@ -183,6 +190,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Height = 17
     Caption = 'Is Damaged'
     TabOrder = 13
+    OnClick = chkSearchIsDamagedClick
   end
   object chkSearchLostTrue: TCheckBox
     Left = 248

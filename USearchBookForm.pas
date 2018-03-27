@@ -141,29 +141,29 @@ begin
         if cbAuthor.Checked then
           if isFirst then
             begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Author LIKE ''%' + edtSearchAuthor.Text + '%''';
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE LOWER(Author) LIKE ''%' + AnsiLowerCase(edtSearchAuthor.Text) + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Author LIKE ''%' + edtSearchAuthor.Text + '%''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND LOWER(Author) LIKE ''%' + AnsiLowerCase(edtSearchAuthor.Text) + '%''';
 
         if cbPicAuthor.Checked then
           if isFirst then
             begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PicAuthor LIKE ''%' + edtPicAutor.Text + '%''';
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE LOWER(PicAuthor) LIKE ''%' + AnsiLowerCase(edtPicAutor.Text) + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PicAuthor LIKE ''%' + edtPicAutor.Text + '%''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND LOWER(PicAuthor) LIKE ''%' + AnsiLowerCase(edtPicAutor.Text) + '%''';
 
         if cbTranslator.Checked then
           if isFirst then
             begin
-              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE Translator LIKE ''%' + edtTranslator.Text + '%''';
+              MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE LOWER(Translator) LIKE ''%' + AnsiLowerCase(edtTranslator.Text) + '%''';
               isFirst := False;
             end
           else
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND Translator LIKE ''%' + edtTranslator.Text + '%''';
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND LOWER(Translator) LIKE ''%' + AnsiLowerCase(edtTranslator.Text) + '%''';
 
         if cbPubHouse.Checked then
           if isFirst then
