@@ -86,7 +86,7 @@ begin
   MainForm.ibqPubHouses.First;
   while not MainForm.ibqPubHouses.Eof do
     begin
-      cbbPubHouse.Items.Add(MainForm.ibqPubHouses.Fields.Fields[1].Value);
+      cbbPubHouse.Items.Add(MainForm.ibqPubHouses.FieldValues['Name']);
       MainForm.ibqPubHouses.Next;
     end;
 end;
@@ -191,38 +191,42 @@ begin
           if isFirst then
             begin
               if (edtYearFrom.Text <> '') and (edtYearTo.Text <> '') then
-              begin
-                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
-                isFirst := False;
-              end
-              else if edtYearFrom.Text <> '' then
-              begin
-                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear >= ' + edtYearFrom.Text;
-                isFirst := False;
-              end
-              else if edtYearTo.Text <> '' then
-              begin
-                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear <= ' + edtYearTo.Text;
-                isFirst := False;
-              end
+                begin
+                  MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
+                  isFirst := False;
+                end
+              else
+                if edtYearFrom.Text <> '' then
+                  begin
+                    MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear >= ' + edtYearFrom.Text;
+                    isFirst := False;
+                  end
+                else
+                  if edtYearTo.Text <> '' then
+                    begin
+                      MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE PubYear <= ' + edtYearTo.Text;
+                      isFirst := False;
+                    end
             end
           else 
             begin
               if (edtYearFrom.Text <> '') and (edtYearTo.Text <> '') then
-              begin
-                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
-                isFirst := False;
-              end
-              else if edtYearFrom.Text <> '' then
-              begin
-                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear >= ' + edtYearFrom.Text;
-                isFirst := False;
-              end
-              else if edtYearTo.Text <> '' then
-              begin
-                MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear <= ' + edtYearTo.Text;
-                isFirst := False;
-              end
+                begin
+                  MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear BETWEEN ' + edtYearFrom.Text + ' AND ' + edtYearTo.Text;
+                  isFirst := False;
+                end
+              else
+                if edtYearFrom.Text <> '' then
+                  begin
+                    MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear >= ' + edtYearFrom.Text;
+                    isFirst := False;
+                  end
+                else
+                  if edtYearTo.Text <> '' then
+                    begin
+                      MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND PubYear <= ' + edtYearTo.Text;
+                      isFirst := False;
+                    end
             end;
 
           MainForm.ibqBooks.Open;

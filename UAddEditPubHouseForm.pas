@@ -33,7 +33,7 @@ begin
   if IsNew then
     edPubHouseName.Clear
   else
-    edPubHouseName.Text := MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[1].Value;
+    edPubHouseName.Text := MainForm.ibqPubHouses.FieldValues['Name'];
 end;
 
 procedure TAddEditPubHouseForm.SetIsNew(New: Boolean);

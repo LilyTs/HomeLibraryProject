@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, IB, SQLStrings, UMainFrom;
+  Dialogs, StdCtrls, IB, SQLStrings, UMainFrom, DBCtrls;
 
 type
   TAddEditGenreForm = class(TForm)
@@ -61,7 +61,7 @@ begin
             else
               begin
                 SQL.Text := sqlEditGenre;
-                ParamByName('Genre_id').AsInteger := MainForm.dbgridGenres.DataSource.DataSet.Fields.Fields[0].Value;
+                ParamByName('Genre_id').AsInteger := MainForm.ibqGenres.FieldValues['Genre_id'];
                 if cbParentGenre.ItemIndex < 0 then
                   ParamByName('ParentGenre_id').Value := Null
                 else
@@ -86,7 +86,7 @@ end;
 
 procedure TAddEditGenreForm.FormShow(Sender: TObject);
 var i: Integer;
-    prevParentGenreID: Variant;
+    prevParentGenreID, GenreID: Variant;
 begin
   if IsNew then
     begin
@@ -94,18 +94,22 @@ begin
     end
   else
     begin
-      edGenreName.Text := MainForm.dbgridGenres.DataSource.DataSet.Fields.Fields[1].Value;
-      prevParentGenreID := MainForm.dbgridGenres.DataSource.DataSet.Fields.Fields[2].Value;
+      edGenreName.Text := MainForm.ibqGenres.FieldValues['Name'];
+      prevParentGenreID := MainForm.ibqGenres.FieldValues['ParentGenre_id'];
+      GenreID := MainForm.ibqGenres.FieldValues['Genre_id'];
     end;
   cbParentGenre.Items.Clear;
   MainForm.ibqGenres.First;
   for i := 0 to MainForm.ibqGenres.RecordCount - 1 do
     begin
-      cbParentGenre.Items.Add(MainForm.ibqGenres.Fields.Fields[1].Value);
+      cbParentGenre.Items.Add(MainForm.ibqGenres.FieldValues['Name']);
       MainForm.ibqGenres.Next;
     end;
+  MainForm.ibqGenres.Locate('Genre_id', GenreID, []);
   if not IsNew and (prevParentGenreID <> Null) then
-    cbParentGenre.ItemIndex := cbParentGenre.Items.IndexOf(MainForm.dbgridGenres.DataSource.DataSet.Lookup('Genre_id', prevParentGenreID, 'Name'));
+    cbParentGenre.ItemIndex := cbParentGenre.Items.IndexOf(MainForm.ibqGenres.Lookup('Genre_id', prevParentGenreID, 'Name'))
+  else
+    cbParentGenre.ItemIndex := -2;
 end;
 
 end.

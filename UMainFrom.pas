@@ -161,14 +161,12 @@ implementation
 uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
      UAddEditGenreForm, USearchBookForm, USearchFriendForm,
   USearchGenreForm, USearchPubHouseForm, UAddEditBorrowingForm,
-  UAddEditPubHouseForm1, USearchBorrowingsForm;
+  UAddEditPubHouseForm1, USearchBorrowingsForm, UFriendsDAL;
 
 {$R *.dfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
 var IniFile: TIniFile;
-    i, j: Integer;
-    str: String;
 begin
   ApplicationEvents.OnIdle := MyIdle;
   try
@@ -303,12 +301,13 @@ end;
 
 procedure TMainForm.actDeleteFriendExecute(Sender: TObject);
 begin
-  with ibqUpdateFriends do
+  UFriendsDAL.Delete(ibqFriends.FieldValues['Friend_id']);
+  {with ibqUpdateFriends do
     begin
       try
         Close;
         SQL.Text := sqlDeleteFriend;
-        ParamByName('Friend_id').AsInteger := dbgridFriends.DataSource.DataSet.Fields.Fields[0].Value;
+        ParamByName('Friend_id').AsInteger := ibqFriends.FieldValues['Friend_id'];
         ExecSQL;
         Transaction.Commit;
         Transaction.Active := False;
@@ -320,7 +319,7 @@ begin
           Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
         end;
       end;
-    end;
+    end; }
 end;
 
 procedure TMainForm.actEditFriendExecute(Sender: TObject);

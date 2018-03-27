@@ -125,10 +125,10 @@ begin
     end
   else
     begin
-      chBoxIsLost.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['IsLost'] = '+');
-      chBoxIsDamaged.Checked := (MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['IsDamaged'] = '+');
-      dtpReturnDate.Date := MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['ReturnDate'];
-      memoComment.Text := MainForm.dbgridBorrowings.DataSource.DataSet.FieldValues['Comment'];
+      chBoxIsLost.Checked := (MainForm.ibqBorrowings.FieldValues['IsLost'] = '+');
+      chBoxIsDamaged.Checked := (MainForm.ibqBorrowings.FieldValues['IsDamaged'] = '+');
+      dtpReturnDate.Date := MainForm.ibqBorrowings.FieldValues['ReturnDate'];
+      memoComment.Text := MainForm.ibqBorrowings.FieldValues['Comment'];
     end;
 end;
 

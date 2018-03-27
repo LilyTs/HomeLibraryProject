@@ -83,17 +83,19 @@ begin
   MainForm.ibqBooks.First;
   while not MainForm.ibqBooks.Eof do
     begin
-      cbbBorrowingBook.Items.Add(MainForm.ibqBooks.Fields.Fields[1].Value);
+      cbbBorrowingBook.Items.Add(MainForm.ibqBooks.FieldValues['Name']);
       MainForm.ibqBooks.Next;
     end;
+  cbbBorrowingBook.ItemIndex := 0;
     
   cbbBorrowingFriend.Items.Clear;
   MainForm.ibqFriends.First;
   while not MainForm.ibqFriends.Eof do
     begin
-      cbbBorrowingFriend.Items.Add(MainForm.ibqFriends.Fields.Fields[1].Value);
+      cbbBorrowingFriend.Items.Add(MainForm.ibqFriends.FieldValues['FIO']);
       MainForm.ibqFriends.Next;
     end;
+  cbbBorrowingFriend.ItemIndex := 0;
 end;
 
 procedure TSearchBorrowingForm.chkSearchBorrowNameClick(Sender: TObject);
@@ -181,82 +183,86 @@ begin
 
         if chkSearchBorrowName.Checked then
           begin
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE b.book_id = ''' +
-              IntToStr(MainForm.ibqBooks.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id')) + '''';
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE b.book_id = ' +
+              VarToStr(MainForm.ibqBooks.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id'));
             isFirst := False;
           end;
 
         if chkSearchBorrowFriend.Checked then
           if isFirst then
-          begin
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE f.Friend_id = ''' +
-              IntToStr(MainForm.ibqFriends.Lookup('FIO', cbbBorrowingFriend.items[cbbBorrowingFriend.itemindex], 'Friend_id')) + '''';
-            isFirst := False;
-          end
-          else MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND f.Friend_id = ''' +
-              IntToStr(MainForm.ibqFriends.Lookup('FIO', cbbBorrowingFriend.items[cbbBorrowingFriend.itemindex], 'Friend_id')) + '''';
+            begin
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE f.Friend_id = ' + IntToStr(MainForm.ibqFriends.Lookup('FIO', cbbBorrowingFriend.items[cbbBorrowingFriend.itemindex], 'Friend_id'));
+              isFirst := False;
+            end
+          else MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND f.Friend_id = ' +
+              VarToStr(MainForm.ibqFriends.Lookup('FIO', cbbBorrowingFriend.items[cbbBorrowingFriend.itemindex], 'Friend_id'));
 
         if chkSearchIsLost.Checked then
           if isFirst then
-          begin
-            if chkSearchLostTrue.Checked then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsLost = ''True''';
-            if chkSearchLostTrue.Checked = False then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsLost = ''False''';
-            isFirst := False;
-          end else
-          begin
-            if chkSearchLostTrue.Checked then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.IsLost = ''True''';
-            if chkSearchLostTrue.Checked = False then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.IsLost = ''False''';
-          end;
+            begin
+              if chkSearchLostTrue.Checked then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsLost = ''True''';
+              if chkSearchLostTrue.Checked = False then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsLost = ''False''';
+              isFirst := False;
+            end
+          else
+            begin
+              if chkSearchLostTrue.Checked then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.IsLost = ''True''';
+              if chkSearchLostTrue.Checked = False then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.IsLost = ''False''';
+            end;
 
           
         if chkSearchIsDamaged.Checked then
           if isFirst then
-          begin
-            if chkSearchIsDamagedTrue.Checked then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsDamaged = ''True''';
-            if chkSearchIsDamagedTrue.Checked = False then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsDamaged = ''False''';
-            isFirst := False;
-          end
+            begin
+              if chkSearchIsDamagedTrue.Checked then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsDamaged = ''True''';
+              if chkSearchIsDamagedTrue.Checked = False then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsDamaged = ''False''';
+              isFirst := False;
+            end
           else
-          begin
-            if chkSearchIsDamagedTrue.Checked then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text +
-              ' AND B.IsDamaged = ''True''';
-            if chkSearchIsDamagedTrue.Checked = False then
-              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text +
-              ' AND B.IsDamaged = ''False''';
-          end;
+            begin
+              if chkSearchIsDamagedTrue.Checked then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text +
+                ' AND B.IsDamaged = ''True''';
+              if chkSearchIsDamagedTrue.Checked = False then
+                MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text +
+                ' AND B.IsDamaged = ''False''';
+            end;
           
         if chkSearchBorrowDate.Checked then
           if isFirst then
-          begin
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.BorrowDate BETWEEN :FromDate AND :ToDate';
-            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchFrom.Date;
-            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowDateTo.Date;
-            isFirst := False;
-          end
+            begin
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.BorrowDate BETWEEN :FromDate AND :ToDate';
+              MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchFrom.Date;
+              MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowDateTo.Date;
+              isFirst := False;
+            end
           else
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.BorrowDate BETWEEN :FromDate AND :ToDate';
-            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchFrom.Date;
-            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowDateTo.Date;
+            begin
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.BorrowDate BETWEEN :FromDate AND :ToDate';
+              MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchFrom.Date;
+              MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowDateTo.Date;
+            end;
          
         if chkSearchReturnDate.Checked then
           if isFirst then
-          begin
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.ReturnDate BETWEEN :FromDate AND :ToDate';
-            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchBorrowReturnDateFrom.Date;
-            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowReturnDateTo.Date;
-            isFirst := False;
-          end
+            begin
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.ReturnDate BETWEEN :FromDate AND :ToDate';
+              MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchBorrowReturnDateFrom.Date;
+              MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowReturnDateTo.Date;
+              isFirst := False;
+            end
           else
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.ReturnDate BETWEEN :FromDate AND :ToDate';
-            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchBorrowReturnDateFrom.Date;
-            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowReturnDateTo.Date;
+            begin
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.ReturnDate BETWEEN :FromDate AND :ToDate';
+              MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchBorrowReturnDateFrom.Date;
+              MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowReturnDateTo.Date;
+            end;
 
           MainForm.ibqBorrowings.Open;
 

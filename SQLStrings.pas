@@ -19,9 +19,7 @@ const
                 + 'SocialNumber = :SocialNumber, Email = :Email, Comment = :Comment '
                 + 'WHERE Friend_id = :Friend_id';
 
-  sqlGetBooks = 'SELECT * FROM Book';
   sqlGetBooksWithPubHouseAndGenres = 'SELECT * FROM GetBooksWithPubHouseAndGenres';
-  sqlGetBooksWithPubHouseName = 'SELECT B.Book_id, B.Name, B.Author, B.PubYear, PH.Name AS PubHouseName, B.PicAuthor, B.Translator, B.Comment FROM Book B JOIN PublishingHouse PH ON B.PubHouse_id = PH.PubHouse_id';
   sqlInsertBook = 'INSERT INTO Book(Book_id, Name, Author, PicAuthor, Translator, PubYear, PubHouse_id, Comment) '
                     + 'VALUES(null, :Name, :Author, :PicAuthor, :Translator, :PubYear, :PubHouse_id, :Comment)';
   sqlDeleteBook = 'DELETE FROM Book '

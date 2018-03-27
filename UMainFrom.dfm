@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-    ActivePage = tsMain
+    ActivePage = tsFriends
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -106,6 +106,7 @@ object MainForm: TMainForm
         Width = 1027
         Height = 25
         DataSource = dsrcBorrowings
+        VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
         Align = alTop
         TabOrder = 1
       end

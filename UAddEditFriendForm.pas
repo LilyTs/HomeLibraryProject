@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB;
+  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB, UFriendsDAL;
 
 type
   TAddEditFriendForm = class(TForm)
@@ -43,7 +43,14 @@ begin
       MessageDlg('Fullname field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
-      with MainForm.ibqUpdateFriends do
+      if IsNew then
+        UFriendsDAL.Insert(edFriendFIO.Text, edFriendPhone.Text,
+          edFriendSocialNumber.Text, edFriendEmail.Text, edFriendComment.Text)
+      else
+        UFriendsDAL.Edit(MainForm.ibqFriends.FieldValues['Friend_id'],
+          edFriendFIO.Text, edFriendPhone.Text, edFriendSocialNumber.Text,
+          edFriendEmail.Text, edFriendComment.Text);
+      {with MainForm.ibqUpdateFriends do
         begin
           try
             Close;
@@ -52,7 +59,7 @@ begin
             else
               begin
                 SQL.Text := sqlEditFriend;
-                ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[0].Value;
+                ParamByName('Friend_id').AsInteger := MainForm.ibqFriends.FieldValues['Friend_id'];
               end;
             ParamByName('FIO').AsString := edFriendFIO.Text;
             ParamByName('PhoneNumber').AsString := edFriendPhone.Text;
@@ -70,7 +77,7 @@ begin
               Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
             end;
           end;
-        end;
+        end; }
     end;
     Self.Hide;
 end;
@@ -92,11 +99,11 @@ begin
     end
   else
     begin
-      edFriendFIO.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[1].Value;
-      edFriendPhone.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[2].Value;
-      edFriendSocialNumber.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[3].Value;
-      edFriendEmail.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[4].Value;
-      edFriendComment.Text := MainForm.dbgridFriends.DataSource.DataSet.Fields.Fields[5].Value;
+      edFriendFIO.Text := MainForm.ibqFriends.FieldValues['FIO'];
+      edFriendPhone.Text := MainForm.ibqFriends.FieldValues['PhoneNumber'];
+      edFriendSocialNumber.Text := MainForm.ibqFriends.FieldValues['SocialNumber'];
+      edFriendEmail.Text := MainForm.ibqFriends.FieldValues['Email'];
+      edFriendComment.Text := MainForm.ibqFriends.FieldValues['Comment'];
     end;
 end;
 

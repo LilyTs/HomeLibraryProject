@@ -13,7 +13,8 @@ uses
   USearchPubHouseForm in 'USearchPubHouseForm.pas' {SearchPubHouseForm},
   UAddEditBorrowingForm in 'UAddEditBorrowingForm.pas' {AddEditBorrowingForm},
   UAddEditPubHouseForm in 'UAddEditPubHouseForm.pas' {AddEditPubHouseForm},
-  USearchBorrowingsForm in 'USearchBorrowingsForm.pas' {SearchBorrowingForm};
+  USearchBorrowingsForm in 'USearchBorrowingsForm.pas' {SearchBorrowingForm},
+  UFriendsDAL in 'UFriendsDAL.pas';
 
 {$R *.res}
 
@@ -32,6 +33,5 @@ begin
   Application.CreateForm(TSearchGenreForm, SearchGenreForm);
   Application.CreateForm(TSearchPubHouseForm, SearchPubHouseForm);
   Application.CreateForm(TAddEditBorrowingForm, AddEditBorrowingForm);
-  //Application.CreateForm(TAddEditPubHouseForm, AddEditPubHouseForm);
   Application.Run;
 end.
