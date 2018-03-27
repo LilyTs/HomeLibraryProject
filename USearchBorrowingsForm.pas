@@ -166,21 +166,21 @@ end;
 
 procedure TSearchBorrowingForm.btnSearchBorrowingClick(Sender: TObject);
 begin
-  with MainForm.ibqBooks do
+  with MainForm.ibqBorrowings do
     begin
       try
         isFirst := True;
-        MainForm.ibqBooks.Close;
-        MainForm.ibqBooks.SQL.Text := sqlGetBorrowings;
+        MainForm.ibqBorrowings.Close;
+        MainForm.ibqBorrowings.SQL.Text := sqlGetBorrowings;
 
         if edtSearchBorrowName.Checked then
           begin
-            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE book_id = ''' +
-            MainForm.ibqBooks.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id') + '''';
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE book_id = ''' +
+            MainForm.ibqBorrowings.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id') + '''';
             isFirst := False;
           end;
 
-          MainForm.ibqBooks.Open;
+          MainForm.ibqBorrowings.Open;
 
           if isFirst then
             MessageDlg('Fields are not selected!', mtError, [mbOk], 0);
