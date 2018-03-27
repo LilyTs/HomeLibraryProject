@@ -66,6 +66,11 @@ begin
   lblSearchBorrowDateTo.Visible := False;
   dtpSearchBorrowDateTo.Visible := False;
 
+  dtpSearchBorrowDateTo.Date := Now;   
+  dtpSearchBorrowReturnDateTo.Date := Now;
+  dtpSearchBorrowReturnDateFrom.Date := Now;
+  dtpSearchFrom.Date := Now;
+
   chkSearchLostTrue.Checked := False;
   chkSearchIsDamagedTrue.Checked := False;
   chkSearchBorrowName.Checked := False;
@@ -240,7 +245,19 @@ begin
             MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.BorrowDate BETWEEN :FromDate AND :ToDate';
             MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchFrom.Date;
             MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowDateTo.Date;
-
+         
+        if chkSearchReturnDate.Checked then
+          if isFirst then
+          begin
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.ReturnDate BETWEEN :FromDate AND :ToDate';
+            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchBorrowReturnDateFrom.Date;
+            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowReturnDateTo.Date;
+            isFirst := False;
+          end
+          else
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.ReturnDate BETWEEN :FromDate AND :ToDate';
+            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchBorrowReturnDateFrom.Date;
+            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowReturnDateTo.Date;
 
           MainForm.ibqBorrowings.Open;
 
