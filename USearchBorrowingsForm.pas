@@ -165,6 +165,7 @@ begin
 end;
 
 procedure TSearchBorrowingForm.btnSearchBorrowingClick(Sender: TObject);
+var isFirst: Boolean;
 begin
   with MainForm.ibqBorrowings do
     begin
@@ -173,10 +174,10 @@ begin
         MainForm.ibqBorrowings.Close;
         MainForm.ibqBorrowings.SQL.Text := sqlGetBorrowings;
 
-        if edtSearchBorrowName.Checked then
+        if chkSearchBorrowName.Checked then
           begin
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE book_id = ''' +
-            MainForm.ibqBorrowings.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id') + '''';
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE b.book_id = ''' +
+              IntToStr(MainForm.ibqBooks.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id')) + '''';
             isFirst := False;
           end;
 
