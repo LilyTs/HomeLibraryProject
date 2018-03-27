@@ -231,13 +231,15 @@ begin
         if chkSearchBorrowDate.Checked then
           if isFirst then
           begin
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.BorrowDate BETWEEN '
-            + DateToStr(dtpSearchFrom.Date) + ' AND ' + DateToStr(dtpSearchBorrowDateTo.Date);
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.BorrowDate BETWEEN :FromDate AND :ToDate';
+            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchFrom.Date;
+            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowDateTo.Date;
             isFirst := False;
           end
           else
-            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.BorrowDate BETWEEN '
-            + DateToStr(dtpSearchFrom.Date) + ' AND ' + DateToStr(dtpSearchBorrowDateTo.Date);
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.BorrowDate BETWEEN :FromDate AND :ToDate';
+            MainForm.ibqBorrowings.ParamByName('FromDate').AsDate := dtpSearchFrom.Date;
+            MainForm.ibqBorrowings.ParamByName('ToDate').AsDate := dtpSearchBorrowDateTo.Date;
 
 
           MainForm.ibqBorrowings.Open;
