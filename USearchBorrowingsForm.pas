@@ -28,7 +28,6 @@ type
     chkSearchIsDamagedTrue: TCheckBox;
     cbbBorrowingBook: TComboBox;
     cbbBorrowingFriend: TComboBox;
-    dbcbbBorrowingBook: TDBComboBox;
     procedure FormShow(Sender: TObject);
     procedure chkSearchBorrowNameClick(Sender: TObject);
     procedure chkSearchBorrowFriendClick(Sender: TObject);
@@ -66,7 +65,7 @@ begin
   lblSearchBorrowDateTo.Visible := False;
   dtpSearchBorrowDateTo.Visible := False;
 
-  dtpSearchBorrowDateTo.Date := Now;   
+  dtpSearchBorrowDateTo.Date := Now;
   dtpSearchBorrowReturnDateTo.Date := Now;
   dtpSearchBorrowReturnDateFrom.Date := Now;
   dtpSearchFrom.Date := Now;
