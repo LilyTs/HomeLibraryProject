@@ -208,4 +208,12 @@ object SearchBorrowingForm: TSearchBorrowingForm
     ItemHeight = 13
     TabOrder = 15
   end
+  object dbcbbBorrowingBook: TDBComboBox
+    Left = 136
+    Top = 80
+    Width = 145
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 16
+  end
 end

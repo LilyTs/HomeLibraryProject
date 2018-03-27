@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, UMainFrom, IB, SQLStrings, StrUtils;
+  Dialogs, StdCtrls, ComCtrls, UMainFrom, IB, SQLStrings, StrUtils, DBCtrls;
 
 type
   TSearchBorrowingForm = class(TForm)
@@ -28,6 +28,7 @@ type
     chkSearchIsDamagedTrue: TCheckBox;
     cbbBorrowingBook: TComboBox;
     cbbBorrowingFriend: TComboBox;
+    dbcbbBorrowingBook: TDBComboBox;
     procedure FormShow(Sender: TObject);
     procedure chkSearchBorrowNameClick(Sender: TObject);
     procedure chkSearchBorrowFriendClick(Sender: TObject);
@@ -180,6 +181,64 @@ begin
               IntToStr(MainForm.ibqBooks.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id')) + '''';
             isFirst := False;
           end;
+
+        if chkSearchBorrowFriend.Checked then
+          if isFirst then
+          begin
+            MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE f.Friend_id = ''' +
+              IntToStr(MainForm.ibqFriends.Lookup('FIO', cbbBorrowingFriend.items[cbbBorrowingFriend.itemindex], 'Friend_id')) + '''';
+            isFirst := False;
+          end
+          else MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND f.Friend_id = ''' +
+              IntToStr(MainForm.ibqFriends.Lookup('FIO', cbbBorrowingFriend.items[cbbBorrowingFriend.itemindex], 'Friend_id')) + '''';
+
+        if chkSearchIsLost.Checked then
+          if isFirst then
+          begin
+            if chkSearchLostTrue.Checked then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsLost = ''True''';
+            if chkSearchLostTrue.Checked = False then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsLost = ''False''';
+            isFirst := False;
+          end else
+          begin
+            if chkSearchLostTrue.Checked then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.IsLost = ''True''';
+            if chkSearchLostTrue.Checked = False then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' AND B.IsLost = ''False''';
+          end;
+
+          
+        if chkSearchIsDamaged.Checked then
+          if isFirst then
+          begin
+            if chkSearchIsDamagedTrue.Checked then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsDamaged = ''True''';
+            if chkSearchIsDamagedTrue.Checked = False then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text + ' WHERE B.IsDamaged = ''False''';
+            isFirst := False;
+          end
+          else
+          begin
+            if chkSearchIsDamagedTrue.Checked then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text +
+              ' AND B.IsDamaged = ''True''';
+            if chkSearchIsDamagedTrue.Checked = False then
+              MainForm.ibqBorrowings.SQL.Text := MainForm.ibqBorrowings.SQL.Text +
+              ' AND B.IsDamaged = ''False''';
+          end;
+          
+        if chkSearchBorrowDate.Checked then
+          if isFirst then
+          begin
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE BorrowDate BETWEEN '
+            + dtpSearchFrom.Date + ' AND ' + dtpSearchBorrowDateTo.Date;
+            isFirst := False;
+          end
+          else 
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' AND BorrowDate BETWEEN '
+            + dtpSearchFrom.Date + ' AND ' + dtpSearchBorrowDateTo.Date;
+
 
           MainForm.ibqBorrowings.Open;
 
