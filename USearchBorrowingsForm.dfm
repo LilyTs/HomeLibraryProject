@@ -115,20 +115,13 @@ object SearchBorrowingForm: TSearchBorrowingForm
     TabOrder = 4
     OnClick = chkSearchBorrowDateClick
   end
-  object edtSearchBorrowName: TEdit
-    Left = 248
-    Top = 24
-    Width = 121
-    Height = 21
-    TabOrder = 5
-  end
   object chkSearchBorrowName: TCheckBox
     Left = 24
     Top = 24
     Width = 97
     Height = 17
     Caption = 'Book name'
-    TabOrder = 6
+    TabOrder = 5
     OnClick = chkSearchBorrowNameClick
   end
   object chkSearchBorrowFriend: TCheckBox
@@ -137,15 +130,8 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Width = 97
     Height = 17
     Caption = 'Friend'
-    TabOrder = 7
+    TabOrder = 6
     OnClick = chkSearchBorrowFriendClick
-  end
-  object edtSearchBorrowFriend: TEdit
-    Left = 248
-    Top = 64
-    Width = 121
-    Height = 21
-    TabOrder = 8
   end
   object dtpSearchBorrowReturnDateFrom: TDateTimePicker
     Left = 160
@@ -154,7 +140,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Height = 21
     Date = 43182.620157314810000000
     Time = 43182.620157314810000000
-    TabOrder = 9
+    TabOrder = 7
   end
   object dtpSearchBorrowReturnDateTo: TDateTimePicker
     Left = 280
@@ -163,7 +149,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Height = 21
     Date = 43182.624575509260000000
     Time = 43182.624575509260000000
-    TabOrder = 10
+    TabOrder = 8
   end
   object chkSearchReturnDate: TCheckBox
     Left = 24
@@ -171,7 +157,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Width = 97
     Height = 17
     Caption = 'Return Date'
-    TabOrder = 11
+    TabOrder = 9
     OnClick = chkSearchReturnDateClick
   end
   object chkSearchIsLost: TCheckBox
@@ -180,7 +166,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Width = 97
     Height = 17
     Caption = 'Is Lost'
-    TabOrder = 12
+    TabOrder = 10
     OnClick = chkSearchIsLostClick
   end
   object chkSearchIsDamaged: TCheckBox
@@ -189,7 +175,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Width = 97
     Height = 17
     Caption = 'Is Damaged'
-    TabOrder = 13
+    TabOrder = 11
     OnClick = chkSearchIsDamagedClick
   end
   object chkSearchLostTrue: TCheckBox
@@ -197,13 +183,29 @@ object SearchBorrowingForm: TSearchBorrowingForm
     Top = 104
     Width = 97
     Height = 17
-    TabOrder = 14
+    TabOrder = 12
   end
   object chkSearchIsDamagedTrue: TCheckBox
     Left = 248
     Top = 144
     Width = 97
     Height = 17
+    TabOrder = 13
+  end
+  object cbbBorrowingBook: TComboBox
+    Left = 248
+    Top = 24
+    Width = 145
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 14
+  end
+  object cbbBorrowingFriend: TComboBox
+    Left = 248
+    Top = 64
+    Width = 145
+    Height = 21
+    ItemHeight = 13
     TabOrder = 15
   end
 end

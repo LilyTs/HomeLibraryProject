@@ -15,10 +15,8 @@ type
     lblSearchBorrowDateFrom: TLabel;
     lblSearchBorrowDateTo: TLabel;
     chkSearchBorrowDate: TCheckBox;
-    edtSearchBorrowName: TEdit;
     chkSearchBorrowName: TCheckBox;
     chkSearchBorrowFriend: TCheckBox;
-    edtSearchBorrowFriend: TEdit;
     dtpSearchBorrowReturnDateFrom: TDateTimePicker;
     dtpSearchBorrowReturnDateTo: TDateTimePicker;
     lblSearchReturnDateFrom: TLabel;
@@ -28,6 +26,8 @@ type
     chkSearchIsDamaged: TCheckBox;
     chkSearchLostTrue: TCheckBox;
     chkSearchIsDamagedTrue: TCheckBox;
+    cbbBorrowingBook: TComboBox;
+    cbbBorrowingFriend: TComboBox;
     procedure FormShow(Sender: TObject);
     procedure chkSearchBorrowNameClick(Sender: TObject);
     procedure chkSearchBorrowFriendClick(Sender: TObject);
@@ -52,8 +52,8 @@ implementation
 
 procedure TSearchBorrowingForm.FormShow(Sender: TObject);
 begin
-  edtSearchBorrowName.Visible := False;
-  edtSearchBorrowFriend.Visible := False;
+  cbbBorrowingBook.Visible := False;
+  cbbBorrowingFriend.Visible := False;
   chkSearchLostTrue.Visible := False;
   chkSearchIsDamagedTrue.Visible := False;
   lblSearchReturnDateFrom.Visible := False;
@@ -65,9 +65,6 @@ begin
   lblSearchBorrowDateTo.Visible := False;
   dtpSearchBorrowDateTo.Visible := False;
 
-  edtSearchBorrowName.Clear;
-  edtSearchBorrowFriend.Clear;
-
   chkSearchLostTrue.Checked := False;
   chkSearchIsDamagedTrue.Checked := False;
   chkSearchBorrowName.Checked := False;
@@ -76,22 +73,38 @@ begin
   chkSearchIsDamaged.Checked := False;
   chkSearchReturnDate.Checked := False;
   chkSearchBorrowDate.Checked := False;
+
+  cbbBorrowingBook.Items.Clear;
+  MainForm.ibqBooks.First;
+  while not MainForm.ibqBooks.Eof do
+    begin
+      cbbBorrowingBook.Items.Add(MainForm.ibqBooks.Fields.Fields[1].Value);
+      MainForm.ibqBooks.Next;
+    end;
+    
+  cbbBorrowingFriend.Items.Clear;
+  MainForm.ibqFriends.First;
+  while not MainForm.ibqFriends.Eof do
+    begin
+      cbbBorrowingFriend.Items.Add(MainForm.ibqFriends.Fields.Fields[1].Value);
+      MainForm.ibqFriends.Next;
+    end;
 end;
 
 procedure TSearchBorrowingForm.chkSearchBorrowNameClick(Sender: TObject);
 begin
   if chkSearchBorrowName.Checked then
-    edtSearchBorrowName.Visible := True
+    cbbBorrowingBook.Visible := True
   else
-    edtSearchBorrowName.Visible := False;
+    cbbBorrowingBook.Visible := False;
 end;
 
 procedure TSearchBorrowingForm.chkSearchBorrowFriendClick(Sender: TObject);
 begin
   if chkSearchBorrowFriend.Checked then
-    edtSearchBorrowFriend.Visible := True
+    cbbBorrowingFriend.Visible := True
   else
-    edtSearchBorrowFriend.Visible := False;
+    cbbBorrowingFriend.Visible := False;
 end;
 
 procedure TSearchBorrowingForm.chkSearchIsLostClick(Sender: TObject);
@@ -158,8 +171,14 @@ begin
       try
         isFirst := True;
         MainForm.ibqBooks.Close;
-        //MainForm.ibqBooks.SQL.Text := sqlGetBooksWithPubHouseAndGenres;
+        MainForm.ibqBooks.SQL.Text := sqlGetBorrowings;
 
+        if edtSearchBorrowName.Checked then
+          begin
+            MainForm.ibqBooks.SQL.Text := MainForm.ibqBooks.SQL.Text + ' WHERE book_id = ''' +
+            MainForm.ibqBooks.Lookup('name', cbbBorrowingBook.items[cbbBorrowingBook.itemindex], 'book_id') + '''';
+            isFirst := False;
+          end;
 
           MainForm.ibqBooks.Open;
 

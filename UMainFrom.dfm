@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-    ActivePage = tsFriends
+    ActivePage = tsMain
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -147,7 +147,6 @@ object MainForm: TMainForm
           Left = 156
           Top = 2
           Action = actSearchBorrowings
-          ImageIndex = 4
         end
       end
     end
