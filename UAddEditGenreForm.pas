@@ -71,7 +71,8 @@ begin
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;
-            MainForm.actRefreshGenresExecute(MainForm);
+            MainForm.actRefreshGenresExecute(MainForm); 
+            Self.Hide;
           except on E: EIBInterBaseError do
             begin
               if Transaction.Active then
@@ -81,7 +82,6 @@ begin
           end;
         end;
     end;
-    Self.Hide;
 end;
 
 procedure TAddEditGenreForm.FormShow(Sender: TObject);

@@ -1,7 +1,5 @@
 unit UFriendsDAL;
 
-
-
 interface
 
 uses
@@ -45,8 +43,7 @@ begin
         begin
           if Transaction.Active then
             Transaction.Rollback;
-          //Application.MessageBox(PChar(E.Message), 'Database error!', MB_ICONERROR);
-          MessageDlg(E.Message, mtError, [mbOK], 0);
+          MessageDlg(E.Message, mtError, [mbOk], 0);
         end;
       end;
     end;
@@ -77,11 +74,11 @@ begin
         Transaction.Commit;
         Transaction.Active := False;
         MainForm.actRefreshFriendsExecute(MainForm);
+
       except on E: EIBInterBaseError do
         begin
           if Transaction.Active then
             Transaction.Rollback;
-          //Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
           MessageDlg(E.Message, mtError, [mbOK], 0);
         end;
       end;

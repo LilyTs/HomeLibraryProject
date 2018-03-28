@@ -50,51 +50,54 @@ end;
 
 procedure TAddEditBorrowingForm.btnSaveBookClick(Sender: TObject);
 begin
-  if IsNew and (cbBookNames.ItemIndex = -1) then
-    MessageDlg('Book name field can''t be empty!', mtError, [mbOk], 0)
+  if dtpReturnDate.Date < dtpBorrowDate.Date then
+    MessageDlg('Return date can''t be earlier than lblBorrowDate date!', mtError, [mbOk], 0)
   else
-    if IsNew and (cbFriends.ItemIndex = -1) then
-      MessageDlg('Friend name field can''t be empty!', mtError, [mbOk], 0)
-    else  
-      with MainForm.ibqUpdateBorrowings do
-          try
-            Close;
-            if IsNew then
+    if IsNew and (cbBookNames.ItemIndex = -1) then
+      MessageDlg('Book name field can''t be empty!', mtError, [mbOk], 0)
+    else
+      if IsNew and (cbFriends.ItemIndex = -1) then
+        MessageDlg('Friend name field can''t be empty!', mtError, [mbOk], 0)
+      else
+        with MainForm.ibqUpdateBorrowings do
+            try
+              Close;
+              if IsNew then
+                begin
+                  SQL.Text := sqlInsertBorrowing;
+                  ParamByName('Book_id').AsInteger := MainForm.ibqBooks.Lookup('Name', cbBookNames.Items[cbBookNames.ItemIndex], 'Book_id');
+                  ParamByName('Friend_id').AsInteger := MainForm.ibqFriends.Lookup('FIO', cbFriends.Items[cbFriends.ItemIndex], 'Friend_id');
+                  ParamByName('BorrowDate').AsDate := dtpBorrowDate.Date;
+                end
+              else
+                begin
+                  SQL.Text := sqlEditBorrowing;
+                  ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
+                  ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
+                  ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
+                end;
+              ParamByName('IsLost').AsString := BoolToStr(chBoxIsLost.Checked, True);
+              ParamByName('IsDamaged').AsString := BoolToStr(chBoxIsDamaged.Checked, True);
+              ParamByName('ReturnDate').AsDate := dtpReturnDate.Date;
+              ParamByName('Comment').AsString := memoComment.Text;
+              ExecSQL;
+              Transaction.Commit;
+              Transaction.Active := False;
+              MainForm.actRefreshBorrowingsExecute(MainForm);
+              Self.Hide;
+            except on E: EIBInterBaseError do
               begin
-                SQL.Text := sqlInsertBorrowing;
-                ParamByName('Book_id').AsInteger := MainForm.ibqBooks.Lookup('Name', cbBookNames.Items[cbBookNames.ItemIndex], 'Book_id');
-                ParamByName('Friend_id').AsInteger := MainForm.ibqFriends.Lookup('FIO', cbFriends.Items[cbFriends.ItemIndex], 'Friend_id');
-                ParamByName('BorrowDate').AsDate := dtpBorrowDate.Date;
-              end
-            else
-              begin
-                SQL.Text := sqlEditBorrowing;
-                ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
-                ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
-                ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
+                if Transaction.Active then
+                  Transaction.Rollback;
+                Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
               end;
-            ParamByName('IsLost').AsString := BoolToStr(chBoxIsLost.Checked, True);
-            ParamByName('IsDamaged').AsString := BoolToStr(chBoxIsDamaged.Checked, True);
-            ParamByName('ReturnDate').AsDate := dtpReturnDate.Date;
-            ParamByName('Comment').AsString := memoComment.Text;
-            ExecSQL; 
-            Transaction.Commit;
-            Transaction.Active := False;
-            MainForm.actRefreshBorrowingsExecute(MainForm);
-          except on E: EIBInterBaseError do
-            begin
-              if Transaction.Active then
-                Transaction.Rollback;
-              Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
             end;
-          end;
-    Self.Hide;
 end;
 
 procedure TAddEditBorrowingForm.FormShow(Sender: TObject);
 begin
   dtpBorrowDate.Date := Now;
-  dtpReturnDate.Date := Now; 
+  dtpReturnDate.Date := Now;
   cbBookNames.Visible := IsNew;
   cbFriends.Visible := IsNew;
   dtpBorrowDate.Visible := IsNew;

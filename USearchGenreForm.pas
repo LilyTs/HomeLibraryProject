@@ -37,16 +37,21 @@ procedure TSearchGenreForm.btnSearchGenreClick(Sender: TObject);
 begin
   with MainForm.ibqGenres do
     begin
-      try     
-        MainForm.ibqGenres.Close;
-        MainForm.ibqGenres.SQL.Text := sqlGetGenresWithParentName;
-
-        MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text + ' WHERE LOWER(G1.Name) LIKE ''%' + AnsiLowerCase(edtNameGenre.Text) + '%''';
-
-        MainForm.ibqGenres.Open;
-
+      try
         if edtNameGenre.Text = '' then
-          MessageDlg('The field is empty!!', mtError, [mbOk], 0);
+          MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
+        else
+          begin
+            MainForm.ibqGenres.Close;
+            MainForm.ibqGenres.SQL.Text := sqlGetGenresWithParentName;
+
+            MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text
+              + ' WHERE LOWER(G1.Name) LIKE ''%'
+              + AnsiLowerCase(edtNameGenre.Text) + '%''';
+              
+            MainForm.ibqGenres.Open;
+            Self.Hide;
+          end;
       except
         on E: EIBInterBaseError do
           begin
@@ -55,7 +60,6 @@ begin
           end;
       end;
     end;
-  Self.Hide;
 end;
 
 procedure TSearchGenreForm.FormShow(Sender: TObject);

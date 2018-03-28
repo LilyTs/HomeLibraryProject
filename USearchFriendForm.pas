@@ -76,7 +76,9 @@ begin
           MainForm.ibqFriends.Open;
 
           if isFirst then
-            MessageDlg('Fields are not selected!', mtError, [mbOk], 0);
+            MessageDlg('Fields are not selected!', mtError, [mbOk], 0)
+          else
+            Self.Hide;
       except
         on E: EIBInterBaseError do
           begin
@@ -85,7 +87,6 @@ begin
           end;
       end;
     end;
-  Self.Hide;
 end;
 
 procedure TSearchFriendForm.FormShow(Sender: TObject);

@@ -70,6 +70,7 @@ begin
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshPubHousesExecute(MainForm);
+            Self.Hide;
           except on E: EIBInterBaseError do
             begin
               if Transaction.Active then
@@ -79,7 +80,6 @@ begin
           end;
         end;
     end;
-    Self.Hide;
 end;
 
 end.

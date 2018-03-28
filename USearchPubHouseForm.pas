@@ -37,16 +37,21 @@ procedure TSearchPubHouseForm.btnSearchPubHouseClick(Sender: TObject);
 begin
   with MainForm.ibqPubHouses do
     begin
-      try     
-        MainForm.ibqPubHouses.Close;
-        MainForm.ibqPubHouses.SQL.Text := sqlGetPubHouses;
-
-        MainForm.ibqPubHouses.SQL.Text := MainForm.ibqPubHouses.SQL.Text + ' WHERE LOWER(Name) LIKE ''%' + AnsiLowerCase(edtNamePubHouse.Text) + '%''';
-
-        MainForm.ibqPubHouses.Open;
-
+      try
         if edtNamePubHouse.Text = '' then
-          MessageDlg('The field is empty!', mtError, [mbOk], 0);
+          MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
+        else
+          begin
+            MainForm.ibqPubHouses.Close;
+            MainForm.ibqPubHouses.SQL.Text := sqlGetPubHouses;
+
+            MainForm.ibqPubHouses.SQL.Text := MainForm.ibqPubHouses.SQL.Text
+              + ' WHERE LOWER(Name) LIKE ''%'
+              + AnsiLowerCase(edtNamePubHouse.Text) + '%''';
+
+            MainForm.ibqPubHouses.Open;
+          end;
+        Self.Hide;
       except
         on E: EIBInterBaseError do
           begin
@@ -55,7 +60,6 @@ begin
           end;
       end;
     end;
-  Self.Hide;
 end;
 
 procedure TSearchPubHouseForm.FormShow(Sender: TObject);

@@ -121,7 +121,8 @@ begin
               Transaction.Commit;
               Transaction.Active := False;
             end;
-          MainForm.actRefreshBooksExecute(MainForm);
+          MainForm.actRefreshBooksExecute(MainForm); 
+          Self.Hide;
         except on E: EIBInterBaseError do
           begin
             if MainForm.ibqUpdateBooks.Transaction.Active then
@@ -132,7 +133,6 @@ begin
           end;
         end;
     end;
-    Self.Hide;
 end;
 
 procedure TAddEditBookForm.FormShow(Sender: TObject);

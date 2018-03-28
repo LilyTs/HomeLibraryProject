@@ -50,6 +50,7 @@ begin
         UFriendsDAL.Edit(MainForm.ibqFriends.FieldValues['Friend_id'],
           edFriendFIO.Text, edFriendPhone.Text, edFriendSocialNumber.Text,
           edFriendEmail.Text, edFriendComment.Text);
+      Hide;
       {with MainForm.ibqUpdateFriends do
         begin
           try
@@ -70,6 +71,7 @@ begin
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshFriendsExecute(MainForm);
+            Self.Hide;
           except on E: EIBInterBaseError do
             begin
               if Transaction.Active then
@@ -79,7 +81,6 @@ begin
           end;
         end; }
     end;
-    Self.Hide;
 end;
 
 procedure TAddEditFriendForm.SetIsNew(New: Boolean);
