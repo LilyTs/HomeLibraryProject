@@ -85,8 +85,7 @@ begin
 end;
 
 procedure TAddEditGenreForm.FormShow(Sender: TObject);
-var i: Integer;
-    prevParentGenreID, GenreID: Variant;
+var prevParentGenre, GenreID: Variant;
 begin
   if IsNew then
     begin
@@ -95,19 +94,19 @@ begin
   else
     begin
       edGenreName.Text := MainForm.ibqGenres.FieldValues['Name'];
-      prevParentGenreID := MainForm.ibqGenres.FieldValues['ParentGenre_id'];
-      GenreID := MainForm.ibqGenres.FieldValues['Genre_id'];
+      prevParentGenre := MainForm.ibqGenres.FieldValues['ParentGenre'];
+      GenreID :=  MainForm.ibqGenres.FieldValues['Genre_id'];
     end;
   cbParentGenre.Items.Clear;
   MainForm.ibqGenres.First;
-  for i := 0 to MainForm.ibqGenres.RecordCount - 1 do
+  while not MainForm.ibqGenres.Eof do
     begin
       cbParentGenre.Items.Add(MainForm.ibqGenres.FieldValues['Name']);
       MainForm.ibqGenres.Next;
     end;
   MainForm.ibqGenres.Locate('Genre_id', GenreID, []);
-  if not IsNew and (prevParentGenreID <> Null) then
-    cbParentGenre.ItemIndex := cbParentGenre.Items.IndexOf(MainForm.ibqGenres.Lookup('Genre_id', prevParentGenreID, 'Name'))
+  if not IsNew and (prevParentGenre <> Null) then
+    cbParentGenre.ItemIndex := cbParentGenre.Items.IndexOf(prevParentGenre)
   else
     cbParentGenre.ItemIndex := -2;
 end;

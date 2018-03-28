@@ -39,9 +39,9 @@ begin
     begin
       try     
         MainForm.ibqGenres.Close;
-        MainForm.ibqGenres.SQL.Text := sqlGetGenres;
+        MainForm.ibqGenres.SQL.Text := sqlGetGenresWithParentName;
 
-        MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text + ' WHERE LOWER(Name) LIKE ''%' + AnsiLowerCase(edtNameGenre.Text) + '%''';
+        MainForm.ibqGenres.SQL.Text := MainForm.ibqGenres.SQL.Text + ' WHERE LOWER(G1.Name) LIKE ''%' + AnsiLowerCase(edtNameGenre.Text) + '%''';
 
         MainForm.ibqGenres.Open;
 

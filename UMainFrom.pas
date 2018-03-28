@@ -180,7 +180,7 @@ begin
     IBTransaction.Active := True;
     with ibqGenres do
       begin
-        SQL.Text := sqlGetGenres;
+        SQL.Text := sqlGetGenresWithParentName; //sqlGetGenres;
         Open;
       end; 
     with ibqBorrowings do
@@ -367,7 +367,7 @@ begin
   with ibqGenres do
     begin
       Close;
-      SQL.Text := sqlGetGenres; 
+      SQL.Text := sqlGetGenresWithParentName; 
       Open;
     end
 end;

@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-    ActivePage = tsFriends
+    ActivePage = tsGenres
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -425,9 +425,9 @@ object MainForm: TMainForm
           end
           item
             Expanded = False
-            FieldName = 'PARENTGENRE_ID'
-            Title.Caption = 'Parent Genre ID'
-            Width = 100
+            FieldName = 'PARENTGENRE'
+            Title.Caption = 'Parent Genre'
+            Width = 150
             Visible = True
           end>
       end
@@ -600,7 +600,9 @@ object MainForm: TMainForm
     BufferChunks = 1000
     CachedUpdates = False
     SQL.Strings = (
-      'Select * from GENRE;')
+      'SELECT G1.Genre_id, G1.Name, G2.Name AS ParentGenre '
+      'FROM Genre G1 JOIN Genre G2 '
+      'ON G1.ParentGenre_id = G2.Genre_id')
     Left = 88
     Top = 456
   end
