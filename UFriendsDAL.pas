@@ -3,7 +3,7 @@ unit UFriendsDAL;
 interface
 
 uses
-  UMainFrom, SQLStrings, DB, IB, Variants, Dialogs;
+  UMainFrom, SQLStrings, DB, IB, Variants, Dialogs, SysUtils;
 
 procedure Insert(FIO: string; PhoneNumber: string; SocialNumber: string;
   Email: string; Comment: String);
@@ -30,11 +30,11 @@ begin
             SQL.Text := sqlEditFriend;
             ParamByName('Friend_id').AsInteger := Id;
           end;
-        ParamByName('FIO').AsString := FIO;
-        ParamByName('PhoneNumber').AsString := PhoneNumber;
-        ParamByName('SocialNumber').AsString := SocialNumber;
-        ParamByName('Email').AsString := Email;
-        ParamByName('Comment').AsString := Comment;
+        ParamByName('FIO').AsString := Trim(FIO);
+        ParamByName('PhoneNumber').AsString := Trim(PhoneNumber);
+        ParamByName('SocialNumber').AsString := Trim(SocialNumber);
+        ParamByName('Email').AsString := Trim(Email);
+        ParamByName('Comment').AsString := Trim(Comment);
         ExecSQL;
         Transaction.Commit;
         Transaction.Active := False;

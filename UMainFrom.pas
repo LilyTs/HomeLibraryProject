@@ -181,7 +181,7 @@ begin
     IBTransaction.Active := True;
     with ibqGenres do
       begin
-        SQL.Text := sqlGetGenresWithParentName; //sqlGetGenres;
+        SQL.Text := sqlGetGenresWithParentName; 
         Open;
       end; 
     with ibqBorrowings do
@@ -303,24 +303,6 @@ end;
 procedure TMainForm.actDeleteFriendExecute(Sender: TObject);
 begin
   UFriendsDAL.Delete(ibqFriends.FieldValues['Friend_id']);
-  {with ibqUpdateFriends do
-    begin
-      try
-        Close;
-        SQL.Text := sqlDeleteFriend;
-        ParamByName('Friend_id').AsInteger := ibqFriends.FieldValues['Friend_id'];
-        ExecSQL;
-        Transaction.Commit;
-        Transaction.Active := False;
-        MainForm.actRefreshFriendsExecute(self);
-      except on E: EIBInterBaseError do
-        begin
-          if Transaction.Active then
-            Transaction.Rollback;
-          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
-        end;
-      end;
-    end; }
 end;
 
 procedure TMainForm.actEditFriendExecute(Sender: TObject);
