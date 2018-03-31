@@ -51,35 +51,6 @@ begin
           edFriendFIO.Text, edFriendPhone.Text, edFriendSocialNumber.Text,
           edFriendEmail.Text, edFriendComment.Text);
       Hide;
-      {with MainForm.ibqUpdateFriends do
-        begin
-          try
-            Close;
-            if IsNew then
-              SQL.Text := sqlInsertFriend
-            else
-              begin
-                SQL.Text := sqlEditFriend;
-                ParamByName('Friend_id').AsInteger := MainForm.ibqFriends.FieldValues['Friend_id'];
-              end;
-            ParamByName('FIO').AsString := edFriendFIO.Text;
-            ParamByName('PhoneNumber').AsString := edFriendPhone.Text;
-            ParamByName('SocialNumber').AsString := edFriendSocialNumber.Text;
-            ParamByName('Email').AsString := edFriendEmail.Text;
-            ParamByName('Comment').AsString := edFriendComment.Text;
-            ExecSQL;
-            Transaction.Commit;
-            Transaction.Active := False;
-            MainForm.actRefreshFriendsExecute(MainForm);
-            Self.Hide;
-          except on E: EIBInterBaseError do
-            begin
-              if Transaction.Active then
-                Transaction.Rollback;
-              Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
-            end;
-          end;
-        end; }
     end;
 end;
 

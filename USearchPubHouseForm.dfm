@@ -1,10 +1,10 @@
 object SearchPubHouseForm: TSearchPubHouseForm
-  Left = 374
+  Left = 370
   Top = 227
   BorderStyle = bsSingle
-  Caption = 'Publishing Houses'
-  ClientHeight = 125
-  ClientWidth = 318
+  Caption = 'Search publishing houses'
+  ClientHeight = 122
+  ClientWidth = 322
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +12,7 @@ object SearchPubHouseForm: TSearchPubHouseForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

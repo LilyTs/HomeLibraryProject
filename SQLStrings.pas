@@ -18,6 +18,7 @@ const
   sqlEditFriend = 'UPDATE Friend SET FIO = :FIO, PhoneNumber = :PhoneNumber, '
                 + 'SocialNumber = :SocialNumber, Email = :Email, Comment = :Comment '
                 + 'WHERE Friend_id = :Friend_id';
+  sqlGetFriendsSortedByFIO = sqlGetFriends + ' ORDER BY FIO';
 
   sqlGetBooksWithPubHouseAndGenres = 'SELECT * FROM GetBooksWithPubHouseAndGenres';
   sqlInsertBook = 'INSERT INTO Book(Book_id, Name, Author, PicAuthor, Translator, PubYear, PubHouse_id, Comment) '

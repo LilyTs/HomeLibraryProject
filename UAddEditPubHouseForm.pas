@@ -63,9 +63,9 @@ begin
             else
               begin
                 SQL.Text := sqlEditPubHouse;
-                ParamByName('PubHouse_id').AsInteger := MainForm.dbgridPubHouses.DataSource.DataSet.Fields.Fields[0].Value;
+                ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.FieldValues['PubHouse_id'];
               end;
-            ParamByName('Name').AsString := edPubHouseName.Text;
+            ParamByName('Name').AsString := Trim(edPubHouseName.Text);
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;

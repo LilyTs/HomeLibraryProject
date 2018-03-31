@@ -67,7 +67,8 @@ begin
                 else
                   ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
               end;
-            ParamByName('Name').AsString := edGenreName.Text;
+            ParamByName('Name').AsString := Trim(edGenreName.Text);
+            Transaction.Active := True;
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;

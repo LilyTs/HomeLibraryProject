@@ -1,9 +1,9 @@
 object SearchBorrowingForm: TSearchBorrowingForm
-  Left = 933
-  Top = 154
+  Left = 365
+  Top = 210
   BorderStyle = bsSingle
-  Caption = 'Borrowings'
-  ClientHeight = 334
+  Caption = 'Search borrowings'
+  ClientHeight = 331
   ClientWidth = 418
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
   PixelsPerInch = 96
   TextHeight = 13
   object lblSearchBorrowDateFrom: TLabel
-    Left = 128
+    Left = 152
     Top = 184
     Width = 26
     Height = 16
@@ -30,7 +30,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     ParentFont = False
   end
   object lblSearchBorrowDateTo: TLabel
-    Left = 264
+    Left = 288
     Top = 184
     Width = 11
     Height = 16
@@ -43,7 +43,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     ParentFont = False
   end
   object lblSearchReturnDateFrom: TLabel
-    Left = 128
+    Left = 152
     Top = 232
     Width = 26
     Height = 16
@@ -56,7 +56,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     ParentFont = False
   end
   object lblSearchReturnDateTo: TLabel
-    Left = 264
+    Left = 288
     Top = 232
     Width = 11
     Height = 16
@@ -69,7 +69,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     ParentFont = False
   end
   object btnSearchBorrowing: TButton
-    Left = 24
+    Left = 80
     Top = 280
     Width = 75
     Height = 25
@@ -79,7 +79,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     OnClick = btnSearchBorrowingClick
   end
   object dtpSearchFrom: TDateTimePicker
-    Left = 160
+    Left = 184
     Top = 184
     Width = 89
     Height = 21
@@ -88,7 +88,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     TabOrder = 1
   end
   object btnCancelBorrowing: TButton
-    Left = 288
+    Left = 248
     Top = 280
     Width = 75
     Height = 25
@@ -98,7 +98,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     OnClick = btnCancelBorrowingClick
   end
   object dtpSearchBorrowDateTo: TDateTimePicker
-    Left = 280
+    Left = 304
     Top = 184
     Width = 89
     Height = 21
@@ -134,7 +134,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     OnClick = chkSearchBorrowFriendClick
   end
   object dtpSearchBorrowReturnDateFrom: TDateTimePicker
-    Left = 160
+    Left = 184
     Top = 232
     Width = 89
     Height = 21
@@ -143,7 +143,7 @@ object SearchBorrowingForm: TSearchBorrowingForm
     TabOrder = 7
   end
   object dtpSearchBorrowReturnDateTo: TDateTimePicker
-    Left = 280
+    Left = 304
     Top = 232
     Width = 89
     Height = 21
@@ -179,31 +179,31 @@ object SearchBorrowingForm: TSearchBorrowingForm
     OnClick = chkSearchIsDamagedClick
   end
   object chkSearchLostTrue: TCheckBox
-    Left = 248
+    Left = 152
     Top = 104
     Width = 97
     Height = 17
     TabOrder = 12
   end
   object chkSearchIsDamagedTrue: TCheckBox
-    Left = 248
+    Left = 152
     Top = 144
     Width = 97
     Height = 17
     TabOrder = 13
   end
   object cbbBorrowingBook: TComboBox
-    Left = 248
+    Left = 152
     Top = 24
-    Width = 145
+    Width = 241
     Height = 21
     ItemHeight = 13
     TabOrder = 14
   end
   object cbbBorrowingFriend: TComboBox
-    Left = 248
+    Left = 152
     Top = 64
-    Width = 145
+    Width = 241
     Height = 21
     ItemHeight = 13
     TabOrder = 15

@@ -82,14 +82,14 @@ begin
               else
                 begin
                   SQL.Text := sqlEditBook;
-                  ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+                  ParamByName('Book_id').AsInteger := MainForm.ibqBooks.FieldValues['Book_id'];
                 end;
-              ParamByName('Name').AsString := edBookName.Text;
-              ParamByName('Author').AsString := edAuthor.Text;
-              ParamByName('PicAuthor').AsString := edPicAuthor.Text;
-              ParamByName('Translator').AsString := edTranslator.Text;
-              ParamByName('PubYear').AsInteger := StrToInt(edPubYear.Text);
-              ParamByName('Comment').AsString := edBookComment.Text;
+              ParamByName('Name').AsString := Trim(edBookName.Text);
+              ParamByName('Author').AsString := Trim(edAuthor.Text);
+              ParamByName('PicAuthor').AsString := Trim(edPicAuthor.Text);
+              ParamByName('Translator').AsString := Trim(edTranslator.Text);
+              ParamByName('PubYear').AsInteger := StrToInt(Trim(edPubYear.Text));
+              ParamByName('Comment').AsString := Trim(edBookComment.Text);
               ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.Lookup('Name', cbPubHouse.Items[cbPubHouse.ItemIndex], 'PubHouse_id');
               Transaction.Active := True;
               ExecSQL;
@@ -101,14 +101,15 @@ begin
           with MainForm.ibqUpdateBookGenre do
             begin
               Close;
+              Transaction.Active := True;
               if not IsNew then
                 begin
                   SQL.Text := sqlDeleteGenresForBook;
-                  ParamByName('Book_id').Value := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+                  ParamByName('Book_id').Value := MainForm.ibqBooks.FieldValues['Book_id'];
                   ExecSQL;
                 end;
               SQL.Text := sqlInsertBookGenre;
-              ParamByName('Book_id').Value := MainForm.dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+              ParamByName('Book_id').Value := MainForm.ibqBooks.FieldValues['Book_id'];
               for i := 0 to checklistGenres.Items.Count - 1 do
                 begin
                   if checklistGenres.Checked[i] then

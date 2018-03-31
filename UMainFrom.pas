@@ -169,6 +169,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 var IniFile: TIniFile;
 begin
   ApplicationEvents.OnIdle := MyIdle;
+  PageControl.ActivePage := tsMain;
   try
     IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
     try

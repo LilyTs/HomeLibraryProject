@@ -1,10 +1,10 @@
 object SearchFriendForm: TSearchFriendForm
-  Left = 752
-  Top = 247
+  Left = 368
+  Top = 256
   BorderStyle = bsSingle
-  Caption = 'Search Friends'
-  ClientHeight = 235
-  ClientWidth = 396
+  Caption = 'Search friends'
+  ClientHeight = 220
+  ClientWidth = 372
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +17,8 @@ object SearchFriendForm: TSearchFriendForm
   PixelsPerInch = 96
   TextHeight = 13
   object chkNameFriend: TCheckBox
-    Left = 48
-    Top = 40
+    Left = 24
+    Top = 24
     Width = 97
     Height = 17
     Caption = 'Name'
@@ -26,8 +26,8 @@ object SearchFriendForm: TSearchFriendForm
     OnClick = chkNameFriendClick
   end
   object chkPhoneFriend: TCheckBox
-    Left = 48
-    Top = 88
+    Left = 24
+    Top = 72
     Width = 97
     Height = 17
     Caption = 'Phone'
@@ -35,8 +35,8 @@ object SearchFriendForm: TSearchFriendForm
     OnClick = chkPhoneFriendClick
   end
   object chkCommentFriend: TCheckBox
-    Left = 48
-    Top = 136
+    Left = 24
+    Top = 120
     Width = 97
     Height = 17
     Caption = 'Comment'
@@ -44,29 +44,29 @@ object SearchFriendForm: TSearchFriendForm
     OnClick = chkCommentFriendClick
   end
   object edtNameFriend: TEdit
-    Left = 176
-    Top = 40
+    Left = 152
+    Top = 24
     Width = 200
     Height = 21
     TabOrder = 3
   end
   object edtPhoneFriend: TEdit
-    Left = 176
-    Top = 80
+    Left = 152
+    Top = 64
     Width = 200
     Height = 21
     TabOrder = 4
   end
   object edtCommentFriend: TEdit
-    Left = 176
-    Top = 128
+    Left = 152
+    Top = 112
     Width = 200
     Height = 21
     TabOrder = 5
   end
   object btnSearchFriend: TButton
-    Left = 96
-    Top = 184
+    Left = 80
+    Top = 168
     Width = 75
     Height = 25
     Caption = 'Search'
@@ -75,8 +75,8 @@ object SearchFriendForm: TSearchFriendForm
     OnClick = btnSearchFriendClick
   end
   object btnCancelFriend: TButton
-    Left = 208
-    Top = 184
+    Left = 216
+    Top = 168
     Width = 75
     Height = 25
     Cancel = True

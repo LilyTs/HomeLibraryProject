@@ -79,7 +79,8 @@ begin
               ParamByName('IsLost').AsString := BoolToStr(chBoxIsLost.Checked, True);
               ParamByName('IsDamaged').AsString := BoolToStr(chBoxIsDamaged.Checked, True);
               ParamByName('ReturnDate').AsDate := dtpReturnDate.Date;
-              ParamByName('Comment').AsString := memoComment.Text;
+              ParamByName('Comment').AsString := Trim(memoComment.Text);
+              Transaction.Active := True;
               ExecSQL;
               Transaction.Commit;
               Transaction.Active := False;
