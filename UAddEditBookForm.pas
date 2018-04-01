@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB, CheckLst, DB;
+  Dialogs, StdCtrls, UMainFrom, SQLStrings, IB, CheckLst, DB,
+  UAddEditPubHouseForm, UAddEditGenreForm;
 
 type
   TAddEditBookForm = class(TForm)
@@ -30,10 +31,14 @@ type
     procedure btnCancelBookClick(Sender: TObject);
     procedure btnSaveBookClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure cbPubHouseChange(Sender: TObject);
+    procedure checklistGenresClick(Sender: TObject);
   private
     IsNew: Boolean;
   public
-    procedure SetIsNew(New: Boolean);
+    procedure SetIsNew(New: Boolean); 
+    procedure AddedNewCBPubHouseItem;
+    procedure AddedNewCheckListGenreItem;
   end;
 
 var
@@ -146,6 +151,7 @@ begin
       cbPubHouse.Items.Add(MainForm.ibqPubHouses.FieldValues['Name']);
       MainForm.ibqPubHouses.Next;
     end;
+  cbPubHouse.Items.Add('Add new...');
   checklistGenres.Clear;
   MainForm.ibqGenres.First;
   while not MainForm.ibqGenres.Eof do
@@ -153,6 +159,7 @@ begin
       checklistGenres.Items.Add(MainForm.ibqGenres.FieldValues['Name']);
       MainForm.ibqGenres.Next;
     end;
+  checklistGenres.Items.Add('Add new...');
   if IsNew then
     begin
       edBookName.Clear;
@@ -184,6 +191,42 @@ begin
             checklistGenres.Checked[i] := True;
         end;
     end;
+end;
+
+procedure TAddEditBookForm.cbPubHouseChange(Sender: TObject);
+begin
+  if cbPubHouse.Items[cbPubHouse.ItemIndex] = 'Add new...' then
+    begin
+      AddEditPubHouseForm.SetFromAddBookForm(True);
+      MainForm.actAddPubHouseExecute(MainForm);
+    end;
+end;
+
+procedure TAddEditBookForm.AddedNewCBPubHouseItem;
+begin
+  MainForm.ibqPubHouses.Last;
+  cbPubHouse.Items.Delete(cbPubHouse.Items.Count - 1);
+  cbPubHouse.Items.Add(MainForm.ibqPubHouses.FieldValues['Name']);
+  cbPubHouse.Items.Add('Add new...');
+  cbPubHouse.ItemIndex := cbPubHouse.Items.Count - 2;
+end;
+
+procedure TAddEditBookForm.checklistGenresClick(Sender: TObject);
+begin
+  if checklistGenres.Checked[checklistGenres.Count - 1] then
+    begin
+      AddEditGenreForm.SetIsFromAddEditBookForm(True);
+      MainForm.actAddGenreExecute(MainForm);
+    end;
+end;
+
+procedure TAddEditBookForm.AddedNewCheckListGenreItem;
+begin
+  MainForm.ibqGenres.Last;
+  checklistGenres.Items.Delete(checklistGenres.Count - 1);
+  checklistGenres.Items.Add(MainForm.ibqGenres.FieldValues['Name']); 
+  checklistGenres.Checked[checklistGenres.Count - 1] := True;
+  checklistGenres.Items.Add('Add new...');
 end;
 
 end.

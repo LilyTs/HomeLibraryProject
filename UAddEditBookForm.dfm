@@ -118,6 +118,7 @@ object AddEditBookForm: TAddEditBookForm
     Height = 21
     ItemHeight = 13
     TabOrder = 5
+    OnChange = cbPubHouseChange
   end
   object edBookComment: TEdit
     Left = 104
@@ -154,5 +155,6 @@ object AddEditBookForm: TAddEditBookForm
     Height = 73
     ItemHeight = 13
     TabOrder = 9
+    OnClick = checklistGenresClick
   end
 end

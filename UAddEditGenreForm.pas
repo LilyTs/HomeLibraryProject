@@ -19,14 +19,18 @@ type
     procedure FormShow(Sender: TObject);
   private
     IsNew: Boolean;
+    IsFromAddEditBookForm: Boolean;
   public
     procedure SetIsNew(New: Boolean);
+    procedure SetIsFromAddEditBookForm(FromAddEditBookForm: Boolean);
   end;
 
 var
   AddEditGenreForm: TAddEditGenreForm;
 
 implementation
+
+uses UAddEditBookForm;
 
 {$R *.dfm}
 
@@ -72,7 +76,9 @@ begin
             ExecSQL;
             Transaction.Commit;
             Transaction.Active := False;
-            MainForm.actRefreshGenresExecute(MainForm); 
+            MainForm.actRefreshGenresExecute(MainForm);
+            if IsFromAddEditBookForm then
+              AddEditBookForm.AddedNewCheckListGenreItem;
             Self.Hide;
           except on E: EIBInterBaseError do
             begin
@@ -110,6 +116,12 @@ begin
     cbParentGenre.ItemIndex := cbParentGenre.Items.IndexOf(prevParentGenre)
   else
     cbParentGenre.ItemIndex := -2;
+end;
+
+procedure TAddEditGenreForm.SetIsFromAddEditBookForm(
+  FromAddEditBookForm: Boolean);
+begin
+  IsFromAddEditBookForm := FromAddEditBookForm;
 end;
 
 end.

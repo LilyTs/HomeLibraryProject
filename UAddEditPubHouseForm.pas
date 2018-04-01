@@ -17,14 +17,18 @@ type
     procedure btnSavePubHouseClick(Sender: TObject);
   private
     IsNew: Boolean;
+    IsFromAddBookForm: Boolean;
   public
     procedure SetIsNew(New: Boolean);
+    procedure SetFromAddBookForm(FromAddBookForm: Boolean);
   end;
 
 var
   AddEditPubHouseForm: TAddEditPubHouseForm;
 
 implementation
+
+uses UAddEditBookForm;
 
 {$R *.dfm}
 
@@ -70,6 +74,8 @@ begin
             Transaction.Commit;
             Transaction.Active := False;
             MainForm.actRefreshPubHousesExecute(MainForm);
+            if IsFromAddBookForm then
+              AddEditBookForm.AddedNewCBPubHouseItem;
             Self.Hide;
           except on E: EIBInterBaseError do
             begin
@@ -80,6 +86,12 @@ begin
           end;
         end;
     end;
+end;
+
+procedure TAddEditPubHouseForm.SetFromAddBookForm(
+  FromAddBookForm: Boolean);
+begin
+  IsFromAddBookForm := FromAddBookForm;
 end;
 
 end.
