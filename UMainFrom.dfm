@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-    ActivePage = tsFriends
+    ActivePage = tsBooks
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -225,16 +225,16 @@ object MainForm: TMainForm
           end
           item
             Expanded = False
-            FieldName = 'NAME'
-            Title.Caption = 'Name'
-            Width = 140
+            FieldName = 'AUTHOR'
+            Title.Caption = 'Author'
+            Width = 105
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'AUTHOR'
-            Title.Caption = 'Author'
-            Width = 105
+            FieldName = 'NAME'
+            Title.Caption = 'Name'
+            Width = 140
             Visible = True
           end
           item
@@ -567,10 +567,7 @@ object MainForm: TMainForm
     end
   end
   object IBDatabase: TIBDatabase
-    DatabaseName = 
-      'C:\Users\Lilia\Desktop\Studies\3_year\6 semester\DataBases ('#1050#1072#1096#1080 +
-      #1088#1089#1082#1072#1103' '#1048'.'#1048'.)\Delphi project for report\HomeLibraryProject\App\HOM' +
-      'ELIBRARY.FDB'
+    DatabaseName = 'HomeLibrary'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'

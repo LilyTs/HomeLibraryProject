@@ -50,7 +50,7 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
     Height = 13
     Caption = 'Comment:'
   end
-  object btnSaveBook: TButton
+  object btnSaveBorrowing: TButton
     Left = 96
     Top = 384
     Width = 80
@@ -58,9 +58,9 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
     Caption = 'Save'
     Default = True
     TabOrder = 0
-    OnClick = btnSaveBookClick
+    OnClick = btnSaveBorrowingClick
   end
-  object btnCancelBook: TButton
+  object btnCancelBorrowing: TButton
     Left = 208
     Top = 384
     Width = 80
@@ -68,7 +68,7 @@ object AddEditBorrowingForm: TAddEditBorrowingForm
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 1
-    OnClick = btnCancelBookClick
+    OnClick = btnCancelBorrowingClick
   end
   object cbBookNames: TComboBox
     Left = 96

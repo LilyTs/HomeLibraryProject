@@ -171,7 +171,8 @@ begin
   ApplicationEvents.OnIdle := MyIdle;
   PageControl.ActivePage := tsMain;
   try
-    IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
+    IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName)
+      + 'Config.ini');
     try
       IBDatabase.DatabaseName := IniFile.ReadString('Base', 'Path', '');
     finally

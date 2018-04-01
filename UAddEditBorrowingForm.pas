@@ -13,8 +13,8 @@ type
     lblBorrowDate: TLabel;
     lblReturnDate: TLabel;
     lblBookComment: TLabel;
-    btnSaveBook: TButton;
-    btnCancelBook: TButton;
+    btnSaveBorrowing: TButton;
+    btnCancelBorrowing: TButton;
     cbBookNames: TComboBox;
     cbFriends: TComboBox;
     chBoxIsLost: TCheckBox;
@@ -22,11 +22,13 @@ type
     dtpReturnDate: TDateTimePicker;
     dtpBorrowDate: TDateTimePicker;
     memoComment: TMemo;
-    procedure btnCancelBookClick(Sender: TObject);
-    procedure btnSaveBookClick(Sender: TObject);
+    procedure btnCancelBorrowingClick(Sender: TObject);
+    procedure btnSaveBorrowingClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     IsNew: Boolean;
+    procedure ChangeFormForEdit;
+    procedure ReturnNormalFormView;
   public
     procedure SetIsNew(New: Boolean);
   end;
@@ -38,7 +40,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TAddEditBorrowingForm.btnCancelBookClick(Sender: TObject);
+procedure TAddEditBorrowingForm.btnCancelBorrowingClick(Sender: TObject);
 begin
   Self.Hide;
 end;
@@ -48,10 +50,11 @@ begin
   IsNew := New;
 end;
 
-procedure TAddEditBorrowingForm.btnSaveBookClick(Sender: TObject);
+procedure TAddEditBorrowingForm.btnSaveBorrowingClick(Sender: TObject);
 begin
   if dtpReturnDate.Date < dtpBorrowDate.Date then
-    MessageDlg('Return date can''t be earlier than lblBorrowDate date!', mtError, [mbOk], 0)
+    MessageDlg('Return date can''t be earlier than borrow date ('
+    + DateToStr(dtpBorrowDate.Date) + ')!', mtError, [mbOk], 0)
   else
     if IsNew and (cbBookNames.ItemIndex = -1) then
       MessageDlg('Book name field can''t be empty!', mtError, [mbOk], 0)
@@ -75,6 +78,7 @@ begin
                   ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
                   ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
                   ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
+                  ReturnNormalFormView;
                 end;
               ParamByName('IsLost').AsString := BoolToStr(chBoxIsLost.Checked, True);
               ParamByName('IsDamaged').AsString := BoolToStr(chBoxIsDamaged.Checked, True);
@@ -97,8 +101,6 @@ end;
 
 procedure TAddEditBorrowingForm.FormShow(Sender: TObject);
 begin
-  dtpBorrowDate.Date := Now;
-  dtpReturnDate.Date := Now;
   cbBookNames.Visible := IsNew;
   cbFriends.Visible := IsNew;
   dtpBorrowDate.Visible := IsNew;
@@ -125,15 +127,45 @@ begin
       cbBookNames.ItemIndex := -1;
       cbFriends.ItemIndex := -1;
       chBoxIsLost.Checked := False; 
-      chBoxIsDamaged.Checked := False;
+      chBoxIsDamaged.Checked := False; 
+      dtpBorrowDate.Date := Now;
+      dtpReturnDate.Date := Now;
     end
   else
     begin
       chBoxIsLost.Checked := (MainForm.ibqBorrowings.FieldValues['IsLost'] = '+');
       chBoxIsDamaged.Checked := (MainForm.ibqBorrowings.FieldValues['IsDamaged'] = '+');
+      dtpBorrowDate.Date := MainForm.ibqBorrowings.FieldValues['BorrowDate'];
       dtpReturnDate.Date := MainForm.ibqBorrowings.FieldValues['ReturnDate'];
       memoComment.Text := MainForm.ibqBorrowings.FieldValues['Comment'];
+      ChangeFormForEdit;
     end;
+end;
+
+procedure TAddEditBorrowingForm.ReturnNormalFormView;
+begin
+  chBoxIsLost.Top := chBoxIsLost.Top + 120;
+  chBoxIsDamaged.Top := chBoxIsDamaged.Top + 120;
+  dtpReturnDate.Top := dtpReturnDate.Top + 120;
+  memoComment.Top := memoComment.Top + 120;
+  btnSaveBorrowing.Top := btnSaveBorrowing.Top + 120;
+  btnCancelBorrowing.Top := btnCancelBorrowing.Top + 120;
+  lblReturnDate.Top := lblReturnDate.Top + 120;
+  lblBookComment.Top := lblBookComment.Top + 120;
+  Self.Height := Self.Height + 120;
+end;
+
+procedure TAddEditBorrowingForm.ChangeFormForEdit;
+begin
+  chBoxIsLost.Top := chBoxIsLost.Top - 120;
+  chBoxIsDamaged.Top := chBoxIsDamaged.Top - 120;
+  dtpReturnDate.Top := dtpReturnDate.Top - 120;
+  memoComment.Top := memoComment.Top - 120;
+  btnSaveBorrowing.Top := btnSaveBorrowing.Top - 120;
+  btnCancelBorrowing.Top := btnCancelBorrowing.Top - 120;
+  lblReturnDate.Top := lblReturnDate.Top - 120;
+  lblBookComment.Top := lblBookComment.Top - 120;
+  Self.Height := Self.Height - 120;
 end;
 
 end.
