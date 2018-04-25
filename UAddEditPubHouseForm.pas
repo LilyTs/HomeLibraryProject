@@ -52,11 +52,11 @@ end;
 
 procedure TAddEditPubHouseForm.btnSavePubHouseClick(Sender: TObject);
 begin
-  if edPubHouseName.Text = '' then
+  if Trim(edPubHouseName.Text) = '' then
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
-      with MainForm.ibqUpdatePubHouses do
+      {with MainForm.ibqUpdatePubHouses do
         begin
           try
             Close;
@@ -70,9 +70,37 @@ begin
                 ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.FieldValues['PubHouse_id'];
               end;
             ParamByName('Name').AsString := Trim(edPubHouseName.Text);
+            Transaction.StartTransaction;
             ExecSQL;
             Transaction.Commit;
-            Transaction.Active := False;
+            MainForm.actRefreshPubHousesExecute(MainForm);
+            if IsFromAddBookForm then
+              AddEditBookForm.AddedNewCBPubHouseItem;
+            Self.Hide;
+          except on E: EIBInterBaseError do
+            begin
+              if Transaction.Active then
+                Transaction.Rollback;
+              Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+            end;
+          end;
+        end;}
+        with MainForm.IBDataSetPubHouses do
+        begin
+          Open;
+          try
+            if not IsNew then
+              begin
+                Edit;
+                FieldByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.FieldValues['PubHouse_id'];
+              end
+            else
+              begin
+                Insert;
+              end;
+            FieldByName('Name').AsString := Trim(edPubHouseName.Text);
+            Post;  
+            Transaction.Commit;
             MainForm.actRefreshPubHousesExecute(MainForm);
             if IsFromAddBookForm then
               AddEditBookForm.AddedNewCBPubHouseItem;

@@ -3,7 +3,7 @@ unit SQLStrings;
 interface
 
 const
-  sqlGetPubHouses = 'SELECT * FROM PublishingHouse';
+  sqlGetPubHouses = 'SELECT * FROM PublishingHouse ORDER BY PubHouse_id';
   sqlInsertPubHouse = 'INSERT INTO PublishingHouse '
                     + 'VALUES(null, :Name)';
   sqlDeletePubHouse = 'DELETE FROM PublishingHouse '
@@ -12,13 +12,13 @@ const
                   + 'WHERE PubHouse_id = :PubHouse_id';
 
   sqlGetFriends = 'SELECT * FROM Friend';
-  sqlInsertFriend = 'INSERT INTO Friend VALUES(null, :FIO, :PhoneNumber, '
-                  + ':SocialNumber, :Email, :Comment)';
+  sqlInsertFriend = 'INSERT INTO Friend(Friend_id, FIO, PhoneNumber, '
+    + 'SocialNumber, Email, Comment) VALUES(null, :FIO, :PhoneNumber, '
+    + ':SocialNumber, :Email, :Comment)';
   sqlDeleteFriend = 'DELETE FROM Friend WHERE Friend_id = :Friend_id';
   sqlEditFriend = 'UPDATE Friend SET FIO = :FIO, PhoneNumber = :PhoneNumber, '
                 + 'SocialNumber = :SocialNumber, Email = :Email, Comment = :Comment '
                 + 'WHERE Friend_id = :Friend_id';
-  sqlGetFriendsSortedByFIO = sqlGetFriends + ' ORDER BY FIO';
 
   sqlGetBooksWithPubHouseAndGenres = 'SELECT * FROM GetBooksWithPubHouseAndGenres';
   sqlInsertBook = 'INSERT INTO Book(Book_id, Name, Author, PicAuthor, Translator, PubYear, PubHouse_id, Comment) '
@@ -49,9 +49,7 @@ const
     + 'WHERE Book_id = :Book_id AND Friend_id = :Friend_id AND BorrowDate = :BorrowDate';
 
   sqlGetGenresForBook = 'SELECT G.Name FROM BookGenre BG JOIN Genre G ON BG.Genre_id = G.Genre_id WHERE Book_id = :Book_id';
-  sqlGetBooksGenres = 'SELECT * FROM BookGenre';
   sqlInsertBookGenre = 'INSERT INTO BookGenre(Book_id, Genre_id) VALUES(:Book_id, :Genre_id)';
-  sqlDeleteBookGenre = 'DELETE FROM BookGenre WHERE Book_id = :Book_id AND Genre_id = :Genre_id';
   sqlDeleteGenresForBook = 'DELETE FROM BookGenre WHERE Book_id = :Book_id';
 
 implementation

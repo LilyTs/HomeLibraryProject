@@ -3,7 +3,7 @@ unit UAddEditGenreForm;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, StrUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, IB, SQLStrings, UMainFrom, DBCtrls;
 
 type
@@ -45,49 +45,58 @@ begin
 end;
 
 procedure TAddEditGenreForm.btnSaveGenreClick(Sender: TObject);
+var GenreChilds: string;
 begin
-  if edGenreName.Text = '' then
+  if Trim(edGenreName.Text) = '' then
       MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
-      with MainForm.ibqUpdateGenres do
+      if not IsNew then
         begin
-          try
-            Close;
-            if IsNew then
-              begin
-                SQL.Text := sqlInsertGenre;
-                if cbParentGenre.ItemIndex < 0 then
+          MainForm.IBStoredProcGenreChilds.ParamByName('Genre_id').AsInteger := MainForm.ibqGenres.FieldValues['Genre_id'];
+          MainForm.IBStoredProcGenreChilds.ExecProc;
+          GenreChilds := MainForm.IBStoredProcGenreChilds.ParamByName('childs').AsString;
+        end;
+      if not IsNew and AnsiContainsStr(GenreChilds, cbParentGenre.Items[cbParentGenre.ItemIndex]) then
+        MessageDlg('Child genre can''t be parent at the same time!', mtError, [mbOk], 0)
+      else
+        with MainForm.ibqUpdateGenres do
+          begin
+            try
+              Close;
+              if IsNew then
+                begin
+                  SQL.Text := sqlInsertGenre;
+                  if cbParentGenre.ItemIndex < 0 then
+                      ParamByName('ParentGenre_id').Value := Null
+                  else
+                    ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
+                end
+              else
+                begin
+                  SQL.Text := sqlEditGenre;
+                  ParamByName('Genre_id').AsInteger := MainForm.ibqGenres.FieldValues['Genre_id'];
+                  if cbParentGenre.ItemIndex < 0 then
                     ParamByName('ParentGenre_id').Value := Null
-                else
-                  ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
-              end
-            else
+                  else
+                    ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
+                end;
+              ParamByName('Name').AsString := Trim(edGenreName.Text);
+              Transaction.StartTransaction;
+              ExecSQL;
+              Transaction.Commit;
+              MainForm.actRefreshGenresExecute(MainForm);
+              if IsFromAddEditBookForm then
+                AddEditBookForm.AddedNewCheckListGenreItem;
+              Self.Hide;
+            except on E: EIBInterBaseError do
               begin
-                SQL.Text := sqlEditGenre;
-                ParamByName('Genre_id').AsInteger := MainForm.ibqGenres.FieldValues['Genre_id'];
-                if cbParentGenre.ItemIndex < 0 then
-                  ParamByName('ParentGenre_id').Value := Null
-                else
-                  ParamByName('ParentGenre_id').AsInteger := MainForm.ibqGenres.Lookup('Name', cbParentGenre.Items[cbParentGenre.ItemIndex], 'Genre_id');
+                if Transaction.Active then
+                  Transaction.Rollback;
+                Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
               end;
-            ParamByName('Name').AsString := Trim(edGenreName.Text);
-            Transaction.Active := True;
-            ExecSQL;
-            Transaction.Commit;
-            Transaction.Active := False;
-            MainForm.actRefreshGenresExecute(MainForm);
-            if IsFromAddEditBookForm then
-              AddEditBookForm.AddedNewCheckListGenreItem;
-            Self.Hide;
-          except on E: EIBInterBaseError do
-            begin
-              if Transaction.Active then
-                Transaction.Rollback;
-              Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
             end;
           end;
-        end;
     end;
 end;
 

@@ -72,7 +72,7 @@ end;
 procedure TAddEditBookForm.btnSaveBookClick(Sender: TObject);
 var i: Integer;
 begin
-  if (edBookName.Text = '') or (edPubYear.Text = '') or (edAuthor.Text = '') or (cbPubHouse.ItemIndex < 0) then
+  if (Trim(edBookName.Text) = '') or (Trim(edPubYear.Text) = '') or (Trim(edAuthor.Text) = '') or (cbPubHouse.ItemIndex < 0) then
     MessageDlg('Field can''t be empty!', mtError, [mbOk], 0)
   else
     begin
@@ -96,17 +96,16 @@ begin
               ParamByName('PubYear').AsInteger := StrToInt(Trim(edPubYear.Text));
               ParamByName('Comment').AsString := Trim(edBookComment.Text);
               ParamByName('PubHouse_id').AsInteger := MainForm.ibqPubHouses.Lookup('Name', cbPubHouse.Items[cbPubHouse.ItemIndex], 'PubHouse_id');
-              Transaction.Active := True;
+              Transaction.StartTransaction;
               ExecSQL;
               Transaction.Commit;
-              Transaction.Active := False; 
               MainForm.actRefreshBooksExecute(MainForm);
               MainForm.dbgridBooks.DataSource.DataSet.Locate('Name', edBookName.Text, []);
             end;
           with MainForm.ibqUpdateBookGenre do
             begin
               Close;
-              Transaction.Active := True;
+              Transaction.StartTransaction;
               if not IsNew then
                 begin
                   SQL.Text := sqlDeleteGenresForBook;
@@ -125,9 +124,8 @@ begin
                     end;
                 end;
               Transaction.Commit;
-              Transaction.Active := False;
             end;
-          MainForm.actRefreshBooksExecute(MainForm); 
+          MainForm.actRefreshBooksExecute(MainForm);
           Self.Hide;
         except on E: EIBInterBaseError do
           begin

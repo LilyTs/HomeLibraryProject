@@ -1,10 +1,10 @@
 object MainForm: TMainForm
-  Left = 227
-  Top = 142
+  Left = 213
+  Top = 158
   BorderStyle = bsSingle
   Caption = 'My Library'
-  ClientHeight = 534
-  ClientWidth = 1037
+  ClientHeight = 455
+  ClientWidth = 1047
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 1041
     Height = 450
-    ActivePage = tsBooks
+    ActivePage = tsFriends
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -567,7 +567,10 @@ object MainForm: TMainForm
     end
   end
   object IBDatabase: TIBDatabase
-    DatabaseName = 'HomeLibrary'
+    DatabaseName = 
+      'C:\Users\Lilia\Desktop\Studies\3_year\6 semester\DataBases_(Kash' +
+      'irskaya)\Delphi project for report\HomeLibraryProject\App\HomeLi' +
+      'brary.fdb'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
@@ -578,7 +581,7 @@ object MainForm: TMainForm
     SQLDialect = 3
     TraceFlags = []
     Left = 8
-    Top = 456
+    Top = 384
   end
   object IBTransaction: TIBTransaction
     Active = False
@@ -588,8 +591,8 @@ object MainForm: TMainForm
       'rec_version'
       'nowait')
     AutoStopAction = saNone
-    Left = 48
-    Top = 456
+    Left = 40
+    Top = 384
   end
   object ibqGenres: TIBQuery
     Database = IBDatabase
@@ -600,8 +603,8 @@ object MainForm: TMainForm
       'SELECT G1.Genre_id, G1.Name, G2.Name AS ParentGenre '
       'FROM Genre G1 JOIN Genre G2 '
       'ON G1.ParentGenre_id = G2.Genre_id')
-    Left = 88
-    Top = 456
+    Left = 304
+    Top = 384
   end
   object ibqBorrowings: TIBQuery
     Database = IBDatabase
@@ -621,18 +624,18 @@ object MainForm: TMainForm
       '   ON B.FRIEND_ID = F.FRIEND_ID'
       '  JOIN BOOK BK '
       '   ON B.BOOK_ID = BK.BOOK_ID;')
-    Left = 160
-    Top = 456
+    Left = 88
+    Top = 384
   end
   object dsrcGenres: TDataSource
     DataSet = ibqGenres
-    Left = 120
-    Top = 456
+    Left = 336
+    Top = 384
   end
   object dsrcBorrowings: TDataSource
     DataSet = ibqBorrowings
-    Left = 192
-    Top = 456
+    Left = 120
+    Top = 384
   end
   object ibqBooks: TIBQuery
     Database = IBDatabase
@@ -641,13 +644,13 @@ object MainForm: TMainForm
     CachedUpdates = False
     SQL.Strings = (
       'select * from GetBooksWithPubHouseAndGenres;')
-    Left = 232
-    Top = 456
+    Left = 160
+    Top = 384
   end
   object dsrcBooks: TDataSource
     DataSet = ibqBooks
-    Left = 264
-    Top = 456
+    Left = 192
+    Top = 384
   end
   object ibqFriends: TIBQuery
     Database = IBDatabase
@@ -656,13 +659,13 @@ object MainForm: TMainForm
     CachedUpdates = False
     SQL.Strings = (
       'select * from FRIEND')
-    Left = 304
-    Top = 456
+    Left = 232
+    Top = 384
   end
   object dsrcFriends: TDataSource
     DataSet = ibqFriends
-    Left = 336
-    Top = 456
+    Left = 264
+    Top = 384
   end
   object ibqPubHouses: TIBQuery
     Database = IBDatabase
@@ -672,16 +675,16 @@ object MainForm: TMainForm
     SQL.Strings = (
       'select * from PUBLISHINGHOUSE')
     Left = 376
-    Top = 456
+    Top = 384
   end
   object dsrcPubHouses: TDataSource
     DataSet = ibqPubHouses
     Left = 408
-    Top = 456
+    Top = 384
   end
   object ImageList: TImageList
     Left = 460
-    Top = 456
+    Top = 384
     Bitmap = {
       494C010105000900040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
@@ -1088,7 +1091,7 @@ object MainForm: TMainForm
   end
   object actListPubHouses: TActionList
     Images = ImageList
-    Left = 44
+    Left = 508
     Top = 416
     object actAddPubHouse: TAction
       Caption = 'actAddPubHouse'
@@ -1119,24 +1122,20 @@ object MainForm: TMainForm
       OnExecute = actSearchPubHouseExecute
     end
   end
-  object ibqUpdatePubHouses: TIBQuery
-    Database = IBDatabase
-    Transaction = IBTransactionUpdatePubHouses
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 564
-    Top = 456
-  end
   object IBTransactionUpdatePubHouses: TIBTransaction
     Active = False
     DefaultDatabase = IBDatabase
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
     AutoStopAction = saNone
-    Left = 596
-    Top = 456
+    Left = 564
+    Top = 416
   end
   object actListFriends: TActionList
     Images = ImageList
-    Left = 12
+    Left = 212
     Top = 416
     object actAddFriend: TAction
       Caption = 'actAddFriend'
@@ -1167,19 +1166,11 @@ object MainForm: TMainForm
       OnExecute = actSearchFriendExecute
     end
   end
-  object ibqUpdateFriends: TIBQuery
-    Database = IBDatabase
-    Transaction = IBTransactionUpdateFriends
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 92
-    Top = 416
-  end
   object IBTransactionUpdateFriends: TIBTransaction
     Active = False
     DefaultDatabase = IBDatabase
     AutoStopAction = saNone
-    Left = 124
+    Left = 276
     Top = 416
   end
   object ibqUpdateBooks: TIBQuery
@@ -1187,7 +1178,7 @@ object MainForm: TMainForm
     Transaction = IBTransactionUpdateBooks
     BufferChunks = 1000
     CachedUpdates = False
-    Left = 164
+    Left = 140
     Top = 416
   end
   object IBTransactionUpdateBooks: TIBTransaction
@@ -1198,12 +1189,12 @@ object MainForm: TMainForm
       'rec_version'
       'nowait')
     AutoStopAction = saNone
-    Left = 196
+    Left = 172
     Top = 416
   end
   object actListBooks: TActionList
     Images = ImageList
-    Left = 228
+    Left = 108
     Top = 416
     object actAddBook: TAction
       Caption = 'actAddBook'
@@ -1233,7 +1224,7 @@ object MainForm: TMainForm
   end
   object actListGenres: TActionList
     Images = ImageList
-    Left = 276
+    Left = 316
     Top = 416
     object actAddGenre: TAction
       Caption = 'actAddGenre'
@@ -1266,7 +1257,7 @@ object MainForm: TMainForm
     Transaction = IBTransactionUpdateGenres
     BufferChunks = 1000
     CachedUpdates = False
-    Left = 308
+    Left = 348
     Top = 416
   end
   object IBTransactionUpdateGenres: TIBTransaction
@@ -1277,56 +1268,27 @@ object MainForm: TMainForm
       'rec_version'
       'nowait')
     AutoStopAction = saNone
-    Left = 340
+    Left = 380
     Top = 416
-  end
-  object ibqSearchBook: TIBQuery
-    Database = IBDatabase
-    Transaction = IBTransactionSearchBook
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 736
-    Top = 456
-  end
-  object IBTransactionSearchBook: TIBTransaction
-    Active = False
-    DefaultDatabase = IBDatabase
-    Params.Strings = (
-      'read_committed'
-      'rec_version'
-      'nowait')
-    AutoStopAction = saNone
-    Left = 696
-    Top = 456
-  end
-  object dsSearchBook: TDataSource
-    DataSet = ibqSearchBook
-    Left = 664
-    Top = 456
   end
   object ApplicationEvents: TApplicationEvents
-    Left = 764
-    Top = 416
+    Left = 492
+    Top = 384
   end
   object ibqGenresForBook: TIBQuery
     Database = IBDatabase
     Transaction = IBTransaction
     BufferChunks = 1000
     CachedUpdates = False
-    Left = 380
-    Top = 416
-  end
-  object dsrcGenresForBooks: TDataSource
-    DataSet = ibqGenresForBook
-    Left = 412
-    Top = 416
+    Left = 564
+    Top = 384
   end
   object ibqUpdateBookGenre: TIBQuery
     Database = IBDatabase
     Transaction = IBTransactionUpdateBookGenre
     BufferChunks = 1000
     CachedUpdates = False
-    Left = 452
+    Left = 428
     Top = 416
   end
   object IBTransactionUpdateBookGenre: TIBTransaction
@@ -1337,24 +1299,11 @@ object MainForm: TMainForm
       'rec_version'
       'nowait')
     AutoStopAction = saNone
-    Left = 484
-    Top = 416
-  end
-  object ibqBooksGenres: TIBQuery
-    Database = IBDatabase
-    Transaction = IBTransaction
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 524
-    Top = 416
-  end
-  object dsrcBooksGenres: TDataSource
-    DataSet = ibqBooksGenres
-    Left = 556
+    Left = 460
     Top = 416
   end
   object actListBorrowings: TActionList
-    Left = 596
+    Left = 4
     Top = 416
     object actAddBorrowing: TAction
       Caption = 'actAddBorrowing'
@@ -1383,7 +1332,7 @@ object MainForm: TMainForm
     Transaction = IBTransactionUpdateBorrowings
     BufferChunks = 1000
     CachedUpdates = False
-    Left = 628
+    Left = 36
     Top = 416
   end
   object IBTransactionUpdateBorrowings: TIBTransaction
@@ -1394,7 +1343,62 @@ object MainForm: TMainForm
       'rec_version'
       'nowait')
     AutoStopAction = saNone
-    Left = 660
+    Left = 68
     Top = 416
+  end
+  object IBDataSetPubHouses: TIBDataSet
+    Database = IBDatabase
+    Transaction = IBTransactionUpdatePubHouses
+    BufferChunks = 1000
+    CachedUpdates = False
+    DeleteSQL.Strings = (
+      'delete from PUBLISHINGHOUSE'
+      'where'
+      '  PUBHOUSE_ID = :OLD_PUBHOUSE_ID')
+    InsertSQL.Strings = (
+      'insert into PUBLISHINGHOUSE'
+      '  (NAME)'
+      'values'
+      '  (:NAME)')
+    RefreshSQL.Strings = (
+      'Select '
+      '  PUBHOUSE_ID,'
+      '  NAME'
+      'from PUBLISHINGHOUSE '
+      'where'
+      '  PUBHOUSE_ID = :PUBHOUSE_ID')
+    SelectSQL.Strings = (
+      'SELECT * FROM PUBLISHINGHOUSE ORDER BY PUBHOUSE_ID')
+    ModifySQL.Strings = (
+      'update PUBLISHINGHOUSE'
+      'set'
+      '  NAME = :NAME'
+      'where'
+      '  PUBHOUSE_ID = :OLD_PUBHOUSE_ID')
+    GeneratorField.Field = 'PUBHOUSE_ID'
+    GeneratorField.Generator = 'GEN_PUBLISHINGHOUSE_ID'
+    GeneratorField.IncrementBy = 0
+    Left = 536
+    Top = 416
+  end
+  object IBDataSetFriends: TIBDataSet
+    Database = IBDatabase
+    Transaction = IBTransactionUpdateFriends
+    BufferChunks = 1000
+    CachedUpdates = False
+    SelectSQL.Strings = (
+      'SELECT * FROM FRIEND')
+    GeneratorField.Field = 'FRIEND_ID'
+    GeneratorField.Generator = 'GEN_FRIEND_ID'
+    GeneratorField.IncrementBy = 0
+    Left = 244
+    Top = 416
+  end
+  object IBStoredProcGenreChilds: TIBStoredProc
+    Database = IBDatabase
+    Transaction = IBTransaction
+    StoredProcName = 'GETGENRECHILDS'
+    Left = 540
+    Top = 384
   end
 end

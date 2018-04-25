@@ -19,25 +19,24 @@ procedure InsertOrEdit(Id: Variant; FIO: string; PhoneNumber: string;
 var IsNew: Boolean;
 begin
   IsNew := (Id = Null);
-  with MainForm.ibqUpdateFriends do
+  with MainForm.IBDataSetFriends do
     begin
       try
-        Close;
+        Open;
         if IsNew then
-          SQL.Text := sqlInsertFriend
+          Insert
         else
           begin
-            SQL.Text := sqlEditFriend;
-            ParamByName('Friend_id').AsInteger := Id;
+            Edit;
+            FieldByName('Friend_id').AsInteger := Id;
           end;
-        ParamByName('FIO').AsString := Trim(FIO);
-        ParamByName('PhoneNumber').AsString := Trim(PhoneNumber);
-        ParamByName('SocialNumber').AsString := Trim(SocialNumber);
-        ParamByName('Email').AsString := Trim(Email);
-        ParamByName('Comment').AsString := Trim(Comment);
-        ExecSQL;
+        FieldByName('FIO').AsString := Trim(FIO);
+        FieldByName('PhoneNumber').AsString := Trim(PhoneNumber);
+        FieldByName('SocialNumber').AsString := Trim(SocialNumber);
+        FieldByName('Email').AsString := Trim(Email);
+        FieldByName('Comment').AsString := Trim(Comment);
+        Post;
         Transaction.Commit;
-        Transaction.Active := False;
         MainForm.actRefreshFriendsExecute(MainForm);
       except on E: EIBInterBaseError do
         begin
@@ -64,17 +63,15 @@ end;
 
 procedure Delete(Id: Integer);
 begin
-  with MainForm.ibqUpdateFriends do
+  with MainForm.IBDataSetFriends do
     begin
       try
-        Close;
-        SQL.Text := sqlDeleteFriend;
-        ParamByName('Friend_id').AsInteger := Id;
-        ExecSQL;
+        Open;
+        Locate('Friend_id', Id, []);
+        Delete;
         Transaction.Commit;
-        Transaction.Active := False;
         MainForm.actRefreshFriendsExecute(MainForm);
-
+        MainForm.actRefreshBorrowingsExecute(MainForm);
       except on E: EIBInterBaseError do
         begin
           if Transaction.Active then

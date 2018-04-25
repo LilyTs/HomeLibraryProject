@@ -39,7 +39,7 @@ implementation
 
 procedure TAddEditFriendForm.btnSaveFriendClick(Sender: TObject);
 begin
-  if (edFriendFIO.Text = '') then
+  if Trim(edFriendFIO.Text) = '' then
       MessageDlg('Fullname field can''t be empty!', mtError, [mbOk], 0)
   else
     begin

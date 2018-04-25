@@ -75,19 +75,18 @@ begin
               else
                 begin
                   SQL.Text := sqlEditBorrowing;
-                  ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
-                  ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
-                  ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
+                  ParamByName('Book_id').AsInteger := MainForm.ibqBooks.Lookup('Name', MainForm.ibqBorrowings.FieldValues['Name'], 'Book_id');
+                  ParamByName('Friend_id').AsInteger := MainForm.ibqFriends.Lookup('FIO', MainForm.ibqBorrowings.FieldValues['FIO'], 'Friend_id');
+                  ParamByName('BorrowDate').AsDate := MainForm.ibqBorrowings.FieldValues['BorrowDate'];
                   ReturnNormalFormView;
                 end;
               ParamByName('IsLost').AsString := BoolToStr(chBoxIsLost.Checked, True);
               ParamByName('IsDamaged').AsString := BoolToStr(chBoxIsDamaged.Checked, True);
               ParamByName('ReturnDate').AsDate := dtpReturnDate.Date;
               ParamByName('Comment').AsString := Trim(memoComment.Text);
-              Transaction.Active := True;
+              Transaction.StartTransaction;
               ExecSQL;
               Transaction.Commit;
-              Transaction.Active := False;
               MainForm.actRefreshBorrowingsExecute(MainForm);
               Self.Hide;
             except on E: EIBInterBaseError do

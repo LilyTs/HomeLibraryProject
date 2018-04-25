@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, IB, ExtCtrls, DBCtrls, Grids, DBGrids, IBDatabase,
   IBCustomDataSet, IBTable, IniFiles, IBQuery, ComCtrls, IBUpdateSQL,
-  ActnList, ImgList, ToolWin, SQLStrings, AppEvnts, DB;
+  ActnList, ImgList, ToolWin, SQLStrings, AppEvnts, DB, IBSQL, IBStoredProc;
 
 type
   TMainForm = class(TForm)
@@ -28,7 +28,6 @@ type
     actDeletePubHouse: TAction;
     actEditPubHouse: TAction;
     actRefreshPubHouses: TAction;
-    ibqUpdatePubHouses: TIBQuery;
     IBTransactionUpdatePubHouses: TIBTransaction;
     PageControl: TPageControl;
     tsMain: TTabSheet;
@@ -60,7 +59,6 @@ type
     actDeleteFriend: TAction;
     actEditFriend: TAction;
     actRefreshFriends: TAction;
-    ibqUpdateFriends: TIBQuery;
     IBTransactionUpdateFriends: TIBTransaction;
     toolBarBooks: TToolBar;
     btnAddBook: TToolButton;
@@ -88,12 +86,8 @@ type
     actRefreshGenres: TAction;
     btnSearchBook: TToolButton;
     actSearchBook: TAction;
-    ibqSearchBook: TIBQuery;
-    IBTransactionSearchBook: TIBTransaction;
-    dsSearchBook: TDataSource;
     ApplicationEvents: TApplicationEvents;
     ibqGenresForBook: TIBQuery;
-    dsrcGenresForBooks: TDataSource;
     btnSearchFriends: TToolButton;
     actSearchFriend: TAction;
     actSearchPubHouse: TAction;
@@ -102,8 +96,6 @@ type
     btnSearchGenre: TToolButton;
     ibqUpdateBookGenre: TIBQuery;
     IBTransactionUpdateBookGenre: TIBTransaction;
-    ibqBooksGenres: TIBQuery;
-    dsrcBooksGenres: TDataSource;
     toolBarBorrowings: TToolBar;
     btnAddBorrowing: TToolButton;
     btnDeleteBorrowing: TToolButton;
@@ -119,6 +111,9 @@ type
     actRefreshBorrowings: TAction;
     actSearchBorrowings: TAction;
     dbgridBooks: TDBGrid;
+    IBDataSetPubHouses: TIBDataSet;
+    IBDataSetFriends: TIBDataSet;
+    IBStoredProcGenreChilds: TIBStoredProc;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure actAddPubHouseExecute(Sender: TObject);
@@ -147,7 +142,7 @@ type
     procedure actDeleteBorrowingExecute(Sender: TObject);
     procedure actSearchBorrowingsExecute(Sender: TObject);
   private
-  
+    procedure InitDataSetsQueries;
   public
     procedure MyIdle(Sender: TObject; var Done: boolean);
   end;
@@ -161,7 +156,7 @@ implementation
 uses UAddEditPubHouseForm, UAddEditFriendForm, UAddEditBookForm,
      UAddEditGenreForm, USearchBookForm, USearchFriendForm,
   USearchGenreForm, USearchPubHouseForm, UAddEditBorrowingForm,
-  UAddEditPubHouseForm1, USearchBorrowingsForm, UFriendsDAL;
+  USearchBorrowingsForm, UFriendsDAL;
 
 {$R *.dfm}
 
@@ -179,7 +174,8 @@ begin
       IniFile.Free;
     end;
     IBDatabase.Connected := true;
-    IBTransaction.Active := True;
+    IBTransaction.StartTransaction;
+    InitDataSetsQueries;
     with ibqGenres do
       begin
         SQL.Text := sqlGetGenresWithParentName; 
@@ -195,11 +191,6 @@ begin
         SQL.Text := sqlGetBooksWithPubHouseAndGenres;
         Open;
         First;
-      end;
-    with ibqBooksGenres do
-      begin
-        SQL.Text := sqlGetBooksGenres;
-        Open;
       end;
     with ibqFriends do
       begin
@@ -227,11 +218,9 @@ begin
   ibqBooks.Close;
   ibqFriends.Close;
   ibqPubHouses.Close;
-  ibqUpdateFriends.Close;
-  ibqUpdatePubHouses.Close;
-  ibqBooksGenres.Close;
   ibqGenresForBook.Close;
-  IBDatabase.Connected := False;
+  IBDataSetPubHouses.Close;
+  IBDataSetFriends.Close;
   IBDatabase.Close;
 end;
 
@@ -243,24 +232,27 @@ end;
 
 procedure TMainForm.actDeletePubHouseExecute(Sender: TObject);
 begin
-  with ibqUpdatePubHouses do
-    begin
-      try
-        Close;
-        SQL.Text := sqlDeletePubHouse;
-        ParamByName('PubHouse_id').AsInteger := dbgridPubHouses.DataSource.DataSet.Fields.Fields[0].Value;
-        ExecSQL;
-        Transaction.Commit;
-        Transaction.Active := False;
-        MainForm.actRefreshPubHousesExecute(self);
-      except on E: EIBInterBaseError do
-        begin
-          if Transaction.Active then
-            Transaction.Rollback;
-          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+  if MessageDlg('Delete this record?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  then
+    if MessageDlg('Books of this publishing house will be automatically deleted. Do you want to continue?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrYes
+    then
+      with IBDataSetPubHouses do
+        try
+          Open;
+          Locate('PubHouse_id', ibqPubHouses.FieldValues['PubHouse_id'], []);
+          Delete;
+          Transaction.Commit;
+          actRefreshPubHousesExecute(self);
+          actRefreshBooksExecute(self);
+        except on E: EIBInterBaseError do
+          begin
+            if Transaction.Active then
+              Transaction.Rollback;
+            Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+          end;
         end;
-      end;
-    end;
 end;
 
 procedure TMainForm.actEditPubHouseExecute(Sender: TObject);
@@ -303,7 +295,13 @@ end;
 
 procedure TMainForm.actDeleteFriendExecute(Sender: TObject);
 begin
-  UFriendsDAL.Delete(ibqFriends.FieldValues['Friend_id']);
+  if MessageDlg('Delete this record?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  then
+    if MessageDlg('Borrowings to this friend will be automatically deleted. Do you want to continue?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrYes
+    then
+      UFriendsDAL.Delete(ibqFriends.FieldValues['Friend_id']);
 end;
 
 procedure TMainForm.actEditFriendExecute(Sender: TObject);
@@ -326,24 +324,28 @@ end;
 
 procedure TMainForm.actDeleteGenreExecute(Sender: TObject);
 begin
-  with ibqUpdateGenres do
-    begin
-      try
-        Close;
-        SQL.Text := sqlDeleteGenre;
-        ParamByName('Genre_id').AsInteger := dbgridGenres.DataSource.DataSet.Fields.Fields[0].Value;
-        ExecSQL;
-        Transaction.Commit;
-        Transaction.Active := False;
-        MainForm.actRefreshGenresExecute(self);
-      except on E: EIBInterBaseError do
-        begin
-          if Transaction.Active then
-            Transaction.Rollback;
-          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+  if MessageDlg('Delete this record?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  then
+    with ibqUpdateGenres do
+      begin
+        try
+          Close;
+          SQL.Text := sqlDeleteGenre;
+          ParamByName('Genre_id').AsInteger := dbgridGenres.DataSource.DataSet.Fields.Fields[0].Value;
+          Transaction.StartTransaction;
+          ExecSQL;
+          Transaction.Commit;
+          actRefreshGenresExecute(self);
+          actRefreshBooksExecute(self);
+        except on E: EIBInterBaseError do
+          begin
+            if Transaction.Active then
+              Transaction.Rollback;
+            Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+          end;
         end;
       end;
-    end;
 end;
 
 procedure TMainForm.actRefreshGenresExecute(Sender: TObject);
@@ -399,24 +401,28 @@ end;
 
 procedure TMainForm.actDeleteBookExecute(Sender: TObject);
 begin
-  with ibqUpdateBooks do
-    begin
-      try
-        Close;
-        SQL.Text := sqlDeleteBook;
-        ParamByName('Book_id').AsInteger := dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
-        ExecSQL;
-        Transaction.Commit;
-        Transaction.Active := False;
-        MainForm.actRefreshBooksExecute(self);
-      except on E: EIBInterBaseError do
-        begin
-          if Transaction.Active then
-            Transaction.Rollback;
-          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+  if MessageDlg('Borrowings of this book will be automatically deleted. Do you want to continue?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  then
+    with ibqUpdateBooks do
+      begin
+        try
+          Close;
+          SQL.Text := sqlDeleteBook;
+          ParamByName('Book_id').AsInteger := dbgridBooks.DataSource.DataSet.Fields.Fields[0].Value;
+          Transaction.StartTransaction;
+          ExecSQL;
+          Transaction.Commit;
+          actRefreshBooksExecute(self);
+          actRefreshBorrowingsExecute(self);
+        except on E: EIBInterBaseError do
+          begin
+            if Transaction.Active then
+              Transaction.Rollback;
+            Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+          end;
         end;
       end;
-    end;
 end;
 
 procedure TMainForm.actEditBookExecute(Sender: TObject);
@@ -464,31 +470,48 @@ end;
 
 procedure TMainForm.actDeleteBorrowingExecute(Sender: TObject);
 begin
-  with ibqUpdateBorrowings do
-    begin
-      try
-        Close;
-        SQL.Text := sqlDeleteBorrowing;
-        ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
-        ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
-        ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
-        ExecSQL;
-        Transaction.Commit;
-        Transaction.Active := False;
-        MainForm.actRefreshBorrowingsExecute(self);
-      except on E: EIBInterBaseError do
-        begin
-          if Transaction.Active then
-            Transaction.Rollback;
-          Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+  if MessageDlg('Delete this record?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  then
+    with ibqUpdateBorrowings do
+      begin
+        try
+          Close;
+          SQL.Text := sqlDeleteBorrowing;
+          ParamByName('Book_id').AsInteger := MainForm.dbgridBooks.DataSource.DataSet.Lookup('Name', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[0].Value, 'Book_id');
+          ParamByName('Friend_id').AsInteger := MainForm.dbgridFriends.DataSource.DataSet.Lookup('FIO', MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[1].Value, 'Friend_id');
+          ParamByName('BorrowDate').AsDate := MainForm.dbgridBorrowings.DataSource.DataSet.Fields.Fields[2].Value;
+          Transaction.StartTransaction;
+          ExecSQL;
+          Transaction.Commit;
+          actRefreshBorrowingsExecute(self);
+        except on E: EIBInterBaseError do
+          begin
+            if Transaction.Active then
+              Transaction.Rollback;
+            Application.MessageBox(PChar(E.Message), 'Error!', MB_ICONERROR);
+          end;
         end;
       end;
-    end;
 end;
 
 procedure TMainForm.actSearchBorrowingsExecute(Sender: TObject);
 begin
   SearchBorrowingForm.Show;
+end;
+
+procedure TMainForm.InitDataSetsQueries;
+begin
+  IBDataSetPubHouses.InsertSQL.Text := sqlInsertPubHouse;
+  IBDataSetPubHouses.ModifySQL.Text := sqlEditPubHouse;
+  IBDataSetPubHouses.DeleteSQL.Text := sqlDeletePubHouse;
+  IBDataSetPubHouses.Prepare;
+
+  IBDataSetFriends.SelectSQL.Text := sqlGetFriends;
+  IBDataSetFriends.InsertSQL.Text := sqlInsertFriend;
+  IBDataSetFriends.ModifySQL.Text := sqlEditFriend;
+  IBDataSetFriends.DeleteSQL.Text := sqlDeleteFriend;
+  IBDataSetFriends.Prepare;
 end;
 
 end.
